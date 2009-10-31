@@ -1,0 +1,45 @@
+#include "Globals.h"
+#include "GTK++.h"
+
+// extenal from GTKWindow API
+extern BOOL Redraw_Internal(void *W);
+
+#define TIMEOUT_INTERVAL 10
+
+/***************************************************************\
+|*                  GTKGLWindow implementation                 *|
+\***************************************************************/
+
+GTKGLWindow::GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc, int PixFormat) :
+GTKWindow(Type, CloseFunc), GTKGLWidget(Config, GTKWindow::Widget, PixFormat)
+{
+	TimeoutID = 0;
+	AddTimeout();
+	GTKWindow::SetHandler("visibility_notify_event", CheckVisibility, this);
+}
+
+BOOL GTKGLWindow::CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, void *data)
+{
+	GTKGLWindow *Self = (GTKGLWindow *)data;
+	if (event->state == GDK_VISIBILITY_FULLY_OBSCURED)
+		Self->RemoveTimeout();
+	else
+		Self->AddTimeout();
+
+	return TRUE;
+}
+
+void GTKGLWindow::AddTimeout()
+{
+	if (TimeoutID == 0)
+		TimeoutID = g_timeout_add(TIMEOUT_INTERVAL, Redraw_Internal, GTKWidget::Widget);
+}
+
+void GTKGLWindow::RemoveTimeout()
+{
+	if (TimeoutID > 0)
+	{
+		g_source_remove(TimeoutID);
+		TimeoutID = 0;
+	}
+}
