@@ -3,7 +3,11 @@
 
 GDKPixbuf::GDKPixbuf(char *File)
 {
+#ifdef _WINDOWS
 	Buff = gdk_pixbuf_new_from_file_utf8(File, NULL);
+#else
+	Buff = gdk_pixbuf_new_from_file(File, NULL);
+#endif
 }
 
 GDKPixbuf::GDKPixbuf(char *Data, int Width, int Height, int BPP, int CPP)

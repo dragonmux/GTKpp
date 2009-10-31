@@ -100,6 +100,14 @@ RECT GTKWindow::GetClientRect()
 	return ret;
 }
 
+SIZE GTKWindow::GetDesktopSize()
+{
+	SIZE Desktop = {0};
+	GdkWindow *wnd = gdk_window_get_toplevel(Widget->window);
+	gdk_drawable_get_size(GDK_DRAWABLE(wnd), (int *)&Desktop.cx, (int *)&Desktop.cy);
+	return Desktop;
+}
+
 void GTKWindow::ShowWindow()
 {
 	gtk_widget_show_all(Widget);

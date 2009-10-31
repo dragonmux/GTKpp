@@ -1,7 +1,14 @@
+#ifndef __GTKpp_H__
+#define __GTKpp_H__
+
 #include <vector>
 #include <gtk/gtk.h>
 #include <gtk/gtkgl.h>
 #include <pango/pango.h>
+
+#ifndef _WINDOWS
+#include <GTK++_Compat.h>
+#endif
 
 #ifdef MessageBox
 #undef MessageBox
@@ -14,7 +21,13 @@
 		#define GTKpp_API __declspec(dllimport)
 	#endif
 #else
-	// To be filled in on a Linux computer
+	#ifdef __GTKpp_EXPORT__
+		#define GTKpp_API
+// extern
+	#else
+		#define GTKpp_API
+// __attribute__((dllimport)) extern
+	#endif
 #endif
 
 class GTK
@@ -29,12 +42,15 @@ public:
 	GTKpp_API static void GTKInit(int argc = __argc, char **argv = __argv);
 };
 
+class GTKGLWidget;
+
 class GTKFont
 {
 public:
 	PangoFont *Font;
 	UINT DisplayBase;
 	int NumEntries, FontSize;
+	GTKGLWidget *Parent;
 
 	GTKpp_API SIZE GetStringMetrics(char *String);
 };
@@ -70,6 +86,7 @@ public:
 	GTKpp_API void glEnd();
 	GTKpp_API GTKFont *SetupGLFont(char *FontName, int Size, int Start, int Num);
 	GTKpp_API void DestroyGLFonts();
+	GTKpp_API void DestroyGLFont(GTKFont **Font);
 	GTKpp_API ULONG glSetHandler(char *Event, void *Handler, void *Data = NULL);
 	GTKpp_API void glRemoveHandler(ULONG ID);
 };
@@ -234,7 +251,7 @@ public:
 	GTKpp_API void Disable();
 };
 
-class GTKEvents abstract;
+class GTKEvents;// abstract;
 
 class GTKWindow : public GTKWidget
 {
@@ -248,7 +265,7 @@ protected:
 	void *QuitFunc, *QuitData;
 
 public:
-	GTKpp_API GTKWindow(GtkWindowType Type, void *CloseFunc = gtk_main_quit, void *data = NULL);
+	GTKpp_API GTKWindow(GtkWindowType Type, void *CloseFunc = (void *)gtk_main_quit, void *data = NULL);
 	GTKpp_API ~GTKWindow();
 	GTKpp_API const GtkWindow *GetWindow();
 	GTKpp_API void SetSize(int Width, int Height);
@@ -261,6 +278,7 @@ public:
 	GTKpp_API void SetParent(GTKWindow *Parent);
 	GTKpp_API RECT GetWindowRect();
 	GTKpp_API RECT GetClientRect();
+	GTKpp_API SIZE GetDesktopSize();
 	GTKpp_API void ShowWindow();
 	GTKpp_API void DoMessageLoop();
 	GTKpp_API void SetEventsHandled(int Events);
@@ -282,7 +300,7 @@ public:
 	GTKpp_API void Unsubclass(UINT SubQuitID);
 };
 
-class GTKEvents abstract
+class GTKEvents// abstract
 {
 protected:
 	GTKWindow *Window;
@@ -309,7 +327,9 @@ private:
 	UINT TimeoutID;
 
 public:
-	GTKpp_API GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc = gtk_main_quit, int PixFormat = GDK_GL_RGBA_TYPE);
+	GTKpp_API GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc = (void *)gtk_main_quit, int PixFormat = GDK_GL_RGBA_TYPE);
 	GTKpp_API void AddTimeout();
 	GTKpp_API void RemoveTimeout();
 };
+
+#endif /*__GTKpp_H__*/

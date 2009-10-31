@@ -5,6 +5,15 @@
 #include <windows.h>
 #endif
 
-#include <gl/gl.h>
-#include <gl/glu.h>
+#if defined(__MACOSX__)
+	#include <OpenGL/gl.h>
+	#include <OpenGL/glu.h>
+#elif defined(__MACOS__)
+	#include <gl.h>
+	#include <glu.h>
+#else
+	#include <GL/gl.h>
+	#include <GL/glu.h>
+#endif
+
 #include <stdarg.h>

@@ -1,0 +1,14 @@
+# GTK++ pkg-config file
+
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/GTK++
+
+Name: libGTK++
+Description: libGTK++ is a general purpose C++ binding for GTK+ that incorperates the gtkGLExt extension for GTK+ to allow for applications to do graphics from within OpenGL
+Version: 1.0.0
+Requires:
+Conflicts:
+Libs: -L${libdir} -lGTK++
+Cflags: -I${includedir} @PACKAGES@

@@ -15,7 +15,7 @@ GTKWindow(Type, CloseFunc), GTKGLWidget(Config, GTKWindow::Widget, PixFormat)
 {
 	TimeoutID = 0;
 	AddTimeout();
-	GTKWindow::SetHandler("visibility_notify_event", CheckVisibility, this);
+	GTKWindow::SetHandler("visibility_notify_event", (void *)CheckVisibility, this);
 }
 
 BOOL GTKGLWindow::CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, void *data)
@@ -32,7 +32,11 @@ BOOL GTKGLWindow::CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, 
 void GTKGLWindow::AddTimeout()
 {
 	if (TimeoutID == 0)
+#ifdef _WINDOWS
 		TimeoutID = g_timeout_add(TIMEOUT_INTERVAL, Redraw_Internal, GTKWidget::Widget);
+#else
+		TimeoutID = g_timeout_add(TIMEOUT_INTERVAL, Redraw_Internal, GTKGLWidget::Widget);
+#endif
 }
 
 void GTKGLWindow::RemoveTimeout()

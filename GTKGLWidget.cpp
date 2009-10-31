@@ -1,8 +1,10 @@
 #include "Globals.h"
 #include "GTK++.h"
 
+#ifdef _WINDOWS
 extern int EnumPixelFormats(HDC hDC);
 extern "C" GdkGLConfig *gdk_win32_gl_config_new_from_pixel_format(int pixel_format);
+#endif
 
 /***************************************************************\
 |*                  GTKGLWidget implementation                 *|
@@ -82,19 +84,35 @@ GTKFont *GTKGLWidget::SetupGLFont(char *FontName, int Size, int Start, int Num)
 	PF = gdk_gl_font_use_pango_font(PFD, Start, Num, Font->DisplayBase);
 	if (PF == NULL)
 	{
-		printf("Cannot get a font from Pango with name and size %s %ipx, exiting.....", FontName, Size);
+		printf("Cannot get a font from Pango with name and size %s %ipt, exiting.....\n\n", FontName, Size);
 		exit(1);
 	}
 	Font->Font = PF;
 	Font->NumEntries = Num;
 	Font->FontSize = Size;
 	Fonts.push_back(Font);
+	Font->Parent = this;
 
 	this->glEnd();
 
 	pango_font_description_free(PFD);
 
 	return Font;
+}
+
+void GTKGLWidget::DestroyGLFont(GTKFont **Font)
+{
+	for (UINT i = 0; i < Fonts.size(); i++)
+	{
+		if (Fonts[i] == *Font)
+		{
+			g_object_unref(Fonts[i]->Font);
+			glDeleteLists(Fonts[i]->DisplayBase, Fonts[i]->NumEntries);
+			free(Fonts[i]);
+			*Font = NULL;
+			return;
+		}
+	}
 }
 
 void GTKGLWidget::DestroyGLFonts()

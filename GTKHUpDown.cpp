@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "GTK++.h"
-#include "img\ArrowLeft.h"
-#include "img\ArrowRight.h"
+#include "img/ArrowLeft.h"
+#include "img/ArrowRight.h"
 
 GTKHUpDown::GTKHUpDown(int Width, int Height, void *IncrementFunc, void *DecrementFunc, void *data) : GTKHBox(Width, Height, TRUE, 0)
 {
