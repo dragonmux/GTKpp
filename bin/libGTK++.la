@@ -1,0 +1,12 @@
+dlname='libGTK++.so' 
+library_names='libGTK++.so'
+old_library='libGTK++.a'
+dependancy_libs=''
+installed=yes
+current=1
+age=0
+revision=0
+shouldnotlink=no
+dlopen=''
+dlpreopen=''
+libdir='/usr/lib'
