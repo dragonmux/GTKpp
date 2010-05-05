@@ -2,6 +2,7 @@
 #define __GTKpp_H__
 
 #include <vector>
+#include <map>
 #include <gtk/gtk.h>
 #include <gtk/gtkgl.h>
 #include <pango/pango.h>
@@ -25,13 +26,7 @@
 		#define GTKpp_API __declspec(dllimport)
 	#endif
 #else
-	#ifdef __GTKpp_EXPORT__
-		#define GTKpp_API
-// extern
-	#else
-		#define GTKpp_API
-// __attribute__((dllimport)) extern
-	#endif
+	#define GTKpp_API
 #endif
 
 class GTK
@@ -57,7 +52,7 @@ public:
 	int NumEntries, FontSize;
 	GTKGLWidget *Parent;
 
-	GTKpp_API SIZE GetStringMetrics(char *String);
+	GTKpp_API SIZE GetStringMetrics(const char *String);
 };
 #endif
 
@@ -69,11 +64,20 @@ protected:
 
 public:
 	GTKpp_API const GtkWidget *GetWidget();
-	GTKpp_API ULONG SetHandler(char *Event, void *Handler, void *Data = NULL);
-	GTKpp_API ULONG SetHandlerAfter(char *Event, void *Handler, void *Data = NULL);
+	GTKpp_API ULONG SetHandler(const char *Event, void *Handler, void *Data = NULL);
+	GTKpp_API ULONG SetHandlerAfter(const char *Event, void *Handler, void *Data = NULL);
 	GTKpp_API void RemoveHandler(ULONG ID);
 	GTKpp_API void Disable();
 	GTKpp_API void Enable();
+	GTKpp_API void Hide();
+	GTKpp_API void Show();
+	GTKpp_API void SetForegroundColour(int R, int G, int B);
+	GTKpp_API void SetBackgroundColour(int R, int G, int B);
+	GTKpp_API void SetBold(BOOL Bold);
+	GTKpp_API void SetItalic(BOOL Italic);
+	GTKpp_API void SetUnderline(BOOL Underline);
+	GTKpp_API void SetFontSize(int Size);
+	GTKpp_API void SetFontName(const char *Name);
 };
 
 #ifndef __NO_OPEN_GL__
@@ -91,7 +95,7 @@ public:
 	GTKpp_API BOOL glBegin();
 	GTKpp_API void glSwapBuffers();
 	GTKpp_API void glEnd();
-	GTKpp_API GTKFont *SetupGLFont(char *FontName, int Size, int Start, int Num);
+	GTKpp_API GTKFont *SetupGLFont(const char *FontName, int Size, int Start, int Num);
 	GTKpp_API void DestroyGLFonts();
 	GTKpp_API void DestroyGLFont(GTKFont **Font);
 	GTKpp_API ULONG glSetHandler(char *Event, void *Handler, void *Data = NULL);
@@ -111,7 +115,7 @@ public:
 class GTKMessageBox : public GTKDialog
 {
 public:
-	GTKpp_API GTKMessageBox(GtkWindow *Window, GtkMessageType Type, GtkButtonsType Buttons, char *Message, char *Title, ...);
+	GTKpp_API GTKMessageBox(GtkWindow *Window, GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...);
 	GTKpp_API ~GTKMessageBox();
 };
 
@@ -120,12 +124,12 @@ class GTKFileDialog : public GTKDialog
 private:
 	GtkFileChooser *FileDialog;
 	GtkFileFilter *Filter;
-	void AddFilters(std::vector<char *> FileTypes, std::vector<char *> FileTypeNames);
-	void AddFilterChooser(std::vector<char *> FileTypes, std::vector<char *> FileTypeNames);
+	void AddFilters(std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
+	void AddFilterChooser(std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
 
 public:
-	GTKpp_API GTKFileDialog(GtkWindow *Window, char *Title, GtkFileChooserAction Action, std::vector<char *> FileTypes, std::vector<char *> FileTypeNames,
-		char *Button1_Type, int Button1_Result, char *Button2_Type, int Button2_Result);
+	GTKpp_API GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChooserAction Action, std::vector<const char *> FileTypes,
+		std::vector<const char *> FileTypeNames, const char *Button1_Type, int Button1_Result, const char *Button2_Type, int Button2_Result);
 	GTKpp_API ~GTKFileDialog();
 	GTKpp_API char *GetSelectedFile();
 };
@@ -172,15 +176,28 @@ public:
 	GTKpp_API void AddWidget(GTKWidget *Child);
 };
 
+class GTKVBox : public GTKBox
+{
+protected:
+	GtkVBox *VBox;
+
+public:
+	GTKpp_API GTKVBox(int Width, int Height, BOOL EqualSpacing = TRUE, int CellSpacing = 0);
+	GTKpp_API void SetParent(GTKWidget *Parent);
+	GTKpp_API void AddWidget(GTKWidget *Child);
+};
+
 class GTKLabel : public GTKWidget
 {
 protected:
 	GtkLabel *Label;
 
 public:
-	GTKpp_API GTKLabel(char *Content = NULL);
-	GTKpp_API void SetText(char *Content = NULL);
+	GTKpp_API GTKLabel(const char *Content = NULL);
+	GTKpp_API void SetText(const char *Content = NULL);
 	GTKpp_API void SetSize(int Width, int Height);
+	GTKpp_API void SetBackgroundColour(int R, int G, int B);
+	GTKpp_API void SetUnderline(BOOL Underline);
 };
 
 class GTKButton : public GTKWidget
@@ -189,7 +206,7 @@ protected:
 	GtkButton *Button;
 
 public:
-	GTKpp_API GTKButton(char *Content = NULL);
+	GTKpp_API GTKButton(const char *Content = NULL);
 	GTKpp_API void SetSize(int Width, int Height);
 	GTKpp_API void SetImage(GtkWidget *Image);
 	GTKpp_API void SetOnClicked(void *OnClickFunc, void *data = NULL);
@@ -210,15 +227,21 @@ public:
 class GTKImage : public GTKWidget
 {
 protected:
+	GtkWidget *_Widget;
 	GtkDrawingArea *Image;
 	GdkDrawable *DrawArea;
-	int Width, Height;
 	GdkGC *GC;
+	GtkImage *Img;
+	GtkEventBox *EventBox;
+	int Width, Height;
+	BOOL UsingImage;
 
 public:
-	GTKpp_API GTKImage(int Width, int Height);
+	GTKpp_API GTKImage(int Width, int Height, BOOL UsingImage = FALSE);
 	GTKpp_API void SetSize(int Width, int Height);
 	GTKpp_API void DrawImage(GDKPixbuf *Image);
+	GTKpp_API void SetImage(GDKPixbuf *Image);
+	GTKpp_API void SetEventsHandled(int Events);
 };
 
 class GTKHUpDown : public GTKHBox
@@ -241,8 +264,8 @@ protected:
 	GtkEntry *Entry;
 
 public:
-	GTKpp_API GTKEntry(int Width, int Height, char *Content = "");
-	GTKpp_API void SetText(char *Content = "");
+	GTKpp_API GTKEntry(int Width, int Height, const char *Content = "");
+	GTKpp_API void SetText(const char *Content = "");
 	GTKpp_API int GetTextLen();
 	GTKpp_API void GetText(char *Buff, int BuffLen);
 };
@@ -260,9 +283,11 @@ protected:
 	GtkWidget *Frame;
 
 public:
-	GTKpp_API GTKFrame(GTKWidget *Parent, int Width, int Height, int X, int Y, char *Label = NULL);
+	GTKpp_API GTKFrame(GTKWidget *Parent, int Width, int Height, int X, int Y, const char *Label = NULL);
 	GTKpp_API void Enable();
 	GTKpp_API void Disable();
+	GTKpp_API void Show();
+	GTKpp_API void Hide();
 };
 
 class GTKEvents;// abstract;
@@ -285,7 +310,7 @@ public:
 	GTKpp_API void SetSize(int Width, int Height);
 	GTKpp_API void SetLocation(int X, int Y);
 	GTKpp_API void SetLocation(GtkWindowPosition Location);
-	GTKpp_API void SetTitle(char *Title);
+	GTKpp_API void SetTitle(const char *Title);
 	GTKpp_API void SetResizable(BOOL Resizable);
 	GTKpp_API void SetModal(BOOL Mode, GTKWindow *Parent = NULL);
 	GTKpp_API void SetTool();
@@ -300,9 +325,9 @@ public:
 	GTKpp_API void IterateMessageLoop();
 	GTKpp_API void SetEventsHandled(int Events);
 	GTKpp_API void Redraw(BOOL Now = FALSE);
-	GTKpp_API int MessageBox(GtkMessageType Type, GtkButtonsType Buttons, char *Message, char *Title, ...);
-	GTKpp_API char *FileSave(char *Title, std::vector<char *> FileTypes, std::vector<char *> FileTypeNames);
-	GTKpp_API char *FileOpen(char *Title, std::vector<char *> FileTypes, std::vector<char *> FileTypeNames);
+	GTKpp_API int MessageBox(GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...);
+	GTKpp_API char *FileSave(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
+	GTKpp_API char *FileOpen(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
 	GTKpp_API void GetCursorPos(POINT *point, GdkModifierType *modifiers = NULL);
 	GTKpp_API void ScreenToClient(POINT *Point);
 	GTKpp_API void ScreenToWindow(POINT *Point);
@@ -363,7 +388,7 @@ protected:
 	void SetParent(GTKWidget *Parent);
 
 public:
-	GTKpp_API GTKScrolledWindow(GTKWidget *Parent, int Width, int Height);
+	GTKpp_API GTKScrolledWindow(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting = TRUE);
 	GTKpp_API void AddChild(GTKWidget *Child);
 };
 
@@ -387,9 +412,97 @@ protected:
 	void SetParent(GTKWidget *Parent);
 
 public:
-	GTKpp_API GTKTextView(GTKWidget *Parent, int Width, int Height);
+	GTKpp_API GTKTextView(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting = TRUE);
 	GTKpp_API void ClearText();
-	GTKpp_API void AddText(char *Text);
+	GTKpp_API void AddText(const char *Text);
+};
+
+class GTKList : public GTKContainer
+{
+protected:
+	GtkTreeView *ListView;
+	GtkListStore *ListStore;
+	GtkCellRenderer *Renderer;
+	GtkTreeViewColumn *Column;
+	void SetParent(GTKWidget *Parent);
+
+public:
+	GTKpp_API GTKList(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting = TRUE);
+	GTKpp_API ~GTKList();
+	GTKpp_API void AddItem(char *Value);
+	GTKpp_API void DeleteItem(char *Value);
+};
+
+class GTKCheckBox : public GTKButton
+{
+protected:
+	GtkCheckButton *CheckButton;
+
+public:
+	GTKpp_API GTKCheckBox(int Width, int Height, const char *Content = NULL);
+	GTKpp_API BOOL GetChecked();
+	GTKpp_API void SetChecked(BOOL Checked = TRUE);
+};
+
+class GTKComboBoxEntry
+{
+public:
+	const char *Text;
+	int ComboPos;
+};
+
+class GTKComboBox : public GTKContainer
+{
+protected:
+	GtkComboBox *ComboBox;
+	void SetParent(GTKWidget *Parent);
+	int lastPos;
+	std::map<int, GTKComboBoxEntry> Items;
+
+public:
+	GTKpp_API GTKComboBox(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting = TRUE);
+	GTKpp_API void AddItem(const char *Text, int EnumValue);
+	GTKpp_API void DeleteItem(const char *Text);
+	GTKpp_API void SetSelected(const char *Text);
+	GTKpp_API void SetSelected(unsigned int EnumValue);
+	GTKpp_API int GetSelected();
+	GTKpp_API const char *getTextFor(unsigned int Value);
+	GTKpp_API int getPossitionOf(const char *Value);
+	GTKpp_API int getEnumFor(unsigned int Value);
+};
+
+class GTKColourSelectionDialog : public GTKDialog
+{
+private:
+	static void OkClicked(GtkWidget *widget, void *data);
+	static void CancelClicked(GtkWidget *widget, void *data);
+
+protected:
+	GtkColorSelectionDialog *Selector;
+
+public:
+	GTKpp_API GTKColourSelectionDialog();
+	GTKpp_API ~GTKColourSelectionDialog();
+	GTKpp_API void SetColour(char R, char G, char B);
+	GTKpp_API void GetColour(char *R, char *G, char *B);
+};
+
+class GTKAboutDialog : public GTKDialog
+{
+protected:
+	GtkAboutDialog *AboutBox;
+
+public:
+	GTKpp_API GTKAboutDialog(GTKWindow *Parent);
+	GTKpp_API ~GTKAboutDialog();
+	GTKpp_API void SetProgram(const char *Name);
+	GTKpp_API void SetVersion(const char *VersionString);
+	GTKpp_API void SetCopyright(const char *Copyright);
+	GTKpp_API void SetComments(const char *Comments);
+	GTKpp_API void SetLicense(const char *License);
+	GTKpp_API void SetWebsiteURL(const char *URL);
+	GTKpp_API void SetWebsiteText(const char *Website);
+	GTKpp_API void SetAuthors(const char **Authors);
 };
 
 #endif /*__GTKpp_H__*/

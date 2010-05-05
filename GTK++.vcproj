@@ -281,6 +281,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\GTKCheckBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKComboBox.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\GTKEntry.cpp"
 					>
 				</File>
@@ -297,6 +305,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\GTKList.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\GTKTextBuffer.cpp"
 					>
 				</File>
@@ -308,6 +320,14 @@
 			<Filter
 				Name="GTKDialogs"
 				>
+				<File
+					RelativePath=".\GTKAboutDialog.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKColourSelectionDialog.cpp"
+					>
+				</File>
 				<File
 					RelativePath=".\GTKFileDialog.cpp"
 					>
@@ -334,6 +354,10 @@
 				</File>
 				<File
 					RelativePath=".\GTKScrolledWindow.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKVBox.cpp"
 					>
 				</File>
 			</Filter>

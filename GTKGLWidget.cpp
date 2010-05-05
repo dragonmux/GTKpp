@@ -4,6 +4,8 @@
 #ifdef _WINDOWS
 extern int EnumPixelFormats(HDC hDC);
 extern "C" GdkGLConfig *gdk_win32_gl_config_new_from_pixel_format(int pixel_format);
+#else
+#include <errno.h>
 #endif
 
 /***************************************************************\
@@ -64,7 +66,7 @@ void GTKGLWidget::glEnd()
 	ctx = NULL;
 }
 
-GTKFont *GTKGLWidget::SetupGLFont(char *FontName, int Size, int Start, int Num)
+GTKFont *GTKGLWidget::SetupGLFont(const char *FontName, int Size, int Start, int Num)
 {
 	PangoFontDescription *PFD;
 	GTKFont *Font = new GTKFont();
@@ -72,7 +74,11 @@ GTKFont *GTKGLWidget::SetupGLFont(char *FontName, int Size, int Start, int Num)
 
 	PFD = pango_font_description_new();
 	pango_font_description_set_family(PFD, FontName);
+#ifdef _WINDOWS
 	pango_font_description_set_size(PFD, (Size - 2) * PANGO_SCALE);
+#else
+	pango_font_description_set_size(PFD, Size * PANGO_SCALE);
+#endif
 	pango_font_description_set_weight(PFD, PANGO_WEIGHT_NORMAL);
 	pango_font_description_set_variant(PFD, PANGO_VARIANT_NORMAL);
 	pango_font_description_set_style(PFD, PANGO_STYLE_NORMAL);

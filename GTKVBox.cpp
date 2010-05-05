@@ -1,21 +1,21 @@
 #include "Globals.h"
 #include "GTK++.h"
 
-GTKHBox::GTKHBox(int Width, int Height, BOOL EqualSpacing, int CellSpacing)
+GTKVBox::GTKVBox(int Width, int Height, BOOL EqualSpacing, int CellSpacing)
 {
-	Widget = gtk_hbox_new(EqualSpacing, CellSpacing);
+	Widget = gtk_vbox_new(EqualSpacing, CellSpacing);
 	Container = GTK_CONTAINER(Widget);
 	Box = GTK_BOX(Container);
-	HBox = GTK_HBOX(Box);
+	VBox = GTK_VBOX(Box);
 	gtk_widget_set_size_request(Widget, Width, Height);
 }
 
-void GTKHBox::SetParent(GTKWidget *Parent)
+void GTKVBox::SetParent(GTKWidget *Parent)
 {
 	gtk_container_add(GTK_CONTAINER(Parent->GetWidget()), Widget);
 }
 
-void GTKHBox::AddWidget(GTKWidget *Child)
+void GTKVBox::AddWidget(GTKWidget *Child)
 {
 	gtk_box_pack_start_defaults(Box, (GtkWidget *)Child->GetWidget());
 	Children.push_back(Child);

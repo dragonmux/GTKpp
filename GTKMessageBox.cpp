@@ -5,13 +5,16 @@
 |*                 GTKMessageBox implementation                *|
 \***************************************************************/
 
-GTKMessageBox::GTKMessageBox(GtkWindow *Window, GtkMessageType Type, GtkButtonsType Buttons, char *Message, char *Title, ...) : GTKDialog()
+GTKMessageBox::GTKMessageBox(GtkWindow *Window, GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...) : GTKDialog()
 {
 	va_list args;
-	char *Tmp = (char *)malloc(strlen(Message) + 255); // allocates 255 bytes extra space for vararg replacements.
-	//TODO: Change this function (again!) to use vsnprintf() to work out how much space to allocate for Tmp.
+	int len;
+	char *Tmp;
 	va_start(args, Title);
-	//vsnprintf
+	len = vsnprintf(NULL, 0, Message, args);
+	va_end(args);
+	Tmp = (char *)malloc(len + 1);
+	va_start(args, Title);
 	vsprintf(Tmp, Message, args);
 	va_end(args);
 	Widget = gtk_message_dialog_new(Window, GTK_DIALOG_MODAL, Type, Buttons, Tmp);

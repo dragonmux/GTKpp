@@ -1,12 +1,13 @@
 #include "Globals.h"
 #include "GTK++.h"
 
-GTKScrolledWindow::GTKScrolledWindow(GTKWidget *Parent, int Width, int Height)
+GTKScrolledWindow::GTKScrolledWindow(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting)
 {
 	Widget = gtk_scrolled_window_new(NULL, NULL);
 	Container = GTK_CONTAINER(Widget);
 	ScrolledWindow = GTK_SCROLLED_WINDOW(Container);
-	SetParent(Parent);
+	if (NeedsParenting != FALSE)
+		SetParent(Parent);
 	gtk_widget_set_size_request(Widget, Width, Height);
 }
 

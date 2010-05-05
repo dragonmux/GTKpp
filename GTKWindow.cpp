@@ -48,7 +48,7 @@ void GTKWindow::SetLocation(GtkWindowPosition Location)
 	gtk_window_set_position(Window, Location);
 }
 
-void GTKWindow::SetTitle(char *Title)
+void GTKWindow::SetTitle(const char *Title)
 {
 	gtk_window_set_title(Window, Title);
 }
@@ -72,7 +72,12 @@ void GTKWindow::SetTool()
 {
 	SetResizable(FALSE);
 	gtk_window_set_skip_taskbar_hint(Window, TRUE);
-	gtk_window_set_type_hint(Window, GDK_WINDOW_TYPE_HINT_TOOLBAR);
+	/******************************\
+	|* What hint to use?!?!       *|
+	|**--------------------------**|
+	|* Well, this seems to work.. *|
+	\******************************/
+	gtk_window_set_type_hint(Window, GDK_WINDOW_TYPE_HINT_UTILITY);
 }
 
 void GTKWindow::SetParent(GTKWindow *Parent)
@@ -84,29 +89,29 @@ void GTKWindow::SetModal(BOOL Mode, GTKWindow *Parent)
 {
 	if (Mode == TRUE && Parent == NULL)
 		return;
-	/*if (Mode == TRUE)
-		gtk_window_set_transient_for(Window, (GtkWindow *)Parent->GetWindow());*/
+	if (Mode == TRUE)
+		gtk_window_set_transient_for(Window, (GtkWindow *)Parent->GetWindow());
 	gtk_window_set_modal(Window, Mode);
 }
 
 RECT GTKWindow::GetWindowRect()
 {
-	int x, y;
+//	int x, y;
 	static RECT ret;
-	gtk_window_get_position(Window, (int *)&ret.left, (int *)&ret.top);
-	gtk_window_get_size(Window, &x, &y);
-	ret.right = ret.left + x;
-	ret.bottom = ret.top + y;
+	static GdkRectangle rc;
+	gdk_window_get_frame_extents(Widget->window, &rc);
+	ret.left = rc.x;
+	ret.top = rc.y;
+	ret.right = ret.left + rc.width;
+	ret.bottom = ret.top + rc.height;
 	return ret;
 }
 
 RECT GTKWindow::GetClientRect()
 {
+#if 0
 	int left, right, top, bottom;
-	static RECT ret; // The following needs rewriting so as to correct it as currently it returns Screen coordinates for the window.
-//	GdkWindow *W = gdk_gl_window_get_window(gtk_widget_get_gl_window(Widget));
-//	gdk_window_get_position(W, &left, &top);
-//	gdk_window_get_size(W, &right, &bottom);
+	static RECT ret;
 	left = Widget->allocation.x;
 	top = Widget->allocation.y;
 	bottom = Widget->allocation.height;
@@ -115,6 +120,16 @@ RECT GTKWindow::GetClientRect()
 	ret.top = top;
 	ret.right = right + left;
 	ret.bottom = bottom + top;
+#endif
+	int x, y, a, b;
+	static RECT ret;
+	gdk_window_get_root_origin(Widget->window, (int *)&ret.left, (int *)&ret.top);
+	gtk_window_get_position(Window, &a, &b);
+	gtk_window_get_size(Window, &x, &y);
+	ret.left -= a;
+	ret.top -= b;
+	ret.right = ret.left + x;
+	ret.bottom = ret.top + y;
 	return ret;
 }
 
@@ -167,7 +182,7 @@ void GTKWindow::Redraw(BOOL Now)
 	}
 }
 
-int GTKWindow::MessageBox(GtkMessageType Type, GtkButtonsType Buttons, char *Message, char *Title, ...)
+int GTKWindow::MessageBox(GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...)
 {
 	va_list args;
 	int ret;
@@ -193,7 +208,7 @@ void GTKWindow::GetCursorPos(POINT *point, GdkModifierType *modifiers)
 	gdk_window_get_pointer(Window->frame, (int *)&point->x, (int *)&point->y, modifiers);
 }
 
-char *GTKWindow::FileSave(char *Title, std::vector<char *> FileTypes, std::vector<char *> FileTypeNames)
+char *GTKWindow::FileSave(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames)
 {
 	int code;
 	char *ret = NULL;
@@ -208,7 +223,7 @@ char *GTKWindow::FileSave(char *Title, std::vector<char *> FileTypes, std::vecto
 	return ret;
 }
 
-char *GTKWindow::FileOpen(char *Title, std::vector<char *> FileTypes, std::vector<char *> FileTypeNames)
+char *GTKWindow::FileOpen(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames)
 {
 	int code;
 	char *ret = NULL;

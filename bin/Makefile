@@ -18,4 +18,6 @@ install:
 	rm -f libGTK++.pc
 	$(SHELL) ./libGTK++.pc.sh
 	cp $(PC) $(PKGDIR)
+	chown root $(PKGDIR)$(PC)
+	chgrp root $(PKGDIR)$(PC)
 	chmod +r $(LIBDIR)$(LA)

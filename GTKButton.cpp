@@ -1,12 +1,15 @@
 #include "Globals.h"
 #include "GTK++.h"
 
-GTKButton::GTKButton(char *Content)
+GTKButton::GTKButton(const char *Content)
 {
 	Widget = gtk_button_new();
 	Button = GTK_BUTTON(Widget);
 	if (Content != NULL)
+	{
 		gtk_button_set_label(Button, Content);
+		gtk_button_set_use_underline(Button, TRUE);
+	}
 }
 
 void GTKButton::SetSize(int Width, int Height)
