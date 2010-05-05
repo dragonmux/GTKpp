@@ -72,7 +72,7 @@ GTKFont *GTKGLWidget::SetupGLFont(char *FontName, int Size, int Start, int Num)
 
 	PFD = pango_font_description_new();
 	pango_font_description_set_family(PFD, FontName);
-	pango_font_description_set_size(PFD, Size * PANGO_SCALE);
+	pango_font_description_set_size(PFD, (Size - 2) * PANGO_SCALE);
 	pango_font_description_set_weight(PFD, PANGO_WEIGHT_NORMAL);
 	pango_font_description_set_variant(PFD, PANGO_VARIANT_NORMAL);
 	pango_font_description_set_style(PFD, PANGO_STYLE_NORMAL);

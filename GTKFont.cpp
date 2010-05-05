@@ -24,14 +24,15 @@ SIZE GTKFont::GetStringMetrics(char *String)
 	pango_layout_set_width(PL, -1);
 	pango_layout_set_text(PL, String, -1);
 
-	pango_layout_get_pixel_extents(PL, NULL, &PR_Logic);
-	ret.cy = PR_Logic.height;
+//	pango_layout_get_pixel_extents(PL, NULL, &PR_Logic);
+//	ret.cy = PR_Logic.height;
 #ifndef _WINDOWS
 	ret.cy -= 10;
 #endif
-	pango_font_description_set_size(PFD, FontSize * PANGO_SCALE);
+	pango_font_description_set_size(PFD, (FontSize - 1) * PANGO_SCALE);
 	pango_layout_set_font_description(PL, PFD);
 	pango_layout_get_pixel_extents(PL, NULL, &PR_Logic);
+	ret.cy = PR_Logic.height;
 	ret.cx = PR_Logic.width;
 
 	g_object_unref(PL);

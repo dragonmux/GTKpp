@@ -4,18 +4,21 @@
 // extenal from GTKWindow API
 extern BOOL Redraw_Internal(void *W);
 
-#define TIMEOUT_INTERVAL 10
+#define TIMEOUT_INTERVAL 15
 
 /***************************************************************\
 |*                  GTKGLWindow implementation                 *|
 \***************************************************************/
 
-GTKGLWindow::GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc, int PixFormat) :
+GTKGLWindow::GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc, int PixFormat, bool AutoRedraw) :
 GTKWindow(Type, CloseFunc), GTKGLWidget(Config, GTKWindow::Widget, PixFormat)
 {
 	TimeoutID = 0;
-	AddTimeout();
-	GTKWindow::SetHandler("visibility_notify_event", (void *)CheckVisibility, this);
+	if (AutoRedraw == true)
+	{
+		AddTimeout();
+		GTKWindow::SetHandler("visibility_notify_event", (void *)CheckVisibility, this);
+	}
 }
 
 BOOL GTKGLWindow::CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, void *data)

@@ -8,9 +8,13 @@
 GTKWindow::GTKWindow(GtkWindowType Type, void *CloseFunc, void *data)
 {
 	Widget = gtk_window_new(Type);
-	Window = GTK_WINDOW(Widget);
+	Container = GTK_CONTAINER(Widget);
+	Window = GTK_WINDOW(Container);
 	gtk_window_set_gravity(Window, GDK_GRAVITY_NORTH_WEST);
-	QuitProcID = SetHandler("delete_event", CloseFunc, data);
+	if (CloseFunc != NULL)
+		QuitProcID = SetHandler("delete_event", CloseFunc, data);
+	else
+		QuitProcID = SetHandler("delete_event", (void *)gtk_main_quit, data);
 	QuitFunc = CloseFunc;
 	QuitData = data;
 	Events = NULL;
@@ -54,6 +58,16 @@ void GTKWindow::SetResizable(BOOL Resizable)
 	gtk_window_set_resizable(Window, Resizable);
 }
 
+void GTKWindow::SetBorderless(BOOL Borderless)
+{
+	gtk_window_set_decorated(Window, (Borderless == FALSE ? TRUE : FALSE));
+}
+
+void GTKWindow::SetHideCloseButton(BOOL Hide)
+{
+	gtk_window_set_deletable(Window, (Hide == FALSE ? TRUE : FALSE));
+}
+
 void GTKWindow::SetTool()
 {
 	SetResizable(FALSE);
@@ -89,10 +103,14 @@ RECT GTKWindow::GetWindowRect()
 RECT GTKWindow::GetClientRect()
 {
 	int left, right, top, bottom;
-	static RECT ret;
-	GdkWindow *W = gdk_gl_window_get_window(gtk_widget_get_gl_window(Widget));
-	gdk_window_get_position(W, &left, &top);
-	gdk_window_get_size(W, &right, &bottom);
+	static RECT ret; // The following needs rewriting so as to correct it as currently it returns Screen coordinates for the window.
+//	GdkWindow *W = gdk_gl_window_get_window(gtk_widget_get_gl_window(Widget));
+//	gdk_window_get_position(W, &left, &top);
+//	gdk_window_get_size(W, &right, &bottom);
+	left = Widget->allocation.x;
+	top = Widget->allocation.y;
+	bottom = Widget->allocation.height;
+	right = Widget->allocation.width;
 	ret.left = left;
 	ret.top = top;
 	ret.right = right + left;
@@ -120,6 +138,11 @@ void GTKWindow::DoMessageLoop()
 	gtk_main();
 }
 
+void GTKWindow::IterateMessageLoop()
+{
+	gtk_main_iteration();
+}
+
 void GTKWindow::SetEventsHandled(int Events)
 {
 	gtk_widget_add_events(Widget, Events);
@@ -133,9 +156,15 @@ BOOL Redraw_Internal(void *W)
 	return TRUE;
 }
 
-void GTKWindow::Redraw()
+void GTKWindow::Redraw(BOOL Now)
 {
-	Redraw_Internal(Widget);
+	if (Now == FALSE)
+		Redraw_Internal(Widget);
+	else
+	{
+		gdk_window_invalidate_rect(Widget->window, NULL, TRUE);
+		gdk_window_process_all_updates();
+	}
 }
 
 int GTKWindow::MessageBox(GtkMessageType Type, GtkButtonsType Buttons, char *Message, char *Title, ...)
@@ -194,6 +223,20 @@ char *GTKWindow::FileOpen(char *Title, std::vector<char *> FileTypes, std::vecto
 	return ret;
 }
 
+void GTKWindow::ClientToScreen(RECT *Rect)
+{
+	RECT wndRect = GetClientRect();
+	Rect->left += wndRect.left;
+	Rect->top += wndRect.top;
+	Rect->right += wndRect.left;
+	Rect->bottom += wndRect.top;
+	wndRect = GetWindowRect();
+	Rect->left += wndRect.left;
+	Rect->top += wndRect.top;
+	Rect->right += wndRect.left;
+	Rect->bottom += wndRect.top;
+}
+
 void GTKWindow::ScreenToClient(POINT *Point)
 {
 	ScreenToWindow(Point);
@@ -218,7 +261,13 @@ void GTKWindow::WindowToClient(POINT *Point)
 
 void GTKWindow::Close()
 {
+	gtk_signal_emit_by_name(GTK_OBJECT(Widget), "delete_event");
+}
+
+void GTKWindow::Destroy()
+{
 	gtk_widget_destroy(Widget);
+//	gtk_signal_emit_by_name(GTK_OBJECT(Widget), "destroy_event");
 }
 
 void GTKWindow::SetEvents(GTKEvents *events)

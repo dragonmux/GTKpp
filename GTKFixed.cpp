@@ -7,7 +7,7 @@ GTKFixed::GTKFixed(GTKWidget *Parent, int Width, int Height)
 	Widget = gtk_fixed_new();
 	Container = GTK_CONTAINER(Widget);
 	Fixed = GTK_FIXED(Container);
-	SetParent((GtkWidget *)Parent->GetWidget());
+	SetParent(Parent);
 	/*gtk_style_set_font(Style, gdk_font_load("Courier New"));
 	gtk_widget_set_style(Widget, Style);*/
 	gtk_widget_set_size_request(Widget, Width, Height);
@@ -21,14 +21,15 @@ GTKFixed::GTKFixed(int Width, int Height)
 	gtk_widget_set_size_request(Widget, Width, Height);
 }
 
-void GTKFixed::SetParent(GtkWidget *Parent)
+void GTKFixed::SetParent(GTKWidget *Parent)
 {
-	gtk_container_add(GTK_CONTAINER(Parent), Widget);
+	((GTKContainer *)Parent)->AddChild(this);
 }
 
 void GTKFixed::SetLocation(GTKWidget *ChildWidget, int X, int Y)
 {
 	gtk_fixed_put(Fixed, (GtkWidget *)ChildWidget->GetWidget(), X, Y);
+	Children.push_back(ChildWidget);
 }
 
 void GTKFixed::SetMove(GTKWidget *ChildWidget, int X, int Y)

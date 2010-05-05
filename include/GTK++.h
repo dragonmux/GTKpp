@@ -14,6 +14,10 @@
 #undef MessageBox
 #endif
 
+#ifndef GTK_GL_RGBA_TYPE
+#define GDK_GL_RGBA_TYPE 0x8014
+#endif
+
 #ifdef _WINDOWS
 	#ifdef __GTKpp_EXPORT__
 		#define GTKpp_API __declspec(dllexport)
@@ -36,6 +40,7 @@ public:
 	GTKpp_API static void GTKInit(int argc = __argc, char **argv = __argv);
 };
 
+#ifndef __NO_OPEN_GL__
 class GTKGL : GTK
 {
 public:
@@ -54,6 +59,7 @@ public:
 
 	GTKpp_API SIZE GetStringMetrics(char *String);
 };
+#endif
 
 class GTKWidget
 {
@@ -70,6 +76,7 @@ public:
 	GTKpp_API void Enable();
 };
 
+#ifndef __NO_OPEN_GL__
 class GTKGLWidget : GTKWidget
 {
 private:
@@ -90,6 +97,7 @@ public:
 	GTKpp_API ULONG glSetHandler(char *Event, void *Handler, void *Data = NULL);
 	GTKpp_API void glRemoveHandler(ULONG ID);
 };
+#endif
 
 class GTKDialog : public GTKWidget
 {
@@ -126,6 +134,12 @@ class GTKContainer : public GTKWidget
 {
 protected:
 	GtkContainer *Container;
+	std::vector<GTKWidget *> Children;
+
+public:
+	GTKpp_API GTKContainer();
+	GTKpp_API ~GTKContainer();
+	GTKpp_API void AddChild(GTKWidget *Child);
 };
 
 class GTKBox : public GTKContainer
@@ -139,7 +153,7 @@ class GTKFixed : public GTKContainer
 protected:
 	GtkFixed *Fixed;
 	GTKFixed(int Width, int Height);
-	void SetParent(GtkWidget *Parent);
+	void SetParent(GTKWidget *Parent);
 
 public:
 	GTKpp_API GTKFixed(GTKWidget *Parent, int Width, int Height);
@@ -155,7 +169,7 @@ protected:
 public:
 	GTKpp_API GTKHBox(int Width, int Height, BOOL EqualSpacing = TRUE, int CellSpacing = 0);
 	GTKpp_API void SetParent(GTKWidget *Parent);
-	GTKpp_API void AddChild(GTKWidget *Child);
+	GTKpp_API void AddWidget(GTKWidget *Child);
 };
 
 class GTKLabel : public GTKWidget
@@ -253,7 +267,7 @@ public:
 
 class GTKEvents;// abstract;
 
-class GTKWindow : public GTKWidget
+class GTKWindow : public GTKContainer
 {
 private:
 	GtkWindow *Window;
@@ -265,7 +279,7 @@ protected:
 	void *QuitFunc, *QuitData;
 
 public:
-	GTKpp_API GTKWindow(GtkWindowType Type, void *CloseFunc = (void *)gtk_main_quit, void *data = NULL);
+	GTKpp_API GTKWindow(GtkWindowType Type, void *CloseFunc = NULL, void *data = NULL);
 	GTKpp_API ~GTKWindow();
 	GTKpp_API const GtkWindow *GetWindow();
 	GTKpp_API void SetSize(int Width, int Height);
@@ -276,13 +290,16 @@ public:
 	GTKpp_API void SetModal(BOOL Mode, GTKWindow *Parent = NULL);
 	GTKpp_API void SetTool();
 	GTKpp_API void SetParent(GTKWindow *Parent);
+	GTKpp_API void SetBorderless(BOOL Borderless = TRUE);
+	GTKpp_API void SetHideCloseButton(BOOL Hide = TRUE);
 	GTKpp_API RECT GetWindowRect();
 	GTKpp_API RECT GetClientRect();
 	GTKpp_API SIZE GetDesktopSize();
 	GTKpp_API void ShowWindow();
 	GTKpp_API void DoMessageLoop();
+	GTKpp_API void IterateMessageLoop();
 	GTKpp_API void SetEventsHandled(int Events);
-	GTKpp_API void Redraw();
+	GTKpp_API void Redraw(BOOL Now = FALSE);
 	GTKpp_API int MessageBox(GtkMessageType Type, GtkButtonsType Buttons, char *Message, char *Title, ...);
 	GTKpp_API char *FileSave(char *Title, std::vector<char *> FileTypes, std::vector<char *> FileTypeNames);
 	GTKpp_API char *FileOpen(char *Title, std::vector<char *> FileTypes, std::vector<char *> FileTypeNames);
@@ -290,7 +307,9 @@ public:
 	GTKpp_API void ScreenToClient(POINT *Point);
 	GTKpp_API void ScreenToWindow(POINT *Point);
 	GTKpp_API void WindowToClient(POINT *Point);
+	GTKpp_API void ClientToScreen(RECT *Rect);
 	GTKpp_API void Close();
+	GTKpp_API void Destroy();
 	GTKpp_API void SetEvents(GTKEvents *events);
 	GTKpp_API const GTKEvents *GetEvents();
 	GTKpp_API void QuitMessageLoop();
@@ -313,13 +332,16 @@ public:
 		BOOL (__cdecl *MoveSize)(GtkWidget *widget, GdkEventConfigure *event, void *data);
 		BOOL (__cdecl *MouseMove)(GtkWidget *widget, GdkEventMotion *event, void *data);
 		BOOL (__cdecl *KeyDown)(GtkWidget *widget, GdkEventKey *event, void *data);
+		BOOL (__cdecl *Close)(GtkWidget *widget, GdkEvent *event, void *data);
 	} Events;
 
+	GTKpp_API GTKEvents();
 	GTKpp_API virtual void Init(GTKWindow *Wnd) = 0;
 	GTKpp_API virtual void Deinit() = 0;
 	Events EventHandlers;
 };
 
+#ifndef __NO_OPEN_GL__
 class GTKGLWindow : public GTKWindow, public GTKGLWidget
 {
 private:
@@ -327,9 +349,47 @@ private:
 	UINT TimeoutID;
 
 public:
-	GTKpp_API GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc = (void *)gtk_main_quit, int PixFormat = GDK_GL_RGBA_TYPE);
+	GTKpp_API GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc = NULL,
+		int PixFormat = GDK_GL_RGBA_TYPE, bool AutoRedraw = false);
 	GTKpp_API void AddTimeout();
 	GTKpp_API void RemoveTimeout();
+};
+#endif
+
+class GTKScrolledWindow : public GTKContainer
+{
+protected:
+	GtkScrolledWindow *ScrolledWindow;
+	void SetParent(GTKWidget *Parent);
+
+public:
+	GTKpp_API GTKScrolledWindow(GTKWidget *Parent, int Width, int Height);
+	GTKpp_API void AddChild(GTKWidget *Child);
+};
+
+class GTKTextBuffer
+{
+protected:
+	GtkTextBuffer *TextBuffer;
+
+public:
+	GTKTextBuffer();
+	void AddTextToEnd(char *Text);
+	void ClearText();
+	const GtkTextBuffer *GetBuffer();
+};
+
+class GTKTextView : public GTKContainer
+{
+protected:
+	GtkTextView *TextView;
+	GTKTextBuffer *TextBuffer;
+	void SetParent(GTKWidget *Parent);
+
+public:
+	GTKpp_API GTKTextView(GTKWidget *Parent, int Width, int Height);
+	GTKpp_API void ClearText();
+	GTKpp_API void AddText(char *Text);
 };
 
 #endif /*__GTKpp_H__*/

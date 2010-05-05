@@ -5,7 +5,7 @@ GTKFrame::GTKFrame(GTKWidget *Parent, int Width, int Height, int X, int Y, char 
 {
 	Frame = gtk_frame_new(Label);
 	gtk_widget_set_size_request(Frame, Width, Height);
-	SetParent(Frame);
+	SetParent(this);
 	gtk_fixed_put(GTK_FIXED(Parent->GetWidget()), Frame, X, Y);
 }
 

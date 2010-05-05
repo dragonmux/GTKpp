@@ -15,7 +15,8 @@ void GTKHBox::SetParent(GTKWidget *Parent)
 	gtk_container_add(GTK_CONTAINER(Parent->GetWidget()), Widget);
 }
 
-void GTKHBox::AddChild(GTKWidget *Child)
+void GTKHBox::AddWidget(GTKWidget *Child)
 {
 	gtk_box_pack_start_defaults(Box, (GtkWidget *)Child->GetWidget());
+	Children.push_back(Child);
 }

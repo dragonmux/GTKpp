@@ -245,7 +245,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\GTKContainer.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\GTKDialog.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKEvents.cpp"
 					>
 				</File>
 				<File
@@ -288,6 +296,14 @@
 					RelativePath=".\GTKLabel.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\GTKTextBuffer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKTextView.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="GTKDialogs"
@@ -314,6 +330,10 @@
 				</File>
 				<File
 					RelativePath=".\GTKHBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKScrolledWindow.cpp"
 					>
 				</File>
 			</Filter>
