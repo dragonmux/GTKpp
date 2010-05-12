@@ -415,6 +415,8 @@ public:
 	GTKpp_API GTKTextView(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting = TRUE);
 	GTKpp_API void ClearText();
 	GTKpp_API void AddText(const char *Text);
+	GTKpp_API void SetEditable(BOOL Editable = TRUE);
+	GTKpp_API void SetWordWrapped(BOOL Wrapped = FALSE);
 };
 
 class GTKList : public GTKContainer

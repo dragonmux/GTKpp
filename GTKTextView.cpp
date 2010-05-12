@@ -27,3 +27,13 @@ void GTKTextView::AddText(const char *Text)
 {
 	TextBuffer->AddTextToEnd((char *)Text);
 }
+
+void GTKTextView::SetEditable(BOOL Editable)
+{
+	gtk_text_view_set_editable(TextView, (Editable == FALSE ? FALSE : TRUE));
+}
+
+void GTKTextView::SetWordWrapped(BOOL Wrapped)
+{
+	gtk_text_view_set_wrap_mode(TextView, (Wrapped == FALSE ? GTK_WRAP_NONE : GTK_WRAP_WORD));
+}
