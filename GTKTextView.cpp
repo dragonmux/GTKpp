@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "GTK++.h"
 
-GTKTextView::GTKTextView(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting)
+GTKTextView::GTKTextView(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting) : AutoScroll(false)
 {
 	Widget = gtk_text_view_new();
 	Container = GTK_CONTAINER(Widget);
@@ -26,6 +26,17 @@ void GTKTextView::ClearText()
 void GTKTextView::AddText(const char *Text)
 {
 	TextBuffer->AddTextToEnd((char *)Text);
+	if (AutoScroll == true)
+	{
+		GtkTextIter Iter = {0};
+		gtk_text_buffer_get_end_iter((GtkTextBuffer *)TextBuffer->GetBuffer(), &Iter);
+		gtk_text_view_scroll_to_iter(TextView, &Iter, 0.0, FALSE, 0, 0);
+	}
+}
+
+void GTKTextView::SetAutoScrolling(BOOL Scrolling)
+{
+	AutoScroll = (Scrolling == FALSE ? false : true);
 }
 
 void GTKTextView::SetEditable(BOOL Editable)

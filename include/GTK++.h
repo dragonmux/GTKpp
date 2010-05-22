@@ -410,6 +410,7 @@ protected:
 	GtkTextView *TextView;
 	GTKTextBuffer *TextBuffer;
 	void SetParent(GTKWidget *Parent);
+	bool AutoScroll;
 
 public:
 	GTKpp_API GTKTextView(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting = TRUE);
@@ -417,6 +418,7 @@ public:
 	GTKpp_API void AddText(const char *Text);
 	GTKpp_API void SetEditable(BOOL Editable = TRUE);
 	GTKpp_API void SetWordWrapped(BOOL Wrapped = FALSE);
+	GTKpp_API void SetAutoScrolling(BOOL Scrolling);
 };
 
 class GTKList : public GTKContainer
@@ -506,5 +508,29 @@ public:
 	GTKpp_API void SetWebsiteText(const char *Website);
 	GTKpp_API void SetAuthors(const char **Authors);
 };
+
+/*class GTKAdjustment
+{
+protected:
+	GtkAdjustment *Adjustment;
+
+public:
+	GTKpp_API GTKAdjustment(int Dim, int Unit);
+	GTKpp_API void Adjust(int newDim);
+	GTKpp_API void SrollBy(int Amount);
+	GTKpp_API const GtkAdjustment *GetAdjustment();
+};
+
+class GTKViewport : public GTKContainer
+{
+protected:
+	GtkViewport *Viewport;
+	GTKAdjustment *HorAdj, *VerAdj;
+	void SetParent(GTKWidget *Parent);
+
+public:
+	GTKpp_API GTKViewport(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting = TRUE);
+	GTKpp_API ~GTKViewport();
+};*/
 
 #endif /*__GTKpp_H__*/
