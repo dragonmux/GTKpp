@@ -11,7 +11,7 @@ extern BOOL Redraw_Internal(void *W);
 \***************************************************************/
 
 GTKGLWindow::GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc, int PixFormat, bool AutoRedraw) :
-GTKWindow(Type, CloseFunc), GTKGLWidget(Config, GTKWindow::Widget, PixFormat)
+	GTKWindow(Type, CloseFunc), GTKGLWidget(Config, GTKWindow::Widget, PixFormat)
 {
 	TimeoutID = 0;
 	if (AutoRedraw == true)

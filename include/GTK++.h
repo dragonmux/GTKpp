@@ -2,6 +2,7 @@
 #define __GTKpp_H__
 
 #include <vector>
+#include <list>
 #include <map>
 #include <gtk/gtk.h>
 #include <gtk/gtkgl.h>
@@ -92,6 +93,7 @@ private:
 public:
 	GTKpp_API GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat = GDK_GL_RGBA_TYPE);
 	GTKpp_API static GdkGLConfig *MakeStandardConfig();
+	GTKpp_API const GTKWidget *GetGTKWidget();
 	GTKpp_API BOOL glBegin();
 	GTKpp_API void glSwapBuffers();
 	GTKpp_API void glEnd();
@@ -138,12 +140,13 @@ class GTKContainer : public GTKWidget
 {
 protected:
 	GtkContainer *Container;
-	std::vector<GTKWidget *> Children;
+	std::list<GTKWidget *> Children;
 
 public:
 	GTKpp_API GTKContainer();
 	GTKpp_API ~GTKContainer();
 	GTKpp_API void AddChild(GTKWidget *Child);
+	GTKpp_API void RemoveChild(GTKWidget *Child);
 };
 
 class GTKBox : public GTKContainer
@@ -399,7 +402,7 @@ protected:
 
 public:
 	GTKTextBuffer();
-	void AddTextToEnd(char *Text);
+	GtkTextMark *AddTextToEnd(char *Text);
 	void ClearText();
 	const GtkTextBuffer *GetBuffer();
 };
@@ -435,6 +438,7 @@ public:
 	GTKpp_API ~GTKList();
 	GTKpp_API void AddItem(char *Value);
 	GTKpp_API void DeleteItem(char *Value);
+	GTKpp_API void Clear();
 };
 
 class GTKCheckBox : public GTKButton
@@ -448,11 +452,14 @@ public:
 	GTKpp_API void SetChecked(BOOL Checked = TRUE);
 };
 
+typedef void (__cdecl * freeFn)(void *);
+
 class GTKComboBoxEntry
 {
 public:
 	const char *Text;
 	int ComboPos;
+	freeFn FreeFn;
 };
 
 class GTKComboBox : public GTKContainer
@@ -465,7 +472,8 @@ protected:
 
 public:
 	GTKpp_API GTKComboBox(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting = TRUE);
-	GTKpp_API void AddItem(const char *Text, int EnumValue);
+	GTKpp_API ~GTKComboBox();
+	GTKpp_API void AddItem(const char *Text, int EnumValue, freeFn FreeFn = free);
 	GTKpp_API void DeleteItem(const char *Text);
 	GTKpp_API void SetSelected(const char *Text);
 	GTKpp_API void SetSelected(unsigned int EnumValue);
@@ -532,5 +540,62 @@ public:
 	GTKpp_API GTKViewport(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting = TRUE);
 	GTKpp_API ~GTKViewport();
 };*/
+
+class GTKDrawingArea : public GTKWidget
+{
+protected:
+	GtkDrawingArea *DrawingArea;
+
+public:
+	GTKpp_API GTKDrawingArea(int Width, int Height);
+};
+
+#ifndef __NO_OPEN_GL__
+class GTKGLDrawingArea : public GTKDrawingArea, public GTKGLWidget
+{
+public:
+	GTKpp_API GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config, int PixFormat = GDK_GL_RGBA_TYPE);
+};
+#endif
+
+class GTKMenuShell : public GTKContainer
+{
+protected:
+	GtkMenuShell *MenuShell;
+
+public:
+	GTKpp_API void AddChild(GTKWidget *Child);
+	GTKpp_API void AddChild(GTKWidget *Child, BOOL Append);
+};
+
+class GTKMenuBar : public GTKMenuShell
+{
+protected:
+	GtkMenuBar *MenuBar;
+
+public:
+	GTKpp_API GTKMenuBar(GTKWidget *Parent, BOOL NeedsParenting = TRUE);
+};
+
+class GTKMenu : public GTKMenuShell
+{
+protected:
+	GtkMenu *Menu;
+
+public:
+	GTKpp_API GTKMenu(GTKWidget *Parent, BOOL NeedsParenting = TRUE);
+};
+
+class GTKMenuItem : public GTKContainer
+{
+protected:
+	GtkMenuItem *MenuItem;
+
+public:
+	GTKpp_API GTKMenuItem(const char *Value = "");
+	GTKpp_API void SetMenuText(const char *Value);
+	GTKpp_API void SetChildMenu(GTKMenu *Menu);
+	GTKpp_API void SetOnClicked(void *OnClickFunc, void *data = NULL);
+};
 
 #endif /*__GTKpp_H__*/

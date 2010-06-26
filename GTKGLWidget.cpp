@@ -16,6 +16,7 @@ GTKGLWidget::GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat)
 {
 	Widget = W;
 	gtk_widget_set_gl_capability(Widget, Config, NULL, TRUE, PixFormat);
+	gtk_widget_set_app_paintable(Widget, TRUE);
 	Conf = Config;
 	ctx = NULL;
 	drw = NULL;
@@ -41,6 +42,11 @@ GdkGLConfig *GTKGLWidget::MakeStandardConfig()
 	}
 	return ret;
 #endif
+}
+
+const GTKWidget *GTKGLWidget::GetGTKWidget()
+{
+	return this;
 }
 
 BOOL GTKGLWidget::glBegin()

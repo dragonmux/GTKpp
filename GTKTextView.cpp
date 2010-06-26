@@ -25,13 +25,11 @@ void GTKTextView::ClearText()
 
 void GTKTextView::AddText(const char *Text)
 {
-	TextBuffer->AddTextToEnd((char *)Text);
+	GtkTextMark *mark = TextBuffer->AddTextToEnd((char *)Text);
 	if (AutoScroll == true)
-	{
-		GtkTextIter Iter = {0};
-		gtk_text_buffer_get_end_iter((GtkTextBuffer *)TextBuffer->GetBuffer(), &Iter);
-		gtk_text_view_scroll_to_iter(TextView, &Iter, 0.0, FALSE, 0, 0);
-	}
+		gtk_text_view_scroll_mark_onscreen(TextView, mark);
+	gtk_text_buffer_delete_mark((GtkTextBuffer *)TextBuffer->GetBuffer(), mark);
+	g_object_unref(G_OBJECT(mark));
 }
 
 void GTKTextView::SetAutoScrolling(BOOL Scrolling)

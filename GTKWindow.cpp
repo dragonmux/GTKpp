@@ -121,10 +121,15 @@ RECT GTKWindow::GetClientRect()
 	ret.right = right + left;
 	ret.bottom = bottom + top;
 #endif
+	//gdk_window_get_position // This could fix my possition problem as this is the actual location of the window which can be drawn on..
 	int x, y, a, b;
 	static RECT ret;
+	gtk_window_get_position(Window, (int *)&ret.left, (int *)&ret.top);
+	gdk_window_get_position(Widget->window, &a, &b);
+#if 0
 	gdk_window_get_root_origin(Widget->window, (int *)&ret.left, (int *)&ret.top);
 	gtk_window_get_position(Window, &a, &b);
+#endif
 	gtk_window_get_size(Window, &x, &y);
 	ret.left -= a;
 	ret.top -= b;

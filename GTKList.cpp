@@ -61,3 +61,16 @@ void GTKList::DeleteItem(char *Value)
 		OK = gtk_tree_model_iter_next(GTK_TREE_MODEL(ListStore), &Iter);
 	}
 }
+
+void GTKList::Clear()
+{
+	BOOL OK;
+	GtkTreeIter Iter = {0};
+	do
+	{
+		OK = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(ListStore), &Iter);
+		if (OK != FALSE)
+			gtk_list_store_remove(ListStore, &Iter);
+	}
+	while (OK != FALSE);
+}

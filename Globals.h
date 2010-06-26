@@ -1,6 +1,8 @@
 #include <stdio.h>
 
 #ifdef _WINDOWS
+// Give us a break, M$!
+#define WIN32_LEAN_AND_MEAN 1
 #include <stdlib.h>
 #include <windows.h>
 #endif

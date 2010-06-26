@@ -16,12 +16,22 @@ GTKComboBox::GTKComboBox(GTKWidget *Parent, int Width, int Height, BOOL NeedsPar
 	gtk_widget_set_size_request(Widget, Width, Height);
 }
 
+GTKComboBox::~GTKComboBox()
+{
+	while (Items.size() != 0)
+	{
+		std::map<int, GTKComboBoxEntry>::iterator i = Items.end()--;
+		(*i).second.FreeFn((void *)((*i).second.Text));
+		Items.erase(i);
+	}
+}
+
 void GTKComboBox::SetParent(GTKWidget *Parent)
 {
 	((GTKContainer *)Parent)->AddChild(this);
 }
 
-void GTKComboBox::AddItem(const char *Text, int EnumValue)
+void GTKComboBox::AddItem(const char *Text, int EnumValue, freeFn FreeFn)
 {
 	if (Items.find(EnumValue) != Items.end())
 	{
@@ -32,6 +42,7 @@ void GTKComboBox::AddItem(const char *Text, int EnumValue)
 	{
 		Items[EnumValue].Text = Text;
 		Items[EnumValue].ComboPos = ++lastPos;
+		Items[EnumValue].FreeFn = FreeFn;
 	}
 	gtk_combo_box_append_text(ComboBox, Text);
 }

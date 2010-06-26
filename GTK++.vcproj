@@ -229,6 +229,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\GTKGLDrawingArea.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\GTKGLWidget.cpp"
 					>
 				</File>
@@ -306,6 +310,10 @@
 				</File>
 				<File
 					RelativePath=".\GTKComboBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKDrawingArea.cpp"
 					>
 				</File>
 				<File
@@ -406,6 +414,26 @@
 				>
 				<File
 					RelativePath=".\GDKPixbuf.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="GTKMenu"
+				>
+				<File
+					RelativePath=".\GTKMenu.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKMenuBar.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKMenuItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKMenuShell.cpp"
 					>
 				</File>
 			</Filter>
