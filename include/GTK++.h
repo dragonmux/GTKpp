@@ -30,6 +30,8 @@
 	#define GTKpp_API
 #endif
 
+#define GTKpp_TIMEOUT_INTERVAL 15
+
 class GTK
 {
 public:
@@ -89,9 +91,15 @@ private:
 	GdkGLContext *ctx;
 	GdkGLDrawable *drw;
 	std::vector<GTKFont *> Fonts;
+	UINT TimeoutID, Timeout;
+	static BOOL CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, void *data);
+	void init(GdkGLConfig *Config, GtkWidget *W, int PixFormat);
 
 public:
-	GTKpp_API GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat = GDK_GL_RGBA_TYPE);
+	GTKpp_API GTKGLWidget(GdkGLConfig *Config, GtkWidget *W);
+	GTKpp_API GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat);
+	GTKpp_API GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat, bool AutoRedraw,
+		int Timeout = GTKpp_TIMEOUT_INTERVAL);
 	GTKpp_API static GdkGLConfig *MakeStandardConfig();
 	GTKpp_API const GTKWidget *GetGTKWidget();
 	GTKpp_API BOOL glBegin();
@@ -102,6 +110,8 @@ public:
 	GTKpp_API void DestroyGLFont(GTKFont **Font);
 	GTKpp_API ULONG glSetHandler(char *Event, void *Handler, void *Data = NULL);
 	GTKpp_API void glRemoveHandler(ULONG ID);
+	GTKpp_API void AddTimeout(int Timeout);
+	GTKpp_API void RemoveTimeout();
 };
 #endif
 
@@ -166,6 +176,7 @@ public:
 	GTKpp_API GTKFixed(GTKWidget *Parent, int Width, int Height);
 	GTKpp_API void SetLocation(GTKWidget *ChildWidget, int X, int Y);
 	GTKpp_API void SetMove(GTKWidget *ChildWidget, int X, int Y);
+	GTKpp_API void SetSize(int Width, int Height);
 };
 
 class GTKHBox : public GTKBox
@@ -320,6 +331,7 @@ public:
 	GTKpp_API void SetParent(GTKWindow *Parent);
 	GTKpp_API void SetBorderless(BOOL Borderless = TRUE);
 	GTKpp_API void SetHideCloseButton(BOOL Hide = TRUE);
+	GTKpp_API void SetMaximised(BOOL Maximised = TRUE);
 	GTKpp_API RECT GetWindowRect();
 	GTKpp_API RECT GetClientRect();
 	GTKpp_API SIZE GetDesktopSize();
@@ -372,15 +384,11 @@ public:
 #ifndef __NO_OPEN_GL__
 class GTKGLWindow : public GTKWindow, public GTKGLWidget
 {
-private:
-	static BOOL CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, void *data);
-	UINT TimeoutID;
-
 public:
 	GTKpp_API GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc = NULL,
-		int PixFormat = GDK_GL_RGBA_TYPE, bool AutoRedraw = false);
-	GTKpp_API void AddTimeout();
-	GTKpp_API void RemoveTimeout();
+		int PixFormat = GDK_GL_RGBA_TYPE, bool AutoRedraw = false, int Timeout = GTKpp_TIMEOUT_INTERVAL);
+	//GTKpp_AVI GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc = NULL,
+	//	bool AutoRedraw = false);
 };
 #endif
 
@@ -548,13 +556,17 @@ protected:
 
 public:
 	GTKpp_API GTKDrawingArea(int Width, int Height);
+	GTKpp_API void SetSize(int Width, int Height);
 };
 
 #ifndef __NO_OPEN_GL__
 class GTKGLDrawingArea : public GTKDrawingArea, public GTKGLWidget
 {
 public:
-	GTKpp_API GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config, int PixFormat = GDK_GL_RGBA_TYPE);
+	GTKpp_API GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config);
+	GTKpp_API GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config, int PixFormat);
+	GTKpp_API GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config, int PixFormat, bool AutoRedraw,
+		int Timeout = GTKpp_TIMEOUT_INTERVAL);
 };
 #endif
 

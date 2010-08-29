@@ -7,3 +7,8 @@ GTKDrawingArea::GTKDrawingArea(int Width, int Height)
 	DrawingArea = GTK_DRAWING_AREA(Widget);
 	gtk_drawing_area_size(DrawingArea, Width, Height);
 }
+
+void GTKDrawingArea::SetSize(int Width, int Height)
+{
+	gtk_drawing_area_size(DrawingArea, Width, Height);
+}

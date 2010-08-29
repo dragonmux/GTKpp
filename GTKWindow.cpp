@@ -94,6 +94,14 @@ void GTKWindow::SetModal(BOOL Mode, GTKWindow *Parent)
 	gtk_window_set_modal(Window, Mode);
 }
 
+void GTKWindow::SetMaximised(BOOL Maximised)
+{
+	if (Maximised == FALSE)
+		gtk_window_unmaximize(Window);
+	else
+		gtk_window_maximize(Window);
+}
+
 RECT GTKWindow::GetWindowRect()
 {
 //	int x, y;

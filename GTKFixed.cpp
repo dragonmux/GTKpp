@@ -36,3 +36,8 @@ void GTKFixed::SetMove(GTKWidget *ChildWidget, int X, int Y)
 {
 	gtk_fixed_move(Fixed, (GtkWidget *)ChildWidget->GetWidget(), X, Y);
 }
+
+void GTKFixed::SetSize(int Width, int Height)
+{
+	gtk_widget_set_size_request(Widget, Width, Height);
+}

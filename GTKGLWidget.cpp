@@ -8,11 +8,34 @@ extern "C" GdkGLConfig *gdk_win32_gl_config_new_from_pixel_format(int pixel_form
 #include <errno.h>
 #endif
 
+// extenal from GTKWindow API
+extern BOOL Redraw_Internal(void *W);
+
 /***************************************************************\
 |*                  GTKGLWidget implementation                 *|
 \***************************************************************/
 
 GTKGLWidget::GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat)
+{
+	init(Config, W, PixFormat);
+}
+
+GTKGLWidget::GTKGLWidget(GdkGLConfig *Config, GtkWidget *W)
+{
+	init(Config, W, GDK_GL_RGBA_TYPE);
+}
+
+GTKGLWidget::GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat, bool AutoRedraw, int Timeout)
+{
+	init(Config, W, PixFormat);
+	if (AutoRedraw == true)
+	{
+		AddTimeout(Timeout);
+		SetHandler("visibility_notify_event", (void *)CheckVisibility, this);
+	}
+}
+
+void GTKGLWidget::init(GdkGLConfig *Config, GtkWidget *W, int PixFormat)
 {
 	Widget = W;
 	gtk_widget_set_gl_capability(Widget, Config, NULL, TRUE, PixFormat);
@@ -20,6 +43,7 @@ GTKGLWidget::GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat)
 	Conf = Config;
 	ctx = NULL;
 	drw = NULL;
+	TimeoutID = 0;
 }
 
 GdkGLConfig *GTKGLWidget::MakeStandardConfig()
@@ -148,4 +172,34 @@ ULONG GTKGLWidget::glSetHandler(char *Event, void *Handler, void *Data)
 void GTKGLWidget::glRemoveHandler(ULONG ID)
 {
 	RemoveHandler(ID);
+}
+
+BOOL GTKGLWidget::CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, void *data)
+{
+	GTKGLWidget *Self = (GTKGLWidget *)data;
+	if (event->state == GDK_VISIBILITY_FULLY_OBSCURED)
+		Self->RemoveTimeout();
+	else
+		Self->AddTimeout(Self->Timeout);
+
+	return TRUE;
+}
+
+void GTKGLWidget::AddTimeout(int Timeout)
+{
+	if (TimeoutID == 0)
+	{
+		TimeoutID = g_timeout_add(Timeout, Redraw_Internal, Widget);
+		this->Timeout = Timeout;
+	}
+}
+
+void GTKGLWidget::RemoveTimeout()
+{
+	if (TimeoutID > 0)
+	{
+		g_source_remove(TimeoutID);
+		TimeoutID = 0;
+		Timeout = -1;
+	}
 }
