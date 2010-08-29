@@ -164,7 +164,7 @@ void GTKGLWidget::DestroyGLFonts()
 	this->glEnd();
 }
 
-ULONG GTKGLWidget::glSetHandler(char *Event, void *Handler, void *Data)
+ULONG GTKGLWidget::glSetHandler(const char *Event, void *Handler, void *Data)
 {
 	return SetHandler(Event, Handler, Data);
 }
