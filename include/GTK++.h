@@ -110,7 +110,7 @@ public:
 	GTKpp_API void DestroyGLFont(GTKFont **Font);
 	GTKpp_API ULONG glSetHandler(const char *Event, void *Handler, void *Data = NULL);
 	GTKpp_API void glRemoveHandler(ULONG ID);
-	GTKpp_API void AddTimeout(int Timeout);
+	GTKpp_API void AddTimeout(int Timeout = GTKpp_TIMEOUT_INTERVAL);
 	GTKpp_API void RemoveTimeout();
 };
 #endif
