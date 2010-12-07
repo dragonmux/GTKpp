@@ -7,5 +7,6 @@ GTKMenuBar::GTKMenuBar(GTKWidget *Parent, BOOL NeedsParenting)
 	Container = GTK_CONTAINER(Widget);
 	MenuShell = GTK_MENU_SHELL(Container);
 	MenuBar = GTK_MENU_BAR(MenuShell);
-	((GTKContainer *)Parent)->AddChild(this);
+	if (NeedsParenting != FALSE)
+		((GTKContainer *)Parent)->AddChild(this);
 }
