@@ -27,7 +27,12 @@
 		#define GTKpp_API __declspec(dllimport)
 	#endif
 #else
-	#define GTKpp_API
+	#if __GNUC__ >= 4
+		#define DEFAULT_VISIBILITY __attribute__ ((visibility("hidden")))
+	#else
+		#define DEFAULT_VISIBILITY
+	#endif
+	#define GTKpp_API DEFAULT_VISIBILITY
 #endif
 
 #define GTKpp_TIMEOUT_INTERVAL 15
