@@ -1,5 +1,7 @@
-CC = gcc
-CFLAGS = -c -D__GTKpp_EXPORT__ -I./include/ -I./ `pkg-config --cflags gtk+-2.0 pango gtkglext-1.0` -o $*.o
+GCC ?= gcc
+CC = $(GCC)
+EXTRA_CFLAGS = $(shell pkg-config --cflags gtk+-2.0 pango gtkglext-1.0)
+CFLAGS = -O2 -g -c -D__GTKpp_EXPORT__ -I./include/ -I./ $(EXTRA_CFLAGS) -o $*.o
 LIBS = `pkg-config --libs gtk+-2.0 pango gtkglext-1.0`
 LFLAGS = -shared $(O) $(LIBS) -Wl,-soname,$(SO_out) -o $(SO)
 AR = ar cr
@@ -17,8 +19,8 @@ default: all
 all: $(O) $(SO) $(LA) $(PC)
 
 install: all
-	@cd bin && sudo $(MAKE) install
-	@cd include && sudo $(MAKE) install
+	@cd bin && $(MAKE) install
+	@cd include && $(MAKE) install
 
 bin/libGTK++.so:
 	rm -f $(SO) $(A)

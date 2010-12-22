@@ -1,10 +1,10 @@
 LN = ln -sfT
-LIBDIR = /usr/lib/
-PKGDIR = /usr/lib/pkgconfig/
+LIBDIR ?= /usr/lib/
+PKGDIR = $(LIBDIR)/pkgconfig/
+INSTALL = install -m644
 
 SO = libGTK++.so
 A = libGTK++.a
-LA = libGTK++.la
 PC = libGTK++.pc
 IN = libGTK++.pc.in
 
@@ -12,12 +12,10 @@ clean:
 	rm -f *.so* *.a* *~
 
 install:
-	cp $(SO) $(LIBDIR)
-	cp $(LA) $(LIBDIR)
-	cp $(A) $(LIBDIR)
+	$(INSTALL) $(SO) $(LIBDIR)
+	$(INSTALL) $(A) $(LIBDIR)
 	rm -f libGTK++.pc
 	$(SHELL) ./libGTK++.pc.sh
-	cp $(PC) $(PKGDIR)
-	chown root $(PKGDIR)$(PC)
-	chgrp root $(PKGDIR)$(PC)
-	chmod +r $(LIBDIR)$(LA)
+	sed -i -e 's:@LIBDIR@:$(LIBDIR):g' libGTK++.pc
+	$(INSTALL) $(PC) $(PKGDIR)
+	ldconfig

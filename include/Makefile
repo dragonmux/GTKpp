@@ -1,14 +1,11 @@
 INCDIR = /usr/include/GTK++/
+INSTALL = install -m644
 
 clean:
 	rm -f *~
 
 install:
-	if [ ! -d $(INCDIR) ]; then \
-		mkdir $(INCDIR); \
-	fi
+	install -m755 -d $(INCDIR)
 	rm -f $(INCDIR)*.h
-	cp GTK++.h $(INCDIR)
-	chmod +r $(INCDIR)GTK++.h
-	cp GTK++_Compat.h $(INCDIR)
-	chmod +r $(INCDIR)GTK++_Compat.h
+	$(INSTALL) GTK++.h $(INCDIR)
+	$(INSTALL) GTK++_Compat.h $(INCDIR)
