@@ -28,7 +28,7 @@
 	#endif
 #else
 	#if __GNUC__ >= 4
-		#define DEFAULT_VISIBILITY __attribute__ ((visibility("hidden")))
+		#define DEFAULT_VISIBILITY __attribute__ ((visibility("default")))
 	#else
 		#define DEFAULT_VISIBILITY
 	#endif
