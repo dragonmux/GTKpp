@@ -14,7 +14,7 @@ AR = ar cr
 RANLIB = ranlib
 STRIP = strip -x
 
-O = GTK.o GTKGL.o GTKWidget.o GTKGLWidget.o GTKWindow.o GTKGLWindow.o GTKFrame.o GTKDialog.o GTKFileDialog.o GTKMessageBox.o GTKFont.o GDKPixbuf.o GTKHBox.o GTKVBox.o GTKKey.o GTKFixed.o GTKButton.o GTKEntry.o GTKImage.o GTKLabel.o GTKHUpDown.o GTKContainer.o GTKEvents.o GTKScrolledWindow.o GTKTextBuffer.o GTKTextView.o GTKList.o GTKCheckBox.o GTKComboBox.o GTKColourSelectionDialog.o GTKAboutDialog.o GTKDrawingArea.o GTKGLDrawingArea.o GTKMenu.o GTKMenuBar.o GTKMenuItem.o GTKMenuShell.o
+O = GTK.o GTKGL.o GTKWidget.o GTKGLWidget.o GTKWindow.o GTKGLWindow.o GTKFrame.o GTKDialog.o GTKFileDialog.o GTKMessageBox.o GTKFont.o GDKPixbuf.o GTKHBox.o GTKVBox.o GTKKey.o GTKFixed.o GTKButton.o GTKEntry.o GTKImage.o GTKLabel.o GTKHUpDown.o GTKContainer.o GTKEvents.o GTKScrolledWindow.o GTKTextBuffer.o GTKTextView.o GTKList.o GTKCheckBox.o GTKComboBox.o GTKColourSelectionDialog.o GTKAboutDialog.o GTKDrawingArea.o GTKGLDrawingArea.o GTKMenu.o GTKMenuBar.o GTKMenuItem.o GTKMenuShell.o GTKProgressBar.o
 SO = bin/libGTK++.so
 SO_out = libGTK++.so
 A = bin/libGTK++.a
@@ -26,8 +26,8 @@ default: all
 all: $(O) $(SO) $(LA) $(PC)
 
 install: all
-	@cd bin && $(MAKE) install
-	@cd include && $(MAKE) install
+	@cd bin && sudo $(MAKE) install
+	@cd include && sudo $(MAKE) install
 
 bin/libGTK++.so:
 	rm -f $(SO) $(A)
@@ -86,3 +86,4 @@ GTKMenu.o: GTKMenu.cpp
 GTKMenuBar.o: GTKMenuBar.cpp
 GTKMenuItem.o: GTKMenuItem.cpp
 GTKMenuShell.o: GTKMenuShell.cpp
+GTKProgressBar.o: GTKProgressBar.cpp

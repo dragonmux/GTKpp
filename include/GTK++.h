@@ -615,4 +615,20 @@ public:
 	GTKpp_API void SetOnClicked(void *OnClickFunc, void *data = NULL);
 };
 
+class GTKProgressBar: public GTKWidget
+{
+protected:
+	GtkProgressBar *ProgressBar;
+	int Max, Progress;
+
+public:
+	GTKpp_API GTKProgressBar();
+	GTKpp_API GTKProgressBar(int Max);
+	GTKpp_API void Increment();
+	GTKpp_API void Reset();
+	GTKpp_API void Pulse();
+	GTKpp_API void SetMax(int Max);
+	GTKpp_API void SetProgress(int Progress);
+};
+
 #endif /*__GTKpp_H__*/
