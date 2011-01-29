@@ -1,4 +1,4 @@
-INCDIR = /usr/include/GTK++/
+INCDIR = /usr/include/GTK++
 INSTALL = install -m644
 
 clean:
@@ -6,6 +6,6 @@ clean:
 
 install:
 	install -m755 -d $(INCDIR)
-	rm -f $(INCDIR)*.h
+	rm -f $(INCDIR)/*.h
 	$(INSTALL) GTK++.h $(INCDIR)
 	$(INSTALL) GTK++_Compat.h $(INCDIR)

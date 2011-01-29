@@ -1,6 +1,6 @@
 LN = ln -sfT
-LIBDIR ?= /usr/lib/
-PKGDIR = $(LIBDIR)/pkgconfig/
+LIBDIR ?= /usr/lib
+PKGDIR = $(LIBDIR)/pkgconfig
 INSTALL = install -m644
 
 SO = libGTK++.so
