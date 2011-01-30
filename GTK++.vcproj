@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="./include/;../Win32/include/gtk-2.0/;../Win32/include/glib-2.0/;../Win32/include/pango-1.0/;../Win32/include/cairo;../Win32/include/atk-1.0/;../Win32/include/gtkglext-1.0/;../Win32/lib/glib-2.0/include/;../Win32/lib/gtk-2.0/include/;../Win32/lib/gtkglext-1.0/include/"
+				AdditionalIncludeDirectories="./include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;__GTKpp_EXPORT__;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				StringPooling="true"
 				BasicRuntimeChecks="3"
@@ -126,7 +126,7 @@
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="./include/;../Win32/include/gtk-2.0/;../Win32/include/glib-2.0/;../Win32/include/pango-1.0/;../Win32/include/cairo;../Win32/include/atk-1.0/;../Win32/include/gtkglext-1.0/;../Win32/lib/glib-2.0/include/;../Win32/lib/gtk-2.0/include/;../Win32/lib/gtkglext-1.0/include/"
+				AdditionalIncludeDirectories="./include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;__GTKpp_EXPORT__;_CRT_SECURE_NO_DEPRECATE"
 				StringPooling="true"
 				RuntimeLibrary="2"
