@@ -8,7 +8,9 @@
 #include <gtk/gtkgl.h>
 #include <pango/pango.h>
 
-#ifndef _WINDOWS
+#ifdef _WINDOWS
+#include <windows.h>
+#else
 #include <GTK++_Compat.h>
 #endif
 

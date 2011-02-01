@@ -32,7 +32,7 @@ typedef struct _RECT
 #ifndef POINT
 typedef struct _POINT
 {
-	long  x, y;
+	long x, y;
 } POINT;
 #endif
 
