@@ -23,13 +23,20 @@ PC = bin/libGTK++.pc.in
 
 default: all
 
-all: $(O) $(SO) $(LA) $(PC)
+all: $(SO) $(LA)
 
-install: all
-	@cd bin && sudo $(MAKE) install
-	@cd include && sudo $(MAKE) install
+ifneq ($(strip $(LIBDIR)),)
+VARS = LIBDIR=$(LIBDIR)
+endif
 
-bin/libGTK++.so:
+install: all $(PC)
+	sudo make $(VARS) sudo-install
+
+sudo-install:
+	@cd bin && $(MAKE) install
+	@cd include && $(MAKE) install
+
+bin/libGTK++.so: $(O)
 	rm -f $(SO) $(A)
 	$(AR) $(A) $(O)
 	$(RANLIB) $(A)
