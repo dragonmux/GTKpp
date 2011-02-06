@@ -60,7 +60,6 @@ public:
 	PangoFont *Font;
 	UINT DisplayBase;
 	int NumEntries, FontSize;
-	GTKGLWidget *Parent;
 
 	GTKpp_API SIZE GetStringMetrics(const char *String);
 };
@@ -71,6 +70,7 @@ class GTKWidget
 protected:
 	GtkWidget *Widget;
 	void DestroyGTKWidget();
+	GTKWidget *getGTKWidget();
 
 public:
 	GTKpp_API const GtkWidget *GetWidget();
@@ -91,7 +91,7 @@ public:
 };
 
 #ifndef __NO_OPEN_GL__
-class GTKGLWidget : GTKWidget
+class GLBase
 {
 private:
 	GdkGLConfig *Conf;
@@ -100,23 +100,21 @@ private:
 	std::vector<GTKFont *> Fonts;
 	UINT TimeoutID, Timeout;
 	static BOOL CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, void *data);
-	void init(GdkGLConfig *Config, GtkWidget *W, int PixFormat);
+	void init(GdkGLConfig *Config, int PixFormat);
+	virtual GTKWidget *getGTKWidget() = 0;
 
 public:
-	GTKpp_API GTKGLWidget(GdkGLConfig *Config, GtkWidget *W);
-	GTKpp_API GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat);
-	GTKpp_API GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat, bool AutoRedraw,
-		int Timeout = GTKpp_TIMEOUT_INTERVAL);
-	GTKpp_API static GdkGLConfig *MakeStandardConfig();
-	GTKpp_API const GTKWidget *GetGTKWidget();
+	GLBase(GdkGLConfig *Config);
+	GLBase(GdkGLConfig *Config, int PixFormat);
+	GLBase(GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int Timeout = GTKpp_TIMEOUT_INTERVAL);
 	GTKpp_API BOOL glBegin();
 	GTKpp_API void glSwapBuffers();
 	GTKpp_API void glEnd();
 	GTKpp_API GTKFont *SetupGLFont(const char *FontName, int Size, int Start, int Num);
 	GTKpp_API void DestroyGLFonts();
 	GTKpp_API void DestroyGLFont(GTKFont **Font);
-	GTKpp_API ULONG glSetHandler(const char *Event, void *Handler, void *Data = NULL);
-	GTKpp_API void glRemoveHandler(ULONG ID);
+	GTKpp_API static GdkGLConfig *MakeStandardConfig();
+	GTKpp_API const GTKWidget *GetGTKWidget();
 	GTKpp_API void AddTimeout(int Timeout = GTKpp_TIMEOUT_INTERVAL);
 	GTKpp_API void RemoveTimeout();
 };
@@ -389,7 +387,7 @@ public:
 };
 
 #ifndef __NO_OPEN_GL__
-class GTKGLWindow : public GTKWindow, public GTKGLWidget
+class GTKGLWindow : public GTKWindow, public GLBase
 {
 public:
 	GTKpp_API GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc = NULL,
@@ -567,7 +565,7 @@ public:
 };
 
 #ifndef __NO_OPEN_GL__
-class GTKGLDrawingArea : public GTKDrawingArea, public GTKGLWidget
+class GTKGLDrawingArea : public GTKDrawingArea, public GLBase
 {
 public:
 	GTKpp_API GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config);

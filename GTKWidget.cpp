@@ -15,6 +15,11 @@ const GtkWidget *GTKWidget::GetWidget()
 	return Widget;
 }
 
+GTKWidget *GTKWidget::getGTKWidget()
+{
+	return this;
+}
+
 ULONG GTKWidget::SetHandler(const char *Event, void *Handler, void *Data)
 {
 	return g_signal_connect(GTK_OBJECT(Widget), Event, G_CALLBACK(Handler), Data);

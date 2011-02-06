@@ -11,42 +11,37 @@ extern "C" GdkGLConfig *gdk_win32_gl_config_new_from_pixel_format(int pixel_form
 // extenal from GTKWindow API
 extern BOOL Redraw_Internal(void *W);
 
-/***************************************************************\
-|*                  GTKGLWidget implementation                 *|
-\***************************************************************/
-
-GTKGLWidget::GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat)
+GLBase::GLBase(GdkGLConfig *Config)
 {
-	init(Config, W, PixFormat);
+	init(Config, GDK_GL_RGBA_TYPE);
 }
 
-GTKGLWidget::GTKGLWidget(GdkGLConfig *Config, GtkWidget *W)
+GLBase::GLBase(GdkGLConfig *Config, int PixFormat)
 {
-	init(Config, W, GDK_GL_RGBA_TYPE);
+	init(Config, PixFormat);
 }
 
-GTKGLWidget::GTKGLWidget(GdkGLConfig *Config, GtkWidget *W, int PixFormat, bool AutoRedraw, int Timeout)
+GLBase::GLBase(GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int Timeout)
 {
-	init(Config, W, PixFormat);
+	init(Config, PixFormat);
 	if (AutoRedraw == true)
 	{
 		AddTimeout(Timeout);
-		SetHandler("visibility_notify_event", (void *)CheckVisibility, this);
+		this->getGTKWidget()->SetHandler("visibility_notify_event", (void *)CheckVisibility, this);
 	}
 }
 
-void GTKGLWidget::init(GdkGLConfig *Config, GtkWidget *W, int PixFormat)
+void GLBase::init(GdkGLConfig *Config, int PixFormat)
 {
-	Widget = W;
-	gtk_widget_set_gl_capability(Widget, Config, NULL, TRUE, PixFormat);
-	gtk_widget_set_app_paintable(Widget, TRUE);
+	gtk_widget_set_gl_capability((GtkWidget *)this->getGTKWidget()->GetWidget(), Config, NULL, TRUE, PixFormat);
+	gtk_widget_set_app_paintable((GtkWidget *)this->getGTKWidget()->GetWidget(), TRUE);
 	Conf = Config;
 	ctx = NULL;
 	drw = NULL;
 	TimeoutID = 0;
 }
 
-GdkGLConfig *GTKGLWidget::MakeStandardConfig()
+GdkGLConfig *GLBase::MakeStandardConfig()
 {
 #ifdef _WINDOWS
 	HDC hDC = GetDC(NULL);
@@ -68,20 +63,20 @@ GdkGLConfig *GTKGLWidget::MakeStandardConfig()
 #endif
 }
 
-const GTKWidget *GTKGLWidget::GetGTKWidget()
+const GTKWidget *GLBase::GetGTKWidget()
 {
-	return this;
+	return (GTKWidget *)this;
 }
 
-BOOL GTKGLWidget::glBegin()
+BOOL GLBase::glBegin()
 {		
-	ctx = gtk_widget_get_gl_context(Widget);
-	drw = gtk_widget_get_gl_drawable(Widget);
+	ctx = gtk_widget_get_gl_context((GtkWidget *)this->getGTKWidget()->GetWidget());
+	drw = gtk_widget_get_gl_drawable((GtkWidget *)this->getGTKWidget()->GetWidget());
 
 	return gdk_gl_drawable_gl_begin(drw, ctx);
 }
 
-void GTKGLWidget::glSwapBuffers()
+void GLBase::glSwapBuffers()
 {
 	if (gdk_gl_drawable_is_double_buffered(drw) == TRUE)
 		gdk_gl_drawable_swap_buffers(drw);
@@ -89,14 +84,14 @@ void GTKGLWidget::glSwapBuffers()
 		glFlush();
 }
 
-void GTKGLWidget::glEnd()
+void GLBase::glEnd()
 {
 	gdk_gl_drawable_gl_end(drw);
 	drw = NULL;
 	ctx = NULL;
 }
 
-GTKFont *GTKGLWidget::SetupGLFont(const char *FontName, int Size, int Start, int Num)
+GTKFont *GLBase::SetupGLFont(const char *FontName, int Size, int Start, int Num)
 {
 	PangoFontDescription *PFD;
 	GTKFont *Font = new GTKFont();
@@ -127,7 +122,7 @@ GTKFont *GTKGLWidget::SetupGLFont(const char *FontName, int Size, int Start, int
 	Font->NumEntries = Num;
 	Font->FontSize = Size;
 	Fonts.push_back(Font);
-	Font->Parent = this;
+//	Font->Parent = this->getGTKWidget();
 
 	this->glEnd();
 
@@ -136,7 +131,7 @@ GTKFont *GTKGLWidget::SetupGLFont(const char *FontName, int Size, int Start, int
 	return Font;
 }
 
-void GTKGLWidget::DestroyGLFont(GTKFont **Font)
+void GLBase::DestroyGLFont(GTKFont **Font)
 {
 	for (UINT i = 0; i < Fonts.size(); i++)
 	{
@@ -151,7 +146,7 @@ void GTKGLWidget::DestroyGLFont(GTKFont **Font)
 	}
 }
 
-void GTKGLWidget::DestroyGLFonts()
+void GLBase::DestroyGLFonts()
 {
 	this->glBegin();
 	for (UINT i = 0; i < Fonts.size(); i++)
@@ -164,19 +159,9 @@ void GTKGLWidget::DestroyGLFonts()
 	this->glEnd();
 }
 
-ULONG GTKGLWidget::glSetHandler(const char *Event, void *Handler, void *Data)
+BOOL GLBase::CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, void *data)
 {
-	return SetHandler(Event, Handler, Data);
-}
-
-void GTKGLWidget::glRemoveHandler(ULONG ID)
-{
-	RemoveHandler(ID);
-}
-
-BOOL GTKGLWidget::CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, void *data)
-{
-	GTKGLWidget *Self = (GTKGLWidget *)data;
+	GLBase *Self = (GLBase *)data;
 	if (event->state == GDK_VISIBILITY_FULLY_OBSCURED)
 		Self->RemoveTimeout();
 	else
@@ -185,16 +170,16 @@ BOOL GTKGLWidget::CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, 
 	return TRUE;
 }
 
-void GTKGLWidget::AddTimeout(int Timeout)
+void GLBase::AddTimeout(int Timeout)
 {
 	if (TimeoutID == 0)
 	{
-		TimeoutID = g_timeout_add(Timeout, Redraw_Internal, Widget);
+		TimeoutID = g_timeout_add(Timeout, Redraw_Internal, (GtkWidget *)this->getGTKWidget()->GetWidget());
 		this->Timeout = Timeout;
 	}
 }
 
-void GTKGLWidget::RemoveTimeout()
+void GLBase::RemoveTimeout()
 {
 	if (TimeoutID > 0)
 	{

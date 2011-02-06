@@ -221,6 +221,10 @@
 				Name="GTK/GL"
 				>
 				<File
+					RelativePath=".\GLBase.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\GLPixelFormats.cpp"
 					>
 				</File>
@@ -230,10 +234,6 @@
 				</File>
 				<File
 					RelativePath=".\GTKGLDrawingArea.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\GTKGLWidget.cpp"
 					>
 				</File>
 				<File
