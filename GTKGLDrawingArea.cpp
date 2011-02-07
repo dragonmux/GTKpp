@@ -15,3 +15,12 @@ GTKGLDrawingArea::GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config, i
 	GTKDrawingArea(Width, Height), GLBase(Config, PixFormat, AutoRedraw, Timeout)
 {
 }
+
+GTKGLDrawingArea::~GTKGLDrawingArea()
+{
+}
+
+GTKWidget *GTKGLDrawingArea::getGTKWidget()
+{
+	return GetGTKWidget();
+}

@@ -2,9 +2,10 @@
 
 #ifdef _WINDOWS
 // Give us a break, M$!
-#define WIN32_LEAN_AND_MEAN 1
+#define WIN32_LEAN_AND_MEAN
 #include <stdlib.h>
 #include <windows.h>
+#undef WIN32_LEAN_AND_MEAN
 #endif
 
 #if defined(__MACOSX__)

@@ -33,12 +33,17 @@ GLBase::GLBase(GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int Timeout)
 
 void GLBase::init(GdkGLConfig *Config, int PixFormat)
 {
-	gtk_widget_set_gl_capability((GtkWidget *)this->getGTKWidget()->GetWidget(), Config, NULL, TRUE, PixFormat);
-	gtk_widget_set_app_paintable((GtkWidget *)this->getGTKWidget()->GetWidget(), TRUE);
+	gtk_widget_set_gl_capability(this->getGTKWidget()->GetWidget(), Config, NULL, TRUE, PixFormat);
+	gtk_widget_set_app_paintable(this->getGTKWidget()->GetWidget(), TRUE);
 	Conf = Config;
 	ctx = NULL;
 	drw = NULL;
 	TimeoutID = 0;
+}
+
+GLBase::~GLBase()
+{
+	DestroyGLFonts();
 }
 
 GdkGLConfig *GLBase::MakeStandardConfig()
@@ -63,15 +68,10 @@ GdkGLConfig *GLBase::MakeStandardConfig()
 #endif
 }
 
-const GTKWidget *GLBase::GetGTKWidget()
-{
-	return (GTKWidget *)this;
-}
-
 BOOL GLBase::glBegin()
-{		
-	ctx = gtk_widget_get_gl_context((GtkWidget *)this->getGTKWidget()->GetWidget());
-	drw = gtk_widget_get_gl_drawable((GtkWidget *)this->getGTKWidget()->GetWidget());
+{
+	ctx = gtk_widget_get_gl_context(this->getGTKWidget()->GetWidget());
+	drw = gtk_widget_get_gl_drawable(this->getGTKWidget()->GetWidget());
 
 	return gdk_gl_drawable_gl_begin(drw, ctx);
 }
@@ -122,7 +122,7 @@ GTKFont *GLBase::SetupGLFont(const char *FontName, int Size, int Start, int Num)
 	Font->NumEntries = Num;
 	Font->FontSize = Size;
 	Fonts.push_back(Font);
-//	Font->Parent = this->getGTKWidget();
+	Font->Parent = this;
 
 	this->glEnd();
 

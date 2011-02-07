@@ -24,7 +24,7 @@ void GTKTextBuffer::ClearText()
 	gtk_text_buffer_delete(TextBuffer, &start, &end);
 }
 
-const GtkTextBuffer *GTKTextBuffer::GetBuffer()
+GtkTextBuffer *GTKTextBuffer::GetBuffer() const
 {
 	return TextBuffer;
 }

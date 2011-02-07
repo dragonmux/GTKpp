@@ -9,3 +9,12 @@ GTKGLWindow::GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFun
 	GTKWindow(Type, CloseFunc), GLBase(Config, PixFormat, AutoRedraw, Timeout)
 {
 }
+
+GTKGLWindow::~GTKGLWindow()
+{
+}
+
+GTKWidget *GTKGLWindow::getGTKWidget()
+{
+	return GetGTKWidget();
+}

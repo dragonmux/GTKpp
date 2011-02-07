@@ -20,7 +20,7 @@ GDKPixbuf::~GDKPixbuf()
 	gdk_pixbuf_unref(Buff);
 }
 
-const GdkPixbuf *GDKPixbuf::GetBuffer()
+GdkPixbuf *GDKPixbuf::GetBuffer() const
 {
 	return Buff;
 }

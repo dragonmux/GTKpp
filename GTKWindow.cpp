@@ -28,7 +28,7 @@ GTKWindow::~GTKWindow()
 	Window = NULL;
 }
 
-const GtkWindow *GTKWindow::GetWindow()
+GtkWindow *GTKWindow::GetWindow() const
 {
 	return Window;
 }
@@ -304,7 +304,7 @@ void GTKWindow::SetEvents(GTKEvents *events)
 	events->Init(this);
 }
 
-const GTKEvents *GTKWindow::GetEvents()
+GTKEvents *GTKWindow::GetEvents() const
 {
 	return Events;
 }

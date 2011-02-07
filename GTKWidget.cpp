@@ -10,14 +10,14 @@ void GTKWidget::DestroyGTKWidget()
 	gtk_widget_destroy(Widget);
 }
 
-const GtkWidget *GTKWidget::GetWidget()
+GtkWidget *GTKWidget::GetWidget() const
 {
 	return Widget;
 }
 
-GTKWidget *GTKWidget::getGTKWidget()
+GTKWidget *GTKWidget::GetGTKWidget() const
 {
-	return this;
+	return (GTKWidget *)this;
 }
 
 ULONG GTKWidget::SetHandler(const char *Event, void *Handler, void *Data)
