@@ -11,7 +11,7 @@ GTKAboutDialog::GTKAboutDialog(GTKWindow *Parent)
 	Widget = gtk_about_dialog_new();
 	Dialog = GTK_DIALOG(Widget);
 	AboutBox = GTK_ABOUT_DIALOG(Dialog);
-	gtk_window_set_transient_for(GTK_WINDOW(Widget), (GtkWindow *)Parent->GetWindow());
+	gtk_window_set_transient_for(GTK_WINDOW(Widget), Parent->GetWindow());
 }
 
 GTKAboutDialog::~GTKAboutDialog()

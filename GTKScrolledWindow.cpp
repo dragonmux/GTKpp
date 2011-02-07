@@ -18,5 +18,5 @@ void GTKScrolledWindow::SetParent(GTKWidget *Parent)
 
 void GTKScrolledWindow::AddChild(GTKWidget *Child)
 {
-	gtk_container_add(Container, (GtkWidget *)Child->GetWidget());
+	gtk_container_add(Container, Child->GetWidget());
 }

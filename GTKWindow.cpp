@@ -82,7 +82,7 @@ void GTKWindow::SetTool()
 
 void GTKWindow::SetParent(GTKWindow *Parent)
 {
-	gtk_widget_set_parent(Widget, (GtkWidget *)Parent->GetWidget());
+	gtk_widget_set_parent(Widget, Parent->GetWidget());
 }
 
 void GTKWindow::SetModal(BOOL Mode, GTKWindow *Parent)
@@ -90,7 +90,7 @@ void GTKWindow::SetModal(BOOL Mode, GTKWindow *Parent)
 	if (Mode == TRUE && Parent == NULL)
 		return;
 	if (Mode == TRUE)
-		gtk_window_set_transient_for(Window, (GtkWindow *)Parent->GetWindow());
+		gtk_window_set_transient_for(Window, Parent->GetWindow());
 	gtk_window_set_modal(Window, Mode);
 }
 
@@ -324,7 +324,7 @@ void GTKWindow::QuitMessageLoop()
 
 void GTKWindow::SetFocus(GTKWidget *Widget)
 {
-	gtk_window_set_focus(Window, (GtkWidget *)Widget->GetWidget());
+	gtk_window_set_focus(Window, Widget->GetWidget());
 }
 
 UINT GTKWindow::Subclass(void *SubQuitFunc, void *SubQuitData)

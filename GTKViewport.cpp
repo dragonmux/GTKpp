@@ -7,7 +7,7 @@ GTKViewport::GTKViewport(GTKWidget *Parent, int Width, int Height, BOOL NeedsPar
 	VerAdj = new GTKAdjustment(Height, 1);
 	Children.push_back(HorAdj);
 	Children.push_back(VerAdj);
-	Widget = gtk_viewport_new((GtkAdjustment *)HorAdj->GetAdjustment(), (GtkAdjustment *)VerAdj->GetAdjustment());
+	Widget = gtk_viewport_new(HorAdj->GetAdjustment(), (GtkAdjustment *)VerAdj->GetAdjustment());
 	Container = GTK_CONTAINER(Widget);
 	Viewport = GTK_VIEWPORT(Container);
 	if (NeedsParenting != FALSE)

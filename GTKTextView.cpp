@@ -10,7 +10,7 @@ GTKTextView::GTKTextView(GTKWidget *Parent, int Width, int Height, BOOL NeedsPar
 		SetParent(Parent);
 	gtk_widget_set_size_request(Widget, Width, Height);
 	TextBuffer = new GTKTextBuffer();
-	gtk_text_view_set_buffer(TextView, (GtkTextBuffer *)TextBuffer->GetBuffer());
+	gtk_text_view_set_buffer(TextView, TextBuffer->GetBuffer());
 }
 
 void GTKTextView::SetParent(GTKWidget *Parent)
@@ -28,7 +28,7 @@ void GTKTextView::AddText(const char *Text)
 	GtkTextMark *mark = TextBuffer->AddTextToEnd((char *)Text);
 	if (AutoScroll == true)
 		gtk_text_view_scroll_mark_onscreen(TextView, mark);
-	gtk_text_buffer_delete_mark((GtkTextBuffer *)TextBuffer->GetBuffer(), mark);
+	gtk_text_buffer_delete_mark(TextBuffer->GetBuffer(), mark);
 	g_object_unref(G_OBJECT(mark));
 }
 

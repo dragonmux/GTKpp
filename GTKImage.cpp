@@ -64,7 +64,7 @@ void GTKImage::DrawImage(GDKPixbuf *Image)
 
 	if (Image != NULL)
 	{
-		GdkPixbuf *Buff = (GdkPixbuf *)Image->GetBuffer();
+		GdkPixbuf *Buff = Image->GetBuffer();
 		int nWidth = gdk_pixbuf_get_width(Buff), nHeight = gdk_pixbuf_get_height(Buff);
 		nWidth = (nWidth > Width ? Width : nWidth);
 		nHeight = (nHeight > Height ? Height : nHeight);
@@ -81,7 +81,7 @@ void GTKImage::DrawImage(GDKPixbuf *Image)
 void GTKImage::SetImage(GDKPixbuf *Image)
 {
 	ASSERT_AND_RETURN("Cannot SetImage on a gtk_drawing_area!\n", UsingImage != FALSE);
-	gtk_image_set_from_pixbuf(this->Img, (GdkPixbuf *)Image->GetBuffer());
+	gtk_image_set_from_pixbuf(this->Img, Image->GetBuffer());
 }
 
 void GTKImage::SetEventsHandled(int Events)

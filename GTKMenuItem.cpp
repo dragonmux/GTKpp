@@ -20,7 +20,7 @@ void GTKMenuItem::SetMenuText(const char *Value)
 
 void GTKMenuItem::SetChildMenu(GTKMenu *Menu)
 {
-	gtk_menu_item_set_submenu(MenuItem, (GtkWidget *)Menu->GetWidget());
+	gtk_menu_item_set_submenu(MenuItem, Menu->GetWidget());
 }
 
 void GTKMenuItem::SetOnClicked(void *OnClickFunc, void *data)

@@ -28,13 +28,13 @@ void GTKFixed::SetParent(GTKWidget *Parent)
 
 void GTKFixed::SetLocation(GTKWidget *ChildWidget, int X, int Y)
 {
-	gtk_fixed_put(Fixed, (GtkWidget *)ChildWidget->GetWidget(), X, Y);
+	gtk_fixed_put(Fixed, ChildWidget->GetWidget(), X, Y);
 	Children.push_back(ChildWidget);
 }
 
 void GTKFixed::SetMove(GTKWidget *ChildWidget, int X, int Y)
 {
-	gtk_fixed_move(Fixed, (GtkWidget *)ChildWidget->GetWidget(), X, Y);
+	gtk_fixed_move(Fixed, ChildWidget->GetWidget(), X, Y);
 }
 
 void GTKFixed::SetSize(int Width, int Height)

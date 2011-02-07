@@ -17,7 +17,7 @@ GTKContainer::~GTKContainer()
 
 void GTKContainer::AddChild(GTKWidget *Child)
 {
-	gtk_container_add(Container, (GtkWidget *)Child->GetWidget());
+	gtk_container_add(Container, Child->GetWidget());
 	Children.push_back(Child);
 }
 
@@ -32,6 +32,6 @@ void GTKContainer::RemoveChild(GTKWidget *Child)
 			break;
 	}
 	while (i++, true);
-	gtk_container_remove(Container, (GtkWidget *)Child->GetWidget());
+	gtk_container_remove(Container, Child->GetWidget());
 	Children.erase(i);
 }

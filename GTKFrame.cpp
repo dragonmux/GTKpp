@@ -7,7 +7,7 @@ GTKFrame::GTKFrame(GTKWidget *Parent, int Width, int Height, int X, int Y, const
 	tmp = Widget;
 	Frame = gtk_frame_new(Label);
 	gtk_widget_set_size_request(Frame, Width, Height);
-//	gtk_container_add(Container, (GtkWidget *)Child->GetWidget());
+//	gtk_container_add(Container, Child->GetWidget());
 	Widget = Frame;
 	((GTKFixed *)Parent)->SetLocation(this, X, Y);
 	Widget = tmp;

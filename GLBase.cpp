@@ -174,7 +174,7 @@ void GLBase::AddTimeout(int Timeout)
 {
 	if (TimeoutID == 0)
 	{
-		TimeoutID = g_timeout_add(Timeout, Redraw_Internal, (GtkWidget *)this->getGTKWidget()->GetWidget());
+		TimeoutID = g_timeout_add(Timeout, Redraw_Internal, this->getGTKWidget()->GetWidget());
 		this->Timeout = Timeout;
 	}
 }
