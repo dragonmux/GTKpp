@@ -106,10 +106,10 @@ private:
 
 protected:
 	virtual GTKWidget *getGTKWidget() = 0;
-	GLBase(GdkGLConfig *Config);
-	GLBase(GdkGLConfig *Config, int PixFormat);
-	GLBase(GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int Timeout = GTKpp_TIMEOUT_INTERVAL);
-	GTKpp_API ~GLBase();
+	void GLBaseInit(GdkGLConfig *Config);
+	void GLBaseInit(GdkGLConfig *Config, int PixFormat);
+	void GLBaseInit(GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int Timeout = GTKpp_TIMEOUT_INTERVAL);
+	void GLBaseDeinit();
 
 public:
 	GTKpp_API BOOL glBegin();

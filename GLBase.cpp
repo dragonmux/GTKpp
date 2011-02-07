@@ -11,17 +11,17 @@ extern "C" GdkGLConfig *gdk_win32_gl_config_new_from_pixel_format(int pixel_form
 // extenal from GTKWindow API
 extern BOOL Redraw_Internal(void *W);
 
-GLBase::GLBase(GdkGLConfig *Config)
+void GLBase::GLBaseInit(GdkGLConfig *Config)
 {
 	init(Config, GDK_GL_RGBA_TYPE);
 }
 
-GLBase::GLBase(GdkGLConfig *Config, int PixFormat)
+void GLBase::GLBaseInit(GdkGLConfig *Config, int PixFormat)
 {
 	init(Config, PixFormat);
 }
 
-GLBase::GLBase(GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int Timeout)
+void GLBase::GLBaseInit(GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int Timeout)
 {
 	init(Config, PixFormat);
 	if (AutoRedraw == true)
@@ -41,7 +41,7 @@ void GLBase::init(GdkGLConfig *Config, int PixFormat)
 	TimeoutID = 0;
 }
 
-GLBase::~GLBase()
+void GLBase::GLBaseDeinit()
 {
 	DestroyGLFonts();
 }
