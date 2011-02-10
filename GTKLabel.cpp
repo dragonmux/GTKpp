@@ -5,11 +5,13 @@ GTKLabel::GTKLabel(const char *Content)
 {
 	Widget = gtk_label_new(Content);
 	Label = GTK_LABEL(Widget);
+	gtk_label_set_ellipsize(Label, PANGO_ELLIPSIZE_END);
 }
 
 void GTKLabel::SetText(const char *Content)
 {
 	gtk_label_set_text(Label, Content);
+	gtk_label_set_ellipsize(Label, PANGO_ELLIPSIZE_END);
 }
 
 void GTKLabel::SetSize(int Width, int Height)
@@ -17,9 +19,9 @@ void GTKLabel::SetSize(int Width, int Height)
 	gtk_widget_set_size_request(Widget, Width, Height);
 }
 
-/*************\
-|* Temporay: *|
-\*************/
+/**************\
+|* Temporary: *|
+\**************/
 void GTKLabel::SetBackgroundColour(int R, int G, int B)
 {
 	PangoAttrList *Attrs = gtk_label_get_attributes(Label);
