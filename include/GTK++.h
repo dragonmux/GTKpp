@@ -43,14 +43,14 @@
 class GTK
 {
 public:
-	GTKpp_API static void GTKInit(int argc = __argc, char **argv = __argv);
+	GTKpp_API static void GTKInit(int _argc, char **_argv);
 };
 
 #ifndef __NO_OPEN_GL__
 class GTKGL : GTK
 {
 public:
-	GTKpp_API static void GTKInit(int argc = __argc, char **argv = __argv);
+	GTKpp_API static void GTKInit(int _argc, char **_argv);
 };
 
 class GLBase;
