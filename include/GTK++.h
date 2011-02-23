@@ -323,8 +323,6 @@ private:
 
 protected:
 	UINT BaseLoopLevel;
-	UINT QuitProcID;
-	void *QuitFunc, *QuitData;
 
 public:
 	GTKpp_API GTKWindow(GtkWindowType Type, void *CloseFunc = NULL, void *data = NULL);
@@ -364,8 +362,6 @@ public:
 	GTKpp_API void QuitMessageLoop();
 	GTKpp_API void QuitAllMessageLoops();
 	GTKpp_API void SetFocus(GTKWidget *Widget);
-	GTKpp_API UINT Subclass(void *SubQuitFunc, void *SubQuitData);
-	GTKpp_API void Unsubclass(UINT SubQuitID);
 };
 
 class GTKEvents// abstract

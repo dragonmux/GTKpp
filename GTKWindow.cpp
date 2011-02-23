@@ -12,11 +12,9 @@ GTKWindow::GTKWindow(GtkWindowType Type, void *CloseFunc, void *data)
 	Window = GTK_WINDOW(Container);
 	gtk_window_set_gravity(Window, GDK_GRAVITY_NORTH_WEST);
 	if (CloseFunc != NULL)
-		QuitProcID = SetHandler("delete_event", CloseFunc, data);
+		SetHandler("delete_event", CloseFunc, data);
 	else
-		QuitProcID = SetHandler("delete_event", (void *)gtk_main_quit, data);
-	QuitFunc = CloseFunc;
-	QuitData = data;
+		SetHandler("delete_event", (void *)gtk_main_quit, data);
 	Events = NULL;
 }
 
@@ -325,18 +323,4 @@ void GTKWindow::QuitMessageLoop()
 void GTKWindow::SetFocus(GTKWidget *Widget)
 {
 	gtk_window_set_focus(Window, Widget->GetWidget());
-}
-
-UINT GTKWindow::Subclass(void *SubQuitFunc, void *SubQuitData)
-{
-	UINT ret;
-	RemoveHandler(QuitProcID);
-	ret = SetHandler("delete_event", SubQuitFunc, SubQuitData);
-	QuitProcID = SetHandler("delete_event", QuitFunc, QuitData);
-	return ret;
-}
-
-void GTKWindow::Unsubclass(UINT SubQuitID)
-{
-	RemoveHandler(SubQuitID);
 }
