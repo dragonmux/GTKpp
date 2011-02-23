@@ -43,13 +43,6 @@ typedef struct _SIZE
 } SIZE;
 #endif
 
-#ifndef __argv
-	extern char **__argv;
-#endif
-#ifndef __argc
-	extern int __argc;
-#endif
-
 #ifndef __cdecl
 #define __cdecl
 #endif
