@@ -337,6 +337,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\GTKProgressBar.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\GTKTextBuffer.cpp"
 					>
 				</File>
