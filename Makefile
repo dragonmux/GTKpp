@@ -18,12 +18,11 @@ O = GTK.o GTKGL.o GTKWidget.o GLBase.o GTKWindow.o GTKGLWindow.o GTKFrame.o GTKD
 SO = bin/libGTK++.so
 SO_out = libGTK++.so
 A = bin/libGTK++.a
-LA = bin/libGTK++.la
 PC = bin/libGTK++.pc.in
 
 default: all
 
-all: $(SO) $(LA)
+all: $(SO)
 
 ifneq ($(strip $(LIBDIR)),)
 VARS = LIBDIR=$(LIBDIR)
@@ -37,7 +36,6 @@ sudo-install:
 	@cd include && $(MAKE) install
 
 bin/libGTK++.so: $(O)
-	rm -f $(SO) $(A)
 	$(AR) $(A) $(O)
 	$(RANLIB) $(A)
 	$(CC) $(LFLAGS)
