@@ -102,7 +102,6 @@ void GTKWindow::SetMaximised(BOOL Maximised)
 
 RECT GTKWindow::GetWindowRect()
 {
-//	int x, y;
 	static RECT ret;
 	static GdkRectangle rc;
 	gdk_window_get_frame_extents(Widget->window, &rc);
@@ -115,30 +114,14 @@ RECT GTKWindow::GetWindowRect()
 
 RECT GTKWindow::GetClientRect()
 {
-#if 0
-	int left, right, top, bottom;
-	static RECT ret;
-	left = Widget->allocation.x;
-	top = Widget->allocation.y;
-	bottom = Widget->allocation.height;
-	right = Widget->allocation.width;
-	ret.left = left;
-	ret.top = top;
-	ret.right = right + left;
-	ret.bottom = bottom + top;
-#endif
 	//gdk_window_get_position // This could fix my possition problem as this is the actual location of the window which can be drawn on..
 	int x, y, a, b;
 	static RECT ret;
 	gdk_window_get_position(Widget->window, (int *)&ret.left, (int *)&ret.top);
 	gtk_window_get_position(Window, &a, &b);
-#if 0
-	gdk_window_get_root_origin(Widget->window, (int *)&ret.left, (int *)&ret.top);
-	gtk_window_get_position(Window, &a, &b);
-#endif
 	gtk_window_get_size(Window, &x, &y);
-	ret.left -= a;
-	ret.top -= b;
+	ret.left -= a + 1;
+	ret.top++;
 	ret.right = ret.left + x;
 	ret.bottom = ret.top + y;
 	return ret;
