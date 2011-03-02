@@ -120,8 +120,6 @@ RECT GTKWindow::GetClientRect()
 	gdk_window_get_position(Widget->window, (int *)&ret.left, (int *)&ret.top);
 	gtk_window_get_position(Window, &a, &b);
 	gtk_window_get_size(Window, &x, &y);
-	ret.left -= a + 1;
-	ret.top++;
 	ret.right = ret.left + x;
 	ret.bottom = ret.top + y;
 	return ret;
