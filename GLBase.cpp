@@ -8,9 +8,6 @@ extern "C" GdkGLConfig *gdk_win32_gl_config_new_from_pixel_format(int pixel_form
 #include <errno.h>
 #endif
 
-// extenal from GTKWindow API
-extern BOOL Redraw_Internal(void *W);
-
 void GLBase::GLBaseInit(GdkGLConfig *Config)
 {
 	init(Config, GDK_GL_RGBA_TYPE);
@@ -19,6 +16,14 @@ void GLBase::GLBaseInit(GdkGLConfig *Config)
 void GLBase::GLBaseInit(GdkGLConfig *Config, int PixFormat)
 {
 	init(Config, PixFormat);
+}
+
+BOOL Redraw_Internal(void *W)
+{
+	GtkWidget *Widget = GTK_WIDGET(W);
+	gdk_window_invalidate_rect(Widget->window, &Widget->allocation, TRUE);
+	gdk_window_process_updates(Widget->window, TRUE);
+	return TRUE;
 }
 
 void GLBase::GLBaseInit(GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int Timeout)

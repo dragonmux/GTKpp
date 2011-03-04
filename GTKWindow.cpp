@@ -155,23 +155,11 @@ void GTKWindow::SetEventsHandled(int Events)
 	gtk_widget_add_events(Widget, Events);
 }
 
-BOOL Redraw_Internal(void *W)
-{
-	GtkWidget *Widget = GTK_WIDGET(W);
-	gdk_window_invalidate_rect(Widget->window, &Widget->allocation, TRUE);
-	gdk_window_process_updates(Widget->window, TRUE);
-	return TRUE;
-}
-
 void GTKWindow::Redraw(BOOL Now)
 {
-	if (Now == FALSE)
-		Redraw_Internal(Widget);
-	else
-	{
-		gdk_window_invalidate_rect(Widget->window, NULL, TRUE);
-		gdk_window_process_all_updates();
-	}
+	gdk_window_invalidate_rect(Widget->window, NULL, TRUE);
+	if (Now != FALSE)
+		gdk_window_process_updates(Widget->window, TRUE);
 }
 
 int GTKWindow::MessageBox(GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...)
