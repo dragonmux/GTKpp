@@ -276,10 +276,10 @@ void GTKWindow::Close(GdkEvent *event)
 		gdk_event_put(event);
 	else
 	{
-		GdkEvent *_event = gdk_event_new(GDK_DELETE);
-		GdkEventAny *delete_event = (GdkEventAny *)_event;
-		delete_event->window = Widget->window;
-		gdk_event_put(_event);
+		GdkEvent *delete_event = gdk_event_new(GDK_DELETE);
+		delete_event->any.window = Widget->window;
+		gdk_event_put(delete_event);
+		gdk_event_free(delete_event);
 	}
 }
 
