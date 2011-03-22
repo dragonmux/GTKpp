@@ -320,6 +320,9 @@ class GTKWindow : public GTKContainer
 private:
 	GtkWindow *Window;
 	GTKEvents *Events;
+	void *QuitFunc;
+	void *QuitData;
+	UINT QuitHandlerID;
 
 protected:
 	UINT BaseLoopLevel;
@@ -355,13 +358,16 @@ public:
 	GTKpp_API void ScreenToWindow(POINT *Point);
 	GTKpp_API void WindowToClient(POINT *Point);
 	GTKpp_API void ClientToScreen(RECT *Rect);
-	GTKpp_API void Close();
+	GTKpp_API void Close(GdkEvent *Event = NULL);
 	GTKpp_API void Destroy();
 	GTKpp_API void SetEvents(GTKEvents *events);
 	GTKpp_API GTKEvents *GetEvents() const;
 	GTKpp_API void QuitMessageLoop();
 	GTKpp_API void QuitAllMessageLoops();
 	GTKpp_API void SetFocus(GTKWidget *Widget);
+	GTKpp_API void RegisterQuitFunction();
+	GTKpp_API void UnregisterQuitFunction();
+	GTKpp_API UINT GetQuitHandlerID();
 };
 
 class GTKEvents// abstract

@@ -11,10 +11,9 @@ GTKWindow::GTKWindow(GtkWindowType Type, void *CloseFunc, void *data)
 	Container = GTK_CONTAINER(Widget);
 	Window = GTK_WINDOW(Container);
 	gtk_window_set_gravity(Window, GDK_GRAVITY_NORTH_WEST);
-	if (CloseFunc != NULL)
-		SetHandler("delete_event", CloseFunc, data);
-	else
-		SetHandler("delete_event", (void *)gtk_main_quit, data);
+	QuitFunc = (CloseFunc == NULL ? (void *)gtk_main_quit : CloseFunc);
+	QuitData = data;
+	RegisterQuitFunction();
 	Events = NULL;
 }
 
@@ -24,6 +23,23 @@ GTKWindow::~GTKWindow()
 	if (Events != NULL)
 		delete Events;
 	Window = NULL;
+}
+
+void GTKWindow::RegisterQuitFunction()
+{
+	QuitHandlerID = SetHandler("delete-event", QuitFunc, QuitData);
+}
+
+void GTKWindow::UnregisterQuitFunction()
+{
+	if (QuitHandlerID != 0)
+		RemoveHandler(QuitHandlerID);
+	QuitHandlerID = 0;
+}
+
+UINT GTKWindow::GetQuitHandlerID()
+{
+	return QuitHandlerID;
 }
 
 GtkWindow *GTKWindow::GetWindow() const
@@ -254,15 +270,22 @@ void GTKWindow::WindowToClient(POINT *Point)
 	Point->y -= cntRect.top;
 }
 
-void GTKWindow::Close()
+void GTKWindow::Close(GdkEvent *event)
 {
-	gtk_signal_emit_by_name(GTK_OBJECT(Widget), "delete_event");
+	if (event != NULL)
+		gdk_event_put(event);
+	else
+	{
+		GdkEvent *_event = gdk_event_new(GDK_DELETE);
+		GdkEventAny *delete_event = (GdkEventAny *)_event;
+		delete_event->window = Widget->window;
+		gdk_event_put(_event);
+	}
 }
 
 void GTKWindow::Destroy()
 {
 	gtk_widget_destroy(Widget);
-//	gtk_signal_emit_by_name(GTK_OBJECT(Widget), "destroy_event");
 }
 
 void GTKWindow::SetEvents(GTKEvents *events)
@@ -279,9 +302,7 @@ GTKEvents *GTKWindow::GetEvents() const
 void GTKWindow::QuitAllMessageLoops()
 {
 	for (UINT i = gtk_main_level(); i > BaseLoopLevel; i--)
-	{
 		QuitMessageLoop();
-	}
 }
 
 void GTKWindow::QuitMessageLoop()
