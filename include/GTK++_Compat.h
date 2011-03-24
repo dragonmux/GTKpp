@@ -25,21 +25,21 @@
 #ifndef RECT
 typedef struct _RECT
 {
-	long left, top, right, bottom;
+	int left, top, right, bottom;
 } RECT;
 #endif
 
 #ifndef POINT
 typedef struct _POINT
 {
-	long x, y;
+	int x, y;
 } POINT;
 #endif
 
 #ifndef SIZE
 typedef struct _SIZE
 {
-	long cx, cy;
+	int cx, cy;
 } SIZE;
 #endif
 
