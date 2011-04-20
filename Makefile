@@ -15,6 +15,7 @@ RANLIB = ranlib
 STRIP = strip -x
 
 O = GTK.o GTKGL.o GTKWidget.o GLBase.o GTKWindow.o GTKGLWindow.o GTKFrame.o GTKDialog.o GTKFileDialog.o GTKMessageBox.o GTKFont.o GDKPixbuf.o GTKHBox.o GTKVBox.o GTKKey.o GTKFixed.o GTKButton.o GTKEntry.o GTKImage.o GTKLabel.o GTKHUpDown.o GTKContainer.o GTKEvents.o GTKScrolledWindow.o GTKTextBuffer.o GTKTextView.o GTKList.o GTKCheckBox.o GTKComboBox.o GTKColourSelectionDialog.o GTKAboutDialog.o GTKDrawingArea.o GTKGLDrawingArea.o GTKMenu.o GTKMenuBar.o GTKMenuItem.o GTKMenuShell.o GTKProgressBar.o
+#GTKFixedFrame.o 
 SO = bin/libGTK++.so
 SO_out = libGTK++.so
 A = bin/libGTK++.a
@@ -58,6 +59,7 @@ GLBase.o: GLBase.cpp
 GTKWindow.o: GTKWindow.cpp
 GTKGLWindow.o: GTKGLWindow.cpp
 GTKFrame.o: GTKFrame.cpp
+GTKFixedFrame.o: GTKFixedFrame.cpp
 GTKDialog.o: GTKDialog.cpp
 GTKFileDialog.o: GTKFileDialog.cpp
 GTKMessageBox.o: GTKMessageBox.cpp

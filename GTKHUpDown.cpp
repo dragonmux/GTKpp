@@ -9,8 +9,8 @@ GTKHUpDown::GTKHUpDown(int Width, int Height, void *IncrementFunc, void *Decreme
 	GtkWidget *Image;
 	Left = new GTKButton();
 	Right = new GTKButton();
-	AddWidget(Left);
-	AddWidget(Right);
+	AddChild(Left);
+	AddChild(Right);
 	Pixbuf = gdk_pixbuf_new_from_inline(-1, ArrowLeft, FALSE, NULL);
 	Image = gtk_image_new_from_pixbuf(Pixbuf);
 	gdk_pixbuf_unref(Pixbuf);

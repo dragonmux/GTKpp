@@ -4,9 +4,9 @@
 #pragma align 4 (ArrowLeft)
 #endif
 #ifdef __GNUC__
-static const guint8 ArrowLeft[] __attribute__ ((__aligned__ (4))) = 
+static const uint8_t ArrowLeft[] __attribute__ ((__aligned__ (4))) = 
 #else
-static const guint8 ArrowLeft[] = 
+static const uint8_t ArrowLeft[] = 
 #endif
 { ""
   /* Pixbuf magic (0x47646b50) */

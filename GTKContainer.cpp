@@ -35,3 +35,8 @@ void GTKContainer::RemoveChild(GTKWidget *Child)
 	gtk_container_remove(Container, Child->GetWidget());
 	Children.erase(i);
 }
+
+void GTKContainer::SetBorder(int BorderWidth)
+{
+	gtk_container_set_border_width(Container, BorderWidth);
+}

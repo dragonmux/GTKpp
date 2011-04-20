@@ -171,13 +171,6 @@ void GTKWindow::SetEventsHandled(int Events)
 	gtk_widget_add_events(Widget, Events);
 }
 
-void GTKWindow::Redraw(BOOL Now)
-{
-	gdk_window_invalidate_rect(Widget->window, NULL, TRUE);
-	if (Now != FALSE)
-		gdk_window_process_updates(Widget->window, TRUE);
-}
-
 int GTKWindow::MessageBox(GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...)
 {
 	va_list args;

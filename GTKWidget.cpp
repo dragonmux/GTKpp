@@ -55,6 +55,13 @@ void GTKWidget::Show()
 	gtk_widget_show_all(Widget);
 }
 
+void GTKWidget::Redraw(BOOL Now)
+{
+	gdk_window_invalidate_rect(Widget->window, NULL, TRUE);
+	if (Now != FALSE)
+		gdk_window_process_updates(Widget->window, TRUE);
+}
+
 void GTKWidget::SetForegroundColour(int R, int G, int B)
 {
 	GdkColor col = {0, R * 257, G * 257, B * 257};

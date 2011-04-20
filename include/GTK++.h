@@ -83,6 +83,7 @@ public:
 	GTKpp_API void Enable();
 	GTKpp_API void Hide();
 	GTKpp_API void Show();
+	GTKpp_API void Redraw(BOOL Now = FALSE);
 	GTKpp_API void SetForegroundColour(int R, int G, int B);
 	GTKpp_API void SetBackgroundColour(int R, int G, int B);
 	GTKpp_API void SetBold(BOOL Bold);
@@ -166,6 +167,7 @@ public:
 	GTKpp_API ~GTKContainer();
 	GTKpp_API void AddChild(GTKWidget *Child);
 	GTKpp_API void RemoveChild(GTKWidget *Child);
+	GTKpp_API void SetBorder(int BorderWidth);
 };
 
 class GTKBox : public GTKContainer
@@ -193,10 +195,14 @@ class GTKHBox : public GTKBox
 protected:
 	GtkHBox *HBox;
 
+private:
+	void Init(BOOL EqualSpacing, int CellSpacing);
+
 public:
-	GTKpp_API GTKHBox(int Width, int Height, BOOL EqualSpacing = TRUE, int CellSpacing = 0);
+	GTKpp_API GTKHBox(BOOL EqualSpacing = TRUE, int CellSpacing = 0);
+	GTKpp_API GTKHBox(int Width, int Height, BOOL EqualSpacing, int CellSpacing = 0);
 	GTKpp_API void SetParent(GTKWidget *Parent);
-	GTKpp_API void AddWidget(GTKWidget *Child);
+	GTKpp_API void AddChild(GTKWidget *Child);
 };
 
 class GTKVBox : public GTKBox
@@ -204,10 +210,14 @@ class GTKVBox : public GTKBox
 protected:
 	GtkVBox *VBox;
 
+private:
+	void Init(BOOL EqualSpacing, int CellSpacing);
+
 public:
-	GTKpp_API GTKVBox(int Width, int Height, BOOL EqualSpacing = TRUE, int CellSpacing = 0);
+	GTKpp_API GTKVBox(BOOL EqualSpacing = TRUE, int CellSpacing = 0);
+	GTKpp_API GTKVBox(int Width, int Height, BOOL EqualSpacing, int CellSpacing = 0);
 	GTKpp_API void SetParent(GTKWidget *Parent);
-	GTKpp_API void AddWidget(GTKWidget *Child);
+	GTKpp_API void AddChild(GTKWidget *Child);
 };
 
 class GTKLabel : public GTKWidget
@@ -241,8 +251,9 @@ protected:
 	GdkPixbuf *Buff;
 
 public:
-	GTKpp_API GDKPixbuf(char *File);
-	GTKpp_API GDKPixbuf(char *Data, int Width, int Height, int BPP, int CPP);
+	GTKpp_API GDKPixbuf(const char *File);
+	GTKpp_API GDKPixbuf(uint8_t *Data, uint32_t Width, uint32_t Height, uint32_t BPP, uint32_t CPP);
+	GTKpp_API GDKPixbuf(const uint8_t *InlineData);
 	GTKpp_API ~GDKPixbuf();
 	GTKpp_API GdkPixbuf *GetBuffer() const;
 };
@@ -300,13 +311,29 @@ public:
 	GTKpp_API static UINT ToUpper(UINT Key);
 };
 
-class GTKFrame : public GTKFixed
+class GTKFrame : public GTKContainer
 {
 protected:
-	GtkWidget *Frame;
+	GtkFrame *Frame;
+
+private:
+	void Init(const char *Label);
 
 public:
-	GTKpp_API GTKFrame(GTKWidget *Parent, int Width, int Height, int X, int Y, const char *Label = NULL);
+	GTKpp_API GTKFrame(GTKWidget *Parent, int Width, int Height, const char *Label = NULL);
+	GTKpp_API GTKFrame(const char *Label = NULL);
+};
+
+class GTKFixedFrame : public GTKFrame
+{
+protected:
+	GTKFixed *Fixed;
+
+public:
+	GTKpp_API GTKFixedFrame(GTKWidget *Parent, int Width, int Height, const char *Label = NULL);
+	GTKpp_API void SetLocation(GTKWidget *ChildWidget, int X, int Y);
+	GTKpp_API void SetMove(GTKWidget *ChildWidget, int X, int Y);
+	GTKpp_API void AddChild(GTKWidget *ChildWidget);
 	GTKpp_API void Enable();
 	GTKpp_API void Disable();
 	GTKpp_API void Show();
@@ -349,7 +376,6 @@ public:
 	GTKpp_API void DoMessageLoop();
 	GTKpp_API void IterateMessageLoop();
 	GTKpp_API void SetEventsHandled(int Events);
-	GTKpp_API void Redraw(BOOL Now = FALSE);
 	GTKpp_API int MessageBox(GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...);
 	GTKpp_API char *FileSave(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
 	GTKpp_API char *FileOpen(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
@@ -379,6 +405,7 @@ public:
 	typedef struct _Events
 	{
 		BOOL (__cdecl *ButtonDown)(GtkWidget *widget, GdkEventButton *event, void *data);
+		BOOL (__cdecl *ButtonUp)(GtkWidget *widget, GdkEventButton *event, void *data);
 		BOOL (__cdecl *Paint)(GtkWidget *widget, GdkEventExpose *event, void *data);
 		BOOL (__cdecl *MoveSize)(GtkWidget *widget, GdkEventConfigure *event, void *data);
 		BOOL (__cdecl *MouseMove)(GtkWidget *widget, GdkEventMotion *event, void *data);
