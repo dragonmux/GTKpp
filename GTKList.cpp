@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-GTKList::GTKList(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting)
+GTKList::GTKList(GTKWidget *Parent, int Width, int Height, bool NeedsParenting)
 {
 	Renderer = gtk_cell_renderer_text_new();
 	Column = gtk_tree_view_column_new();
@@ -44,7 +44,7 @@ void GTKList::AddItem(char *Value)
 
 void GTKList::DeleteItem(char *Value)
 {
-	BOOL OK;
+	bool OK;
 	char *val;
 	GtkTreeIter Iter = {0};
 	OK = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(ListStore), &Iter);
@@ -64,7 +64,7 @@ void GTKList::DeleteItem(char *Value)
 
 void GTKList::Clear()
 {
-	BOOL OK;
+	bool OK;
 	GtkTreeIter Iter = {0};
 	do
 	{

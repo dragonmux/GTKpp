@@ -1,18 +1,18 @@
 #include "Globals.h"
 #include "GTK++.h"
 
-GTKVBox::GTKVBox(BOOL EqualSpacing, int CellSpacing)
+GTKVBox::GTKVBox(bool EqualSpacing, int CellSpacing)
 {
 	Init(EqualSpacing, CellSpacing);
 }
 
-GTKVBox::GTKVBox(int Width, int Height, BOOL EqualSpacing, int CellSpacing)
+GTKVBox::GTKVBox(int Width, int Height, bool EqualSpacing, int CellSpacing)
 {
 	Init(EqualSpacing, CellSpacing);
 	gtk_widget_set_size_request(Widget, Width, Height);
 }
 
-void GTKVBox::Init(BOOL EqualSpacing, int CellSpacing)
+void GTKVBox::Init(bool EqualSpacing, int CellSpacing)
 {
 	Widget = gtk_vbox_new(EqualSpacing, CellSpacing);
 	Container = GTK_CONTAINER(Widget);

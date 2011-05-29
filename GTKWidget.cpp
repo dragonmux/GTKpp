@@ -20,17 +20,17 @@ GTKWidget *GTKWidget::GetGTKWidget() const
 	return (GTKWidget *)this;
 }
 
-ULONG GTKWidget::SetHandler(const char *Event, void *Handler, void *Data)
+uint32_t GTKWidget::SetHandler(const char *Event, void *Handler, void *Data)
 {
 	return g_signal_connect(GTK_OBJECT(Widget), Event, G_CALLBACK(Handler), Data);
 }
 
-ULONG GTKWidget::SetHandlerAfter(const char *Event, void *Handler, void *Data)
+uint32_t GTKWidget::SetHandlerAfter(const char *Event, void *Handler, void *Data)
 {
 	return g_signal_connect_after(GTK_OBJECT(Widget), Event, G_CALLBACK(Handler), Data);
 }
 
-void GTKWidget::RemoveHandler(ULONG ID)
+void GTKWidget::RemoveHandler(uint32_t ID)
 {
 	g_signal_handler_disconnect(GTK_OBJECT(Widget), ID);
 }
@@ -55,7 +55,7 @@ void GTKWidget::Show()
 	gtk_widget_show_all(Widget);
 }
 
-void GTKWidget::Redraw(BOOL Now)
+void GTKWidget::Redraw(bool Now)
 {
 	gdk_window_invalidate_rect(Widget->window, NULL, TRUE);
 	if (Now != FALSE)
@@ -84,7 +84,7 @@ void GTKWidget::SetBackgroundColour(int R, int G, int B)
 	gtk_widget_modify_base(Widget, GTK_STATE_PRELIGHT, &col);
 }
 
-void GTKWidget::SetBold(BOOL Bold)
+void GTKWidget::SetBold(bool Bold)
 {
 	PangoContext *ctx = gtk_widget_get_pango_context(Widget);
 	PangoFontDescription *pfd = pango_font_description_copy(pango_context_get_font_description(ctx));
@@ -92,7 +92,7 @@ void GTKWidget::SetBold(BOOL Bold)
 	gtk_widget_modify_font(Widget, pfd);
 }
 
-void GTKWidget::SetItalic(BOOL Italic)
+void GTKWidget::SetItalic(bool Italic)
 {
 	PangoContext *ctx = gtk_widget_get_pango_context(Widget);
 	PangoFontDescription *pfd = pango_font_description_copy(pango_context_get_font_description(ctx));
@@ -100,7 +100,7 @@ void GTKWidget::SetItalic(BOOL Italic)
 	gtk_widget_modify_font(Widget, pfd);
 }
 
-void GTKWidget::SetUnderline(BOOL Underline)
+void GTKWidget::SetUnderline(bool Underline)
 {
 /*	PangoContext *ctx = gtk_widget_get_pango_context(Widget);
 	PangoFontDescription *pfd = pango_font_description_copy(pango_context_get_font_description(ctx));

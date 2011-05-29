@@ -5,7 +5,7 @@
 |*                    GTKImage implementation                  *|
 \***************************************************************/
 
-GTKComboBox::GTKComboBox(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting)
+GTKComboBox::GTKComboBox(GTKWidget *Parent, int Width, int Height, bool NeedsParenting)
 {
 	Widget = gtk_combo_box_new_text();
 	Container = GTK_CONTAINER(Widget);

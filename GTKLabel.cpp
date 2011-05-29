@@ -34,7 +34,7 @@ void GTKLabel::SetBackgroundColour(int R, int G, int B)
 	gtk_label_set_attributes(Label, Attrs);
 }
 
-void GTKLabel::SetUnderline(BOOL Underline)
+void GTKLabel::SetUnderline(bool Underline)
 {
 	PangoAttrList *Attrs = gtk_label_get_attributes(Label);
 	PangoAttribute *Attr = pango_attr_underline_new((Underline == FALSE ? PANGO_UNDERLINE_NONE : PANGO_UNDERLINE_SINGLE));

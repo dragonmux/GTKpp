@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "GTK++.h"
 
-GTKTextView::GTKTextView(GTKWidget *Parent, int Width, int Height, BOOL NeedsParenting) : AutoScroll(false)
+GTKTextView::GTKTextView(GTKWidget *Parent, int Width, int Height, bool NeedsParenting) : AutoScroll(false)
 {
 	Widget = gtk_text_view_new();
 	Container = GTK_CONTAINER(Widget);
@@ -27,22 +27,22 @@ void GTKTextView::AddText(const char *Text)
 {
 	GtkTextMark *mark = TextBuffer->AddTextToEnd((char *)Text);
 	if (AutoScroll == true)
-		gtk_text_view_scroll_mark_onscreen(TextView, mark);
+		//gtk_text_view_scroll_mark_onscreen(TextView, mark);
 	gtk_text_buffer_delete_mark(TextBuffer->GetBuffer(), mark);
 	g_object_unref(G_OBJECT(mark));
 }
 
-void GTKTextView::SetAutoScrolling(BOOL Scrolling)
+void GTKTextView::SetAutoScrolling(bool Scrolling)
 {
-	AutoScroll = (Scrolling == FALSE ? false : true);
+	AutoScroll = Scrolling;
 }
 
-void GTKTextView::SetEditable(BOOL Editable)
+void GTKTextView::SetEditable(bool Editable)
 {
-	gtk_text_view_set_editable(TextView, (Editable == FALSE ? FALSE : TRUE));
+	gtk_text_view_set_editable(TextView, (Editable == false ? FALSE : TRUE));
 }
 
-void GTKTextView::SetWordWrapped(BOOL Wrapped)
+void GTKTextView::SetWordWrapped(bool Wrapped)
 {
-	gtk_text_view_set_wrap_mode(TextView, (Wrapped == FALSE ? GTK_WRAP_NONE : GTK_WRAP_WORD));
+	gtk_text_view_set_wrap_mode(TextView, (Wrapped == false ? GTK_WRAP_NONE : GTK_WRAP_WORD));
 }

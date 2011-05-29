@@ -37,7 +37,7 @@ void GTKWindow::UnregisterQuitFunction()
 	QuitHandlerID = 0;
 }
 
-UINT GTKWindow::GetQuitHandlerID()
+uint32_t GTKWindow::GetQuitHandlerID()
 {
 	return QuitHandlerID;
 }
@@ -67,17 +67,17 @@ void GTKWindow::SetTitle(const char *Title)
 	gtk_window_set_title(Window, Title);
 }
 
-void GTKWindow::SetResizable(BOOL Resizable)
+void GTKWindow::SetResizable(bool Resizable)
 {
 	gtk_window_set_resizable(Window, Resizable);
 }
 
-void GTKWindow::SetBorderless(BOOL Borderless)
+void GTKWindow::SetBorderless(bool Borderless)
 {
 	gtk_window_set_decorated(Window, (Borderless == FALSE ? TRUE : FALSE));
 }
 
-void GTKWindow::SetHideCloseButton(BOOL Hide)
+void GTKWindow::SetHideCloseButton(bool Hide)
 {
 	gtk_window_set_deletable(Window, (Hide == FALSE ? TRUE : FALSE));
 }
@@ -99,7 +99,7 @@ void GTKWindow::SetParent(GTKWindow *Parent)
 	gtk_widget_set_parent(Widget, Parent->GetWidget());
 }
 
-void GTKWindow::SetModal(BOOL Mode, GTKWindow *Parent)
+void GTKWindow::SetModal(bool Mode, GTKWindow *Parent)
 {
 	if (Mode == TRUE && Parent == NULL)
 		return;
@@ -108,7 +108,7 @@ void GTKWindow::SetModal(BOOL Mode, GTKWindow *Parent)
 	gtk_window_set_modal(Window, Mode);
 }
 
-void GTKWindow::SetMaximised(BOOL Maximised)
+void GTKWindow::SetMaximised(bool Maximised)
 {
 	if (Maximised == FALSE)
 		gtk_window_unmaximize(Window);
@@ -116,9 +116,9 @@ void GTKWindow::SetMaximised(BOOL Maximised)
 		gtk_window_maximize(Window);
 }
 
-RECT GTKWindow::GetWindowRect()
+GTKRect GTKWindow::GetWindowRect()
 {
-	static RECT ret;
+	static GTKRect ret;
 	static GdkRectangle rc;
 	gdk_window_get_frame_extents(Widget->window, &rc);
 	ret.left = rc.x;
@@ -128,11 +128,11 @@ RECT GTKWindow::GetWindowRect()
 	return ret;
 }
 
-RECT GTKWindow::GetClientRect()
+GTKRect GTKWindow::GetClientRect()
 {
 	//gdk_window_get_position // This could fix my possition problem as this is the actual location of the window which can be drawn on..
 	int x, y, a, b;
-	static RECT ret;
+	static GTKRect ret;
 	gdk_window_get_position(Widget->window, (int *)&ret.left, (int *)&ret.top);
 	gtk_window_get_position(Window, &a, &b);
 	gtk_window_get_size(Window, &x, &y);
@@ -141,9 +141,9 @@ RECT GTKWindow::GetClientRect()
 	return ret;
 }
 
-SIZE GTKWindow::GetDesktopSize()
+GTKSize GTKWindow::GetDesktopSize()
 {
-	SIZE Desktop = {0};
+	GTKSize Desktop = {0};
 	GdkWindow *wnd = gdk_window_get_toplevel(Widget->window);
 	gdk_drawable_get_size(GDK_DRAWABLE(wnd), (int *)&Desktop.cx, (int *)&Desktop.cy);
 	return Desktop;
@@ -192,7 +192,7 @@ int GTKWindow::MessageBox(GtkMessageType Type, GtkButtonsType Buttons, const cha
 	return ret;
 }
 
-void GTKWindow::GetCursorPos(POINT *point, GdkModifierType *modifiers)
+void GTKWindow::GetCursorPos(GTKPoint *point, GdkModifierType *modifiers)
 {
 	gdk_window_get_pointer(Window->frame, (int *)&point->x, (int *)&point->y, modifiers);
 }
@@ -227,9 +227,9 @@ char *GTKWindow::FileOpen(const char *Title, std::vector<const char *> FileTypes
 	return ret;
 }
 
-void GTKWindow::ClientToScreen(RECT *Rect)
+void GTKWindow::ClientToScreen(GTKRect *Rect)
 {
-	RECT wndRect = GetClientRect();
+	GTKRect wndRect = GetClientRect();
 	Rect->left += wndRect.left;
 	Rect->top += wndRect.top;
 	Rect->right += wndRect.left;
@@ -241,23 +241,23 @@ void GTKWindow::ClientToScreen(RECT *Rect)
 	Rect->bottom += wndRect.top;
 }
 
-void GTKWindow::ScreenToClient(POINT *Point)
+void GTKWindow::ScreenToClient(GTKPoint *Point)
 {
 	ScreenToWindow(Point);
 	WindowToClient(Point);
 }
 
-void GTKWindow::ScreenToWindow(POINT *Point)
+void GTKWindow::ScreenToWindow(GTKPoint *Point)
 {
-	RECT wndRect;
+	GTKRect wndRect;
 	wndRect = GetWindowRect();
 	Point->x -= wndRect.left;
 	Point->y -= wndRect.top;
 }
 
-void GTKWindow::WindowToClient(POINT *Point)
+void GTKWindow::WindowToClient(GTKPoint *Point)
 {
-	RECT cntRect;
+	GTKRect cntRect;
 	cntRect = GetClientRect();
 	Point->x -= cntRect.left;
 	Point->y -= cntRect.top;
@@ -294,7 +294,7 @@ GTKEvents *GTKWindow::GetEvents() const
 
 void GTKWindow::QuitAllMessageLoops()
 {
-	for (UINT i = gtk_main_level(); i > BaseLoopLevel; i--)
+	for (uint32_t i = gtk_main_level(); i > BaseLoopLevel; i--)
 		QuitMessageLoop();
 }
 

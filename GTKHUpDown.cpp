@@ -3,7 +3,7 @@
 #include "img/ArrowLeft.h"
 #include "img/ArrowRight.h"
 
-GTKHUpDown::GTKHUpDown(int Width, int Height, void *IncrementFunc, void *DecrementFunc, void *data) : GTKHBox(Width, Height, TRUE, 0)
+GTKHUpDown::GTKHUpDown(int Width, int Height, void *IncrementFunc, void *DecrementFunc, void *data) : GTKHBox(Width, Height, true, 0)
 {
 	GdkPixbuf *Pixbuf;
 	GtkWidget *Image;

@@ -24,7 +24,7 @@ GTKFileDialog::~GTKFileDialog()
 
 void GTKFileDialog::AddFilters(std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames)
 {
-	for (UINT i = 0; i < FileTypes.size(); i++)
+	for (uint32_t i = 0; i < FileTypes.size(); i++)
 	{
 		Filter = gtk_file_filter_new();
 		gtk_file_filter_add_pattern(Filter, FileTypes[i]);

@@ -14,7 +14,7 @@
 		} \
 	}
 
-GTKImage::GTKImage(int Width, int Height, BOOL UsingImage)
+GTKImage::GTKImage(int Width, int Height, bool UsingImage)
 {
 	this->UsingImage = UsingImage;
 	if (UsingImage == FALSE)

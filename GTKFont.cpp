@@ -5,14 +5,14 @@
 |*                    GTKFont implementation                   *|
 \***************************************************************/
 
-SIZE GTKFont::GetStringMetrics(const char *String)
+GTKSize GTKFont::GetStringMetrics(const char *String)
 {
 	PangoLayout *PL;
 	PangoContext *PC;
 	PangoFontMap *PFM;
 	PangoFontDescription *PFD;
 	static PangoRectangle PR_Logic;
-	static SIZE ret;
+	static GTKSize ret;
 
 	PFD = pango_font_describe(Font);
 	PFM = pango_font_get_font_map(Font);
