@@ -15,7 +15,7 @@ GTKCheckBox::GTKCheckBox(int Width, int Height, const char *Content)
 
 bool GTKCheckBox::GetChecked()
 {
-	return gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button));
+	return (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Button)) == FALSE ? false : true);
 }
 
 void GTKCheckBox::SetChecked(bool Checked)

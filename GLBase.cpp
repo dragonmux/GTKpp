@@ -78,12 +78,12 @@ bool GLBase::glBegin()
 	ctx = gtk_widget_get_gl_context(this->getGTKWidget()->GetWidget());
 	drw = gtk_widget_get_gl_drawable(this->getGTKWidget()->GetWidget());
 
-	return (gdk_gl_drawable_gl_begin(drw, ctx) == 0 ? false : true);
+	return (gdk_gl_drawable_gl_begin(drw, ctx) == FALSE ? false : true);
 }
 
 void GLBase::glSwapBuffers()
 {
-	if (gdk_gl_drawable_is_double_buffered(drw) == true)
+	if (gdk_gl_drawable_is_double_buffered(drw) == TRUE)
 		gdk_gl_drawable_swap_buffers(drw);
 	else
 		glFlush();
