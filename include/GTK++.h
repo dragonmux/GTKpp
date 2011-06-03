@@ -88,7 +88,11 @@ public:
 class GTKWidget
 {
 protected:
+	bool Destroyed;
 	GtkWidget *Widget;
+
+protected:
+	GTKWidget();
 	void DestroyGTKWidget();
 	GTKWidget *GetGTKWidget() const;
 
@@ -425,7 +429,7 @@ public:
 		bool (__cdecl *ButtonDown)(GtkWidget *widget, GdkEventButton *event, void *data);
 		bool (__cdecl *ButtonUp)(GtkWidget *widget, GdkEventButton *event, void *data);
 		bool (__cdecl *Paint)(GtkWidget *widget, GdkEventExpose *event, void *data);
-		bool (__cdecl *MoveGTKSize)(GtkWidget *widget, GdkEventConfigure *event, void *data);
+		bool (__cdecl *MoveSize)(GtkWidget *widget, GdkEventConfigure *event, void *data);
 		bool (__cdecl *MouseMove)(GtkWidget *widget, GdkEventMotion *event, void *data);
 		bool (__cdecl *KeyDown)(GtkWidget *widget, GdkEventKey *event, void *data);
 		bool (__cdecl *Close)(GtkWidget *widget, GdkEvent *event, void *data);

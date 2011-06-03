@@ -5,9 +5,17 @@
 |*                   GTKWidget implementation                  *|
 \***************************************************************/
 
+GTKWidget::GTKWidget() : Destroyed(false)
+{
+}
+
 void GTKWidget::DestroyGTKWidget()
 {
-	gtk_widget_destroy(Widget);
+	if (Destroyed == false)
+	{
+		gtk_widget_destroy(Widget);
+		Destroyed = true;
+	}
 }
 
 GtkWidget *GTKWidget::GetWidget() const

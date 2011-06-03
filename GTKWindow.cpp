@@ -278,7 +278,7 @@ void GTKWindow::Close(GdkEvent *event)
 
 void GTKWindow::Destroy()
 {
-	gtk_widget_destroy(Widget);
+	DestroyGTKWidget();
 }
 
 void GTKWindow::SetEvents(GTKEvents *events)

@@ -138,6 +138,8 @@ GTKFont *GLBase::SetupGLFont(const char *FontName, int Size, int Start, int Num)
 
 void GLBase::DestroyGLFont(GTKFont **Font)
 {
+	if (Font == NULL || *Font == NULL)
+		return;
 	for (uint32_t i = 0; i < Fonts.size(); i++)
 	{
 		if (Fonts[i] == *Font)
@@ -153,6 +155,8 @@ void GLBase::DestroyGLFont(GTKFont **Font)
 
 void GLBase::DestroyGLFonts()
 {
+	if (Fonts.size() == 0)
+		return;
 	this->glBegin();
 	for (uint32_t i = 0; i < Fonts.size(); i++)
 	{
