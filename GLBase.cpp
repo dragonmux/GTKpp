@@ -20,9 +20,8 @@ void GLBase::GLBaseInit(GdkGLConfig *Config, int PixFormat)
 
 int32_t Redraw_Internal(void *W)
 {
-	GtkWidget *Widget = GTK_WIDGET(W);
-	gdk_window_invalidate_rect(Widget->window, &Widget->allocation, true);
-	gdk_window_process_updates(Widget->window, true);
+	GTKWidget *Widget = (GTKWidget *)W;
+	Widget->Redraw(true);
 	return 1;
 }
 
@@ -183,7 +182,7 @@ void GLBase::AddTimeout(int Timeout)
 {
 	if (TimeoutID == 0)
 	{
-		TimeoutID = g_timeout_add(Timeout, Redraw_Internal, getGTKWidget()->GetWidget());
+		TimeoutID = g_timeout_add(Timeout, Redraw_Internal, getGTKWidget());
 		this->Timeout = Timeout;
 	}
 }
