@@ -5,17 +5,15 @@
 |*                   GTKWidget implementation                  *|
 \***************************************************************/
 
-GTKWidget::GTKWidget() : Destroyed(false)
+GTKWidget::GTKWidget() : Widget(NULL)
 {
 }
 
-void GTKWidget::DestroyGTKWidget()
+GTKWidget::~GTKWidget()
 {
-	if (Destroyed == false)
-	{
+	if (Widget != NULL && gdk_window_is_destroyed(Widget->window) == FALSE)
 		gtk_widget_destroy(Widget);
-		Destroyed = true;
-	}
+	Widget = NULL;
 }
 
 GtkWidget *GTKWidget::GetWidget() const
