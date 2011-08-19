@@ -88,15 +88,14 @@ public:
 class GTKWidget
 {
 protected:
-	bool Destroyed;
 	GtkWidget *Widget;
 
 protected:
 	GTKWidget();
-	void DestroyGTKWidget();
 	GTKWidget *GetGTKWidget() const;
 
 public:
+	GTKpp_API virtual ~GTKWidget();
 	GTKpp_API GtkWidget *GetWidget() const;
 	GTKpp_API uint32_t SetHandler(const char *Event, void *Handler, void *Data = NULL);
 	GTKpp_API uint32_t SetHandlerAfter(const char *Event, void *Handler, void *Data = NULL);
@@ -160,7 +159,6 @@ class GTKMessageBox : public GTKDialog
 {
 public:
 	GTKpp_API GTKMessageBox(GtkWindow *Window, GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...);
-	GTKpp_API ~GTKMessageBox();
 };
 
 class GTKFileDialog : public GTKDialog
@@ -174,7 +172,6 @@ private:
 public:
 	GTKpp_API GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChooserAction Action, std::vector<const char *> FileTypes,
 		std::vector<const char *> FileTypeNames, const char *Button1_Type, int Button1_Result, const char *Button2_Type, int Button2_Result);
-	GTKpp_API ~GTKFileDialog();
 	GTKpp_API char *GetSelectedFile();
 };
 
@@ -489,6 +486,7 @@ protected:
 
 public:
 	GTKpp_API GTKTextView(GTKWidget *Parent, int Width, int Height, bool NeedsParenting = true);
+	GTKpp_API ~GTKTextView();
 	GTKpp_API void ClearText();
 	GTKpp_API void AddText(const char *Text);
 	GTKpp_API void SetEditable(bool Editable = true);
@@ -566,7 +564,6 @@ protected:
 
 public:
 	GTKpp_API GTKColourSelectionDialog();
-	GTKpp_API ~GTKColourSelectionDialog();
 	GTKpp_API void SetColour(char R, char G, char B);
 	GTKpp_API void GetColour(char *R, char *G, char *B);
 };
@@ -578,7 +575,6 @@ protected:
 
 public:
 	GTKpp_API GTKAboutDialog(GTKWindow *Parent);
-	GTKpp_API ~GTKAboutDialog();
 	GTKpp_API void SetProgram(const char *Name);
 	GTKpp_API void SetVersion(const char *VersionString);
 	GTKpp_API void SetCopyright(const char *Copyright);
@@ -644,8 +640,7 @@ protected:
 	GtkMenuShell *MenuShell;
 
 public:
-	GTKpp_API void AddChild(GTKWidget *Child);
-	GTKpp_API void AddChild(GTKWidget *Child, bool Append);
+	GTKpp_API void AddChild(GTKWidget *Child, bool Append = true);
 };
 
 class GTKMenuBar : public GTKMenuShell
