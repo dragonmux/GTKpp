@@ -1,11 +1,6 @@
 #include "Globals.h"
 #include "GTK++.h"
 
-void GTKMenuShell::AddChild(GTKWidget *Child)
-{
-	AddChild(Child, true);
-}
-
 void GTKMenuShell::AddChild(GTKWidget *Child, bool Append)
 {
 	if (Append == true)
