@@ -13,6 +13,11 @@ GTKTextView::GTKTextView(GTKWidget *Parent, int Width, int Height, bool NeedsPar
 	gtk_text_view_set_buffer(TextView, TextBuffer->GetBuffer());
 }
 
+GTKTextView::~GTKTextView()
+{
+	delete TextBuffer;
+}
+
 void GTKTextView::SetParent(GTKWidget *Parent)
 {
 	((GTKContainer *)Parent)->AddChild(this);
