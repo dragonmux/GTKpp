@@ -19,9 +19,7 @@ GTKWindow::GTKWindow(GtkWindowType Type, void *CloseFunc, void *data)
 
 GTKWindow::~GTKWindow()
 {
-	DestroyGTKWidget();
-	if (Events != NULL)
-		delete Events;
+	delete Events;
 	Window = NULL;
 }
 
@@ -278,7 +276,7 @@ void GTKWindow::Close(GdkEvent *event)
 
 void GTKWindow::Destroy()
 {
-	DestroyGTKWidget();
+	gtk_widget_destroy(Widget);
 }
 
 void GTKWindow::SetEvents(GTKEvents *events)

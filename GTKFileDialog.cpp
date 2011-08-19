@@ -17,11 +17,6 @@ GTKFileDialog::GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChoose
 		AddFilterChooser(FileTypes, FileTypeNames);
 }
 
-GTKFileDialog::~GTKFileDialog()
-{
-	DestroyGTKWidget();
-}
-
 void GTKFileDialog::AddFilters(std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames)
 {
 	for (uint32_t i = 0; i < FileTypes.size(); i++)

@@ -22,8 +22,3 @@ GTKMessageBox::GTKMessageBox(GtkWindow *Window, GtkMessageType Type, GtkButtonsT
 	Dialog = GTK_DIALOG(Widget);
 	gtk_window_set_title(GTK_WINDOW(Dialog), Title);
 }
-
-GTKMessageBox::~GTKMessageBox()
-{
-	DestroyGTKWidget();
-}

@@ -14,11 +14,6 @@ GTKAboutDialog::GTKAboutDialog(GTKWindow *Parent)
 	gtk_window_set_transient_for(GTK_WINDOW(Widget), Parent->GetWindow());
 }
 
-GTKAboutDialog::~GTKAboutDialog()
-{
-	DestroyGTKWidget();
-}
-
 void GTKAboutDialog::SetProgram(const char *Name)
 {
 	gtk_about_dialog_set_program_name(AboutBox, Name);
