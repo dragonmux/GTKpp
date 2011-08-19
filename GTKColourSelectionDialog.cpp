@@ -21,11 +21,6 @@ GTKColourSelectionDialog::GTKColourSelectionDialog()
 	g_signal_connect(GTK_OBJECT(Selector->cancel_button), "clicked", G_CALLBACK(CancelClicked), this);
 }
 
-GTKColourSelectionDialog::~GTKColourSelectionDialog()
-{
-	DestroyGTKWidget();
-}
-
 void GTKColourSelectionDialog::SetColour(char R, char G, char B)
 {
 	GdkColor col = {0, ((int)R) * 257, ((int)G) * 257, ((int)B) * 257};
