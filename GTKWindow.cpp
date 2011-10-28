@@ -114,6 +114,11 @@ void GTKWindow::SetMaximised(bool Maximised)
 		gtk_window_maximize(Window);
 }
 
+void GTKWindow::SetAlwaysOnTop()
+{
+	gtk_window_set_keep_above(Window, TRUE);
+}
+
 GTKRect GTKWindow::GetWindowRect()
 {
 	static GTKRect ret;
@@ -142,7 +147,10 @@ GTKRect GTKWindow::GetClientRect()
 GTKSize GTKWindow::GetDesktopSize()
 {
 	GTKSize Desktop = {0};
-	GdkWindow *wnd = gdk_window_get_toplevel(Widget->window);
+	GdkWindow *wnd = gdk_get_default_root_window();
+//	GdkScreen *screen = gtk_window_get_screen(Window);
+//	Desktop.cx = gdk_screen_get_width(screen);
+//	Desktop.cy = gdk_screen_get_height(screen);
 	gdk_drawable_get_size(GDK_DRAWABLE(wnd), (int *)&Desktop.cx, (int *)&Desktop.cy);
 	return Desktop;
 }
@@ -304,4 +312,9 @@ void GTKWindow::QuitMessageLoop()
 void GTKWindow::SetFocus(GTKWidget *Widget)
 {
 	gtk_window_set_focus(Window, Widget->GetWidget());
+}
+
+void GTKWindow::SetWindowIcon(GList *Icons)
+{
+	gtk_window_set_icon_list(Window, Icons);
 }

@@ -62,6 +62,7 @@ class GTK
 {
 public:
 	GTKpp_API static void GTKInit(int _argc, char **_argv);
+	GTKpp_API static void SetDefaultWindowIcon(GList *Icons);
 };
 
 #ifndef __NO_OPEN_GL__
@@ -413,6 +414,8 @@ public:
 	GTKpp_API void RegisterQuitFunction();
 	GTKpp_API void UnregisterQuitFunction();
 	GTKpp_API uint32_t GetQuitHandlerID();
+	GTKpp_API void SetAlwaysOnTop();
+	GTKpp_API void SetWindowIcon(GList *Icons);
 };
 
 class GTKEvents// abstract
