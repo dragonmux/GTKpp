@@ -74,6 +74,11 @@ GdkGLConfig *GLBase::MakeStandardConfig()
 
 bool GLBase::glBegin()
 {
+	if (ctx != NULL || drw != NULL)
+	{
+		printf("Error, glBegin() called without interviening glEnd() call\n");
+		return false;
+	}
 	ctx = gtk_widget_get_gl_context(this->getGTKWidget()->GetWidget());
 	drw = gtk_widget_get_gl_drawable(this->getGTKWidget()->GetWidget());
 
@@ -90,6 +95,11 @@ void GLBase::glSwapBuffers()
 
 void GLBase::glEnd()
 {
+	if (drw == NULL)
+	{
+		printf("Error, glEnd() called twice without interviening glBegin() call\n");
+		return;
+	}
 	gdk_gl_drawable_gl_end(drw);
 	drw = NULL;
 	ctx = NULL;
