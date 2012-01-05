@@ -14,7 +14,7 @@ AR = ar cr
 RANLIB = ranlib
 STRIP = strip -x
 
-O = GTK.o GTKGL.o GTKWidget.o GLBase.o GTKWindow.o GTKGLWindow.o GTKFrame.o GTKDialog.o GTKFileDialog.o GTKMessageBox.o GTKFont.o GDKPixbuf.o GTKHBox.o GTKVBox.o GTKKey.o GTKFixed.o GTKButton.o GTKEntry.o GTKImage.o GTKLabel.o GTKHUpDown.o GTKContainer.o GTKEvents.o GTKScrolledWindow.o GTKTextBuffer.o GTKTextView.o GTKList.o GTKCheckBox.o GTKComboBox.o GTKColourSelectionDialog.o GTKAboutDialog.o GTKDrawingArea.o GTKGLDrawingArea.o GTKMenu.o GTKMenuBar.o GTKMenuItem.o GTKMenuShell.o GTKProgressBar.o GTKRange.o GTKScale.o GTKHScale.o GTKVScale.o
+O = GTK.o GTKGL.o GTKWidget.o GLBase.o GTKWindow.o GTKGLWindow.o GTKFrame.o GTKDialog.o GTKFileDialog.o GTKMessageBox.o GTKFont.o GDKPixbuf.o GTKHBox.o GTKVBox.o GTKKey.o GTKFixed.o GTKButton.o GTKEntry.o GTKImage.o GTKLabel.o GTKHUpDown.o GTKContainer.o GTKEvents.o GTKScrolledWindow.o GTKTextBuffer.o GTKTextView.o GTKList.o GTKCheckBox.o GTKComboBox.o GTKColourSelectionDialog.o GTKAboutDialog.o GTKDrawingArea.o GTKGLDrawingArea.o GTKMenu.o GTKMenuBar.o GTKMenuItem.o GTKMenuShell.o GTKProgressBar.o GTKRange.o GTKScale.o GTKHScale.o GTKVScale.o GTKSeparator.o GTKHSeparator.o GTKVSeparator.o
 #GTKFixedFrame.o 
 SO = bin/libGTK++.so
 SO_out = libGTK++.so
@@ -98,3 +98,6 @@ GTKRange.o: GTKRange.cpp
 GTKScale.o: GTKScale.cpp
 GTKHScale.o: GTKHScale.cpp
 GTKVScale.o: GTKVScale.cpp
+GTKSeparator.o: GTKSeparator.cpp
+GTKHSeparator.o: GTKHSeparator.cpp
+GTKVSeparator.o: GTKVSeparator.cpp

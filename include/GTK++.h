@@ -747,4 +747,33 @@ public:
 	GTKpp_API GTKVScale(double min = 0, double max = 100, double step = 1);
 };
 
+class GTKSeparator : public GTKWidget
+{
+protected:
+	GtkSeparator *Separator;
+
+	GTKSeparator();
+	~GTKSeparator();
+};
+
+class GTKHSeparator : public GTKSeparator
+{
+protected:
+	GtkHSeparator *HSeparator;
+
+public:
+	GTKpp_API GTKHSeparator();
+	GTKpp_API ~GTKHSeparator();
+};
+
+class GTKVSeparator : public GTKSeparator
+{
+protected:
+	GtkVSeparator *VSeparator;
+
+public:
+	GTKpp_API GTKVSeparator();
+	GTKpp_API ~GTKVSeparator();
+};
+
 #endif /*__GTKpp_H__*/
