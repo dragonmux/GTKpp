@@ -45,3 +45,9 @@ void GTKLabel::SetUnderline(bool Underline)
 	pango_attr_list_change(Attrs, Attr);
 	gtk_label_set_attributes(Label, Attrs);
 }
+
+void GTKLabel::SetJustification(GTKJustification Placement)
+{
+	float Position = (Placement == GTKpp_JUSTIFY_LEFT ? 0 : (Placement == GTKpp_JUSTIFY_RIGHT ? 1 : 0.5F));
+	gtk_misc_set_alignment(GTK_MISC(Widget), Position, 0.5F);
+}
