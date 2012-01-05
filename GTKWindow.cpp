@@ -72,18 +72,18 @@ void GTKWindow::SetResizable(bool Resizable)
 
 void GTKWindow::SetBorderless(bool Borderless)
 {
-	gtk_window_set_decorated(Window, (Borderless == FALSE ? TRUE : FALSE));
+	gtk_window_set_decorated(Window, (Borderless == false ? TRUE : FALSE));
 }
 
 void GTKWindow::SetHideCloseButton(bool Hide)
 {
-	gtk_window_set_deletable(Window, (Hide == FALSE ? TRUE : FALSE));
+	gtk_window_set_deletable(Window, (Hide == false ? TRUE : FALSE));
 }
 
-void GTKWindow::SetTool()
+void GTKWindow::SetTool(bool ShowInTaskbar)
 {
-	SetResizable(FALSE);
-	gtk_window_set_skip_taskbar_hint(Window, TRUE);
+	SetResizable(false);
+	gtk_window_set_skip_taskbar_hint(Window, (ShowInTaskbar == false ? TRUE : FALSE));
 	/******************************\
 	|* What hint to use?!?!       *|
 	|**--------------------------**|
