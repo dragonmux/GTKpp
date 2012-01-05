@@ -54,6 +54,13 @@ typedef struct _GTKSize
 	int32_t cy;
 } GTKSize;
 
+typedef enum _GTKJustification
+{
+	GTKpp_JUSTIFY_LEFT,
+	GTKpp_JUSTIFY_CENTER,
+	GTKpp_JUSTIFY_RIGHT
+} GTKJustification;
+
 #ifndef __cdecl
 #define __cdecl
 #endif
@@ -251,6 +258,7 @@ public:
 	GTKpp_API void SetSize(int Width, int Height);
 	GTKpp_API void SetBackgroundColour(int R, int G, int B);
 	GTKpp_API void SetUnderline(bool Underline);
+	GTKpp_API void SetJustification(GTKJustification Placement);
 };
 
 class GTKButton : public GTKWidget
@@ -692,7 +700,20 @@ public:
 	GTKpp_API void SetProgress(int Progress);
 };
 
-class GTKScale : public GTKWidget
+class GTKRange : public GTKWidget
+{
+protected:
+	GtkRange *Range;
+
+	GTKRange();
+	~GTKRange();
+
+public:
+	GTKpp_API double GetValue();
+	GTKpp_API void SetValue(double Value);
+};
+
+class GTKScale : public GTKRange
 {
 protected:
 	GtkScale *Scale;
