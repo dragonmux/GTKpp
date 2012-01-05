@@ -384,7 +384,7 @@ public:
 	GTKpp_API void SetTitle(const char *Title);
 	GTKpp_API void SetResizable(bool Resizable);
 	GTKpp_API void SetModal(bool Mode, GTKWindow *Parent = NULL);
-	GTKpp_API void SetTool();
+	GTKpp_API void SetTool(bool ShowInTaskbar = false);
 	GTKpp_API void SetParent(GTKWindow *Parent);
 	GTKpp_API void SetBorderless(bool Borderless = true);
 	GTKpp_API void SetHideCloseButton(bool Hide = true);
@@ -676,7 +676,7 @@ public:
 	GTKpp_API void SetOnClicked(void *OnClickFunc, void *data = NULL);
 };
 
-class GTKProgressBar: public GTKWidget
+class GTKProgressBar : public GTKWidget
 {
 protected:
 	GtkProgressBar *ProgressBar;
@@ -690,6 +690,40 @@ public:
 	GTKpp_API void Pulse();
 	GTKpp_API void SetMax(int Max);
 	GTKpp_API void SetProgress(int Progress);
+};
+
+class GTKScale : public GTKWidget
+{
+protected:
+	GtkScale *Scale;
+
+	GTKScale();
+	~GTKScale();
+
+public:
+	GTKpp_API void SetDecimalPrecision(uint32_t Places = 0);
+	GTKpp_API void SetValueDrawn(bool Drawn = true);
+	GTKpp_API void SetValuePosition(GtkPositionType Position);
+	GTKpp_API void AddMark(double MarkValue, GtkPositionType MarkPosition, const char *MarkText = NULL);
+	GTKpp_API void ClearAllMarks();
+};
+
+class GTKHScale : public GTKScale
+{
+protected:
+	GtkHScale *HScale;
+
+public:
+	GTKpp_API GTKHScale(double min = 0, double max = 100, double step = 1);
+};
+
+class GTKVScale : public GTKScale
+{
+protected:
+	GtkVScale *VScale;
+
+public:
+	GTKpp_API GTKVScale(double min = 0, double max = 100, double step = 1);
 };
 
 #endif /*__GTKpp_H__*/
