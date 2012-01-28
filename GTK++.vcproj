@@ -321,10 +321,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\GTKHUpDown.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\GTKImage.cpp"
 					>
 				</File>
@@ -341,6 +337,18 @@
 					>
 				</File>
 				<File
+					RelativePath=".\GTKRange.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKScale.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GTKSeparator.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\GTKTextBuffer.cpp"
 					>
 				</File>
@@ -348,6 +356,34 @@
 					RelativePath=".\GTKTextView.cpp"
 					>
 				</File>
+				<Filter
+					Name="Horizontal"
+					>
+					<File
+						RelativePath=".\GTKHScale.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\GTKHSeparator.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\GTKHUpDown.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Vertical"
+					>
+					<File
+						RelativePath=".\GTKVScale.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\GTKVSeparator.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="GTKDialogs"
