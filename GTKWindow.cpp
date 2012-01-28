@@ -1,6 +1,10 @@
 #include "Globals.h"
 #include "GTK++.h"
 
+#ifdef MessageBox
+#undef MessageBox
+#endif
+
 /***************************************************************\
 |*                   GTKWindow implementation                  *|
 \***************************************************************/
@@ -317,4 +321,12 @@ void GTKWindow::SetFocus(GTKWidget *Widget)
 void GTKWindow::SetWindowIcon(GList *Icons)
 {
 	gtk_window_set_icon_list(Window, Icons);
+}
+
+void GTKWindow::SetFullscreen(bool Fullscreen)
+{
+	if (Fullscreen == true)
+		gtk_window_fullscreen(Window);
+	else
+		gtk_window_unfullscreen(Window);
 }

@@ -13,6 +13,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef MessageBox
+#ifdef UNICODE
+#define __HAD_MessageBox__  MessageBoxW
+#else
+#define __HAD_MessageBox__  MessageBoxA
+#endif /* UNICODE */
+#undef MessageBox
+#endif
+
 #ifdef _WINDOWS
 	#ifdef __GTKpp_EXPORT__
 		#define GTKpp_API __declspec(dllexport)
@@ -424,6 +433,7 @@ public:
 	GTKpp_API uint32_t GetQuitHandlerID();
 	GTKpp_API void SetAlwaysOnTop();
 	GTKpp_API void SetWindowIcon(GList *Icons);
+	GTKpp_API void SetFullscreen(bool Fullscreen = true);
 };
 
 class GTKEvents// abstract
@@ -776,4 +786,8 @@ public:
 	GTKpp_API ~GTKVSeparator();
 };
 
+#ifdef __HAD_MessageBox__
+#define MessageBox __HAD_MessageBox__
+#undef __HAD_MessageBox__
+#endif /*__HAD_MessageBox__*/
 #endif /*__GTKpp_H__*/
