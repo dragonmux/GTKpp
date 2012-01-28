@@ -7,7 +7,7 @@ GCC_FLAGS =
 endif
 CC = $(GCC) $(GCC_FLAGS)
 EXTRA_CFLAGS = $(shell pkg-config --cflags gtk+-2.0 pango gtkglext-1.0)
-CFLAGS = -O2 -g -c -D__GTKpp_EXPORT__ -I./include/ -I./ $(EXTRA_CFLAGS) -o $*.o
+CFLAGS = -O2 -c -D__GTKpp_EXPORT__ -I./include/ -I./ $(EXTRA_CFLAGS) -o $*.o
 LIBS = $(shell pkg-config --libs gtk+-2.0 pango gtkglext-1.0)
 LFLAGS = -shared $(O) $(LIBS) -Wl,-soname,$(SO_out) -o $(SO)
 AR = ar cr
