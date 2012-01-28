@@ -11,7 +11,7 @@ GTKRange::~GTKRange()
 
 double GTKRange::GetValue()
 {
-	gtk_range_get_value(Range);
+	return gtk_range_get_value(Range);
 }
 
 void GTKRange::SetValue(double Value)
