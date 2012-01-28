@@ -11,7 +11,13 @@ GTKWidget::GTKWidget() : Widget(NULL)
 
 GTKWidget::~GTKWidget()
 {
-	if (Widget != NULL && gdk_window_is_destroyed(Widget->window) == FALSE)
+	if (Widget != NULL &&
+#if (GTK_MAJOR_VERSION >= 2 && GTK_MINOR_VERSION >= 18)
+		gdk_window_is_destroyed(Widget->window) == FALSE
+#else
+		((GdkWindowObject *)Widget->window)->destroyed == FALSE
+#endif
+		)
 		gtk_widget_destroy(Widget);
 	Widget = NULL;
 }
