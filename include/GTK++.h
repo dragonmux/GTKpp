@@ -432,6 +432,7 @@ public:
 	GTKpp_API void UnregisterQuitFunction();
 	GTKpp_API uint32_t GetQuitHandlerID();
 	GTKpp_API void SetAlwaysOnTop();
+	GTKpp_API void Present();
 	GTKpp_API void SetWindowIcon(GList *Icons);
 	GTKpp_API void SetFullscreen(bool Fullscreen = true);
 };

@@ -87,7 +87,8 @@ void GTKWindow::SetHideCloseButton(bool Hide)
 void GTKWindow::SetTool(bool ShowInTaskbar)
 {
 	SetResizable(false);
-	gtk_window_set_skip_taskbar_hint(Window, (ShowInTaskbar == false ? TRUE : FALSE));
+	if (ShowInTaskbar == false)
+		gtk_window_set_skip_taskbar_hint(Window, TRUE);
 	/******************************\
 	|* What hint to use?!?!       *|
 	|**--------------------------**|
@@ -121,6 +122,11 @@ void GTKWindow::SetMaximised(bool Maximised)
 void GTKWindow::SetAlwaysOnTop()
 {
 	gtk_window_set_keep_above(Window, TRUE);
+}
+
+void GTKWindow::Present()
+{
+	gtk_window_present(Window);
 }
 
 GTKRect GTKWindow::GetWindowRect()
