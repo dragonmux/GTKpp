@@ -1,0 +1,8 @@
+*.user
+*.suo
+*.ncb
+bin/*.lib
+bin/*.pdb
+bin/*.dll
+bin/*.exp
+bin/libGTK++.pc
