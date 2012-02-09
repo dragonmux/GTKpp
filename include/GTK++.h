@@ -4,6 +4,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <utility>
 #include <gtk/gtk.h>
 #include <gtk/gtkgl.h>
 #include <pango/pango.h>
@@ -711,17 +712,34 @@ public:
 	GTKpp_API void SetProgress(int Progress);
 };
 
+typedef void (__cdecl *ChangedCallback)(void *, double);
+
 class GTKRange : public GTKWidget
 {
 protected:
 	GtkRange *Range;
 
 	GTKRange();
+	void SetHandlers();
 	~GTKRange();
+
+private:
+	std::vector<std::pair<ChangedCallback, void *> > OnChangedCallbacks;
+	double StartVal;
+
+	void CallOnChangedCallbacks();
+	static bool ButtonPress(GtkWidget *, GdkEventButton *event, void *data);
+	static bool ButtonRelease(GtkWidget *, GdkEventButton *event, void *data);
+	static bool KeyPress(GtkWidget *, GdkEventKey *, void *data);
+	static bool KeyRelease(GtkWidget *, GdkEventKey *, void *data);
+	static bool Scroll(GtkWidget *widget, GdkEventScroll *, void *data);
 
 public:
 	GTKpp_API double GetValue();
 	GTKpp_API void SetValue(double Value);
+	GTKpp_API void SetOnChanged(ChangedCallback OnChangedFunc, void *data = NULL);
+	GTKpp_API void SetIncrement(double Step);
+	GTKpp_API void SetIncrement(double Step, double Page);
 };
 
 class GTKScale : public GTKRange

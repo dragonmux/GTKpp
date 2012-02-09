@@ -7,4 +7,5 @@ GTKVScale::GTKVScale(double min, double max, double step)
 	Range = GTK_RANGE(Widget);
 	Scale = GTK_SCALE(Range);
 	VScale = GTK_VSCALE(Scale);
+	SetHandlers();
 }
