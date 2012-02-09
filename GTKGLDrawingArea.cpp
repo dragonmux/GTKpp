@@ -1,5 +1,4 @@
-#include "Globals.h"
-#include "GTK++.h"
+#include "stdafx.h"
 
 GTKGLDrawingArea::GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config) : GTKDrawingArea(Width, Height)
 {

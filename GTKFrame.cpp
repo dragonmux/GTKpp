@@ -1,5 +1,4 @@
-#include "Globals.h"
-#include "GTK++.h"
+#include "stdafx.h"
 
 GTKFrame::GTKFrame(GTKWidget *Parent, int Width, int Height, const char *Label) : GTKContainer()
 {

@@ -1,5 +1,4 @@
-#include "Globals.h"
-#include "GTK++.h"
+#include "stdafx.h"
 
 GTKVBox::GTKVBox(bool EqualSpacing, int CellSpacing)
 {

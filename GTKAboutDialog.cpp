@@ -1,5 +1,4 @@
-#include "Globals.h"
-#include "GTK++.h"
+#include "stdafx.h"
 
 void WebURLCallback(GtkAboutDialog *AboutBox, const char *Link, void *Data)
 {

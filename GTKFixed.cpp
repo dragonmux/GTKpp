@@ -1,5 +1,4 @@
-#include "Globals.h"
-#include "GTK++.h"
+#include "stdafx.h"
 
 GTKFixed::GTKFixed(GTKWidget *Parent, int Width, int Height)
 {

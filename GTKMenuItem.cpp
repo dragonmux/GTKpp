@@ -1,5 +1,4 @@
-#include "Globals.h"
-#include "GTK++.h"
+#include "stdafx.h"
 
 GTKMenuItem::GTKMenuItem(const char *Value)
 {

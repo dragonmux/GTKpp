@@ -1,5 +1,4 @@
-#include "Globals.h"
-#include "GTK++.h"
+#include "stdafx.h"
 
 GTKDrawingArea::GTKDrawingArea(int Width, int Height)
 {

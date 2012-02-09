@@ -1,6 +1,4 @@
-#ifdef _WINDOWS
-#include <windows.h>
-#endif
+#include "stdafx.h"
 #include <gl/gl.h>
 #include <gl/glu.h>
 

@@ -1,10 +1,11 @@
 GCC ?= gcc
-GCC_VER = $(shell gcc -dumpversion | cut -d . -f 1)
-ifeq ($(shell if [ $(GCC_VER) -ge 4 ]; then echo 1; else echo 0; fi), 1)
-GCC_FLAGS = -fvisibility=hidden -fvisibility-inlines-hidden
-else
-GCC_FLAGS = 
-endif
+#GCC_VER = $(shell gcc -dumpversion | cut -d . -f 1)
+#ifeq ($(shell if [ $(GCC_VER) -ge 4 ]; then echo 1; else echo 0; fi), 1)
+#GCC_FLAGS = -fvisibility=hidden -fvisibility-inlines-hidden
+#else
+#GCC_FLAGS = 
+#endif
+GCC_FLAGS = -ggdb
 CC = $(GCC) $(GCC_FLAGS)
 EXTRA_CFLAGS = $(shell pkg-config --cflags gtk+-2.0 pango gtkglext-1.0)
 CFLAGS = -O2 -c -D__GTKpp_EXPORT__ -I./include/ -I./ $(EXTRA_CFLAGS) -o $*.o
@@ -40,7 +41,7 @@ bin/libGTK++.so: $(O)
 	$(AR) $(A) $(O)
 	$(RANLIB) $(A)
 	$(CC) $(LFLAGS)
-	$(STRIP) $(SO)
+#	$(STRIP) $(SO)
 
 .cpp.o:
 	$(CC) $(CFLAGS) $*.cpp

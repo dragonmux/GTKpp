@@ -1,5 +1,4 @@
-#include "Globals.h"
-#include "GTK++.h"
+#include "stdafx.h"
 #ifdef _WINDOWS
 int round(double a)
 {

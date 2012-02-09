@@ -1,5 +1,4 @@
-#include "Globals.h"
-#include "GTK++.h"
+#include "stdafx.h"
 
 GTKTextView::GTKTextView(GTKWidget *Parent, int Width, int Height, bool NeedsParenting) : AutoScroll(false)
 {
