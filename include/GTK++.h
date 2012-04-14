@@ -6,7 +6,9 @@
 #include <map>
 #include <utility>
 #include <gtk/gtk.h>
+#ifndef __NO_OPEN_GL__
 #include <gtk/gtkgl.h>
+#endif
 #include <pango/pango.h>
 
 #include <inttypes.h>

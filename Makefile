@@ -12,16 +12,26 @@ else
 	OPTIM_FLAGS = -O2
 	DEBUG = 0
 endif
+ifeq ($(strip $(NOGL)), 1)
+	O_GL =
+	PKG_GL =
+	CFLAGS_GL = -D__NO_OPEN_GL__
+else
+	O_GL = GTKGL.o GLBase.o GTKGLWindow.o GTKFont.o GTKGLDrawingArea.o
+	PKG_GL = gtkglext-1.0
+	CFLAGS_GL = 
+endif
 CC = $(GCC) $(GCC_FLAGS)
-EXTRA_CFLAGS = $(shell pkg-config --cflags gtk+-2.0 pango gtkglext-1.0)
+PKG_CONFIG = gtk+-2.0 pango $(PKG_GL)
+EXTRA_CFLAGS = $(shell pkg-config --cflags $(PKG_CONFIG)) $(CFLAGS_GL)
 CFLAGS = -c $(OPTIM_FLAGS) -D__GTKpp_EXPORT__ -I./include/ -I./ $(EXTRA_CFLAGS) -o $*.o
-LIBS = $(shell pkg-config --libs gtk+-2.0 pango gtkglext-1.0)
+LIBS = $(shell pkg-config --libs $(PKG_CONFIG))
 LFLAGS = $(OPTIM_FLAGS) -shared $(O) $(LIBS) -Wl,-soname,$(SO_out) -o $(SO)
 AR = ar cr
 RANLIB = ranlib
 STRIP = strip -x
 
-O = GTK.o GTKGL.o GTKWidget.o GLBase.o GTKWindow.o GTKGLWindow.o GTKFrame.o GTKDialog.o GTKFileDialog.o GTKMessageBox.o GTKFont.o GDKPixbuf.o GTKHBox.o GTKVBox.o GTKKey.o GTKFixed.o GTKButton.o GTKEntry.o GTKImage.o GTKLabel.o GTKHUpDown.o GTKContainer.o GTKEvents.o GTKScrolledWindow.o GTKTextBuffer.o GTKTextView.o GTKList.o GTKCheckBox.o GTKComboBox.o GTKColourSelectionDialog.o GTKAboutDialog.o GTKDrawingArea.o GTKGLDrawingArea.o GTKMenu.o GTKMenuBar.o GTKMenuItem.o GTKMenuShell.o GTKProgressBar.o GTKRange.o GTKScale.o GTKHScale.o GTKVScale.o GTKSeparator.o GTKHSeparator.o GTKVSeparator.o
+O = GTK.o GTKWidget.o GTKWindow.o GTKFrame.o GTKDialog.o GTKFileDialog.o GTKMessageBox.o GDKPixbuf.o GTKHBox.o GTKVBox.o GTKKey.o GTKFixed.o GTKButton.o GTKEntry.o GTKImage.o GTKLabel.o GTKHUpDown.o GTKContainer.o GTKEvents.o GTKScrolledWindow.o GTKTextBuffer.o GTKTextView.o GTKList.o GTKCheckBox.o GTKComboBox.o GTKColourSelectionDialog.o GTKAboutDialog.o GTKDrawingArea.o GTKMenu.o GTKMenuBar.o GTKMenuItem.o GTKMenuShell.o GTKProgressBar.o GTKRange.o GTKScale.o GTKHScale.o GTKVScale.o GTKSeparator.o GTKHSeparator.o GTKVSeparator.o $(O_GL)
 #GTKFixedFrame.o 
 SO = bin/libGTK++.so
 SO_out = libGTK++.so
