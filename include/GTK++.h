@@ -77,14 +77,22 @@ typedef enum _GTKJustification
 
 class GTK
 {
+protected:
+	GTK();
+	~GTK();
+
 public:
 	GTKpp_API static void GTKInit(int _argc, char **_argv);
 	GTKpp_API static void SetDefaultWindowIcon(GList *Icons);
 };
 
 #ifndef __NO_OPEN_GL__
-class GTKGL : GTK
+class GTKGL : public GTK
 {
+private:
+	GTKGL();
+	~GTKGL();
+
 public:
 	GTKpp_API static void GTKInit(int _argc, char **_argv);
 };

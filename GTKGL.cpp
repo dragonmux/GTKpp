@@ -9,3 +9,11 @@ void GTKGL::GTKInit(int argc, char **argv)
 	GTK::GTKInit(argc, argv);
 	gtk_gl_init(&argc, &argv);
 }
+
+GTKGL::GTKGL()
+{
+}
+
+GTKGL::~GTKGL()
+{
+}
