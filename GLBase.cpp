@@ -49,6 +49,10 @@ void GLBase::GLBaseDeinit()
 	DestroyGLFonts();
 }
 
+GLBase::~GLBase()
+{
+}
+
 GdkGLConfig *GLBase::MakeStandardConfig()
 {
 #ifdef _WINDOWS

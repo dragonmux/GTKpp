@@ -158,6 +158,7 @@ protected:
 	void GLBaseInit(GdkGLConfig *Config, int PixFormat);
 	void GLBaseInit(GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int Timeout = GTKpp_TIMEOUT_INTERVAL);
 	void GLBaseDeinit();
+	virtual ~GLBase();
 
 public:
 	GTKpp_API bool glBegin();
@@ -463,7 +464,11 @@ public:
 		bool (__cdecl *Close)(GtkWidget *widget, GdkEvent *event, void *data);
 	} Events;
 
+protected:
 	GTKpp_API GTKEvents();
+
+public:
+	GTKpp_API virtual ~GTKEvents();
 	GTKpp_API virtual void Init(GTKWindow *Wnd) = 0;
 	GTKpp_API virtual void Deinit() = 0;
 	Events EventHandlers;
