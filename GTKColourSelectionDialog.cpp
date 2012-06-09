@@ -11,10 +11,8 @@ int round(double a)
 #include <math.h>
 #endif
 
-GTKColourSelectionDialog::GTKColourSelectionDialog()
+GTKColourSelectionDialog::GTKColourSelectionDialog() : GTKDialog(gtk_color_selection_dialog_new("Please pick a colour"))
 {
-	Widget = gtk_color_selection_dialog_new("Please pick a colour");
-	Dialog = GTK_DIALOG(Widget);
 	Selector = GTK_COLOR_SELECTION_DIALOG(Dialog);
 	g_signal_connect(GTK_OBJECT(Selector->ok_button), "clicked", G_CALLBACK(OkClicked), this);
 	g_signal_connect(GTK_OBJECT(Selector->cancel_button), "clicked", G_CALLBACK(CancelClicked), this);

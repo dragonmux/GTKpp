@@ -1,8 +1,7 @@
 #include "stdafx.h"
 
-GTKDrawingArea::GTKDrawingArea(int Width, int Height)
+GTKDrawingArea::GTKDrawingArea(int Width, int Height) : GTKWidget(gtk_drawing_area_new())
 {
-	Widget = gtk_drawing_area_new();
 	DrawingArea = GTK_DRAWING_AREA(Widget);
 	gtk_drawing_area_size(DrawingArea, Width, Height);
 }

@@ -2,12 +2,14 @@
 
 #include <stdio.h>
 
-GTKList::GTKList(GTKWidget *Parent, int Width, int Height, bool NeedsParenting)
+GTKList::GTKList(GTKWidget *Parent, int Width, int Height, bool NeedsParenting) : GTKContainer(gtk_invisible_new())
 {
+	g_object_unref(Widget);
 	Renderer = gtk_cell_renderer_text_new();
 	Column = gtk_tree_view_column_new();
 	ListStore = gtk_list_store_new(1, G_TYPE_STRING);
 	Widget = gtk_tree_view_new_with_model(GTK_TREE_MODEL(ListStore));
+	gtk_widget_ref(Widget);
 	Container = GTK_CONTAINER(Widget);
 	ListView = GTK_TREE_VIEW(Container);
 	gtk_tree_view_column_set_visible(Column, TRUE);

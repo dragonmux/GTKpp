@@ -1,19 +1,17 @@
 #include "stdafx.h"
 
-GTKProgressBar::GTKProgressBar()
+GTKProgressBar::GTKProgressBar() : GTKWidget(gtk_progress_bar_new())
 {
-	Widget = gtk_progress_bar_new();
 	ProgressBar = GTK_PROGRESS_BAR(Widget);
 	gtk_progress_bar_set_pulse_step(ProgressBar, 0.05);
 	gtk_progress_bar_pulse(ProgressBar);
 	Max = Progress = 0;
 }
 
-GTKProgressBar::GTKProgressBar(int Max)
+GTKProgressBar::GTKProgressBar(int Max) : GTKWidget(gtk_progress_bar_new())
 {
 	if (Max < 1)
-		return;
-	Widget = gtk_progress_bar_new();
+		throw (void *)NULL;
 	ProgressBar = GTK_PROGRESS_BAR(Widget);
 	this->Max = Max;
 	Reset();

@@ -1,9 +1,6 @@
 #include "stdafx.h"
 
-GTKMenu::GTKMenu(GTKWidget *Parent, bool NeedsParenting)
+GTKMenu::GTKMenu(GTKWidget *Parent, bool NeedsParenting) : GTKMenuShell(gtk_menu_new())
 {
-	Widget = gtk_menu_new();
-	Container = GTK_CONTAINER(Widget);
-	MenuShell = GTK_MENU_SHELL(Container);
 	Menu = GTK_MENU(MenuShell);
 }

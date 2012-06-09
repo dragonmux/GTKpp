@@ -1,7 +1,8 @@
 #include "stdafx.h"
 
-GTKSeparator::GTKSeparator()
+GTKSeparator::GTKSeparator(GtkWidget *Widget) : GTKWidget(Widget)
 {
+	Separator = GTK_SEPARATOR(Widget);
 }
 
 GTKSeparator::~GTKSeparator()

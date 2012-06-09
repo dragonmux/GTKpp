@@ -4,20 +4,25 @@
 |*                   GTKWidget implementation                  *|
 \***************************************************************/
 
-GTKWidget::GTKWidget() : Widget(NULL)
+GTKWidget::GTKWidget(GtkWidget *W) : Widget(W)
 {
+	gtk_widget_ref(Widget);
 }
 
 GTKWidget::~GTKWidget()
 {
-	if (Widget != NULL &&
+	if (Widget != NULL)
+	{
+		if (Widget->window != NULL &&
 #if (GTK_MAJOR_VERSION >= 2 && GTK_MINOR_VERSION >= 18)
-		gdk_window_is_destroyed(Widget->window) == FALSE
+			gdk_window_is_destroyed(Widget->window) == FALSE
 #else
-		((GdkWindowObject *)Widget->window)->destroyed == FALSE
+			((GdkWindowObject *)Widget->window)->destroyed == FALSE
 #endif
 		)
-		gtk_widget_destroy(Widget);
+			gtk_widget_destroy(Widget);
+		gtk_widget_unref(Widget);
+	}
 	Widget = NULL;
 }
 

@@ -5,10 +5,8 @@ void WebURLCallback(GtkAboutDialog *AboutBox, const char *Link, void *Data)
 	gtk_show_uri(NULL, Link, GDK_CURRENT_TIME, NULL);
 }
 
-GTKAboutDialog::GTKAboutDialog(GTKWindow *Parent)
+GTKAboutDialog::GTKAboutDialog(GTKWindow *Parent) : GTKDialog(gtk_about_dialog_new())
 {
-	Widget = gtk_about_dialog_new();
-	Dialog = GTK_DIALOG(Widget);
 	AboutBox = GTK_ABOUT_DIALOG(Dialog);
 	gtk_window_set_transient_for(GTK_WINDOW(Widget), Parent->GetWindow());
 }

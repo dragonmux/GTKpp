@@ -1,22 +1,14 @@
 #include "stdafx.h"
 
-GTKHBox::GTKHBox(bool EqualSpacing, int CellSpacing)
+GTKHBox::GTKHBox(bool EqualSpacing, int CellSpacing) : GTKBox(gtk_hbox_new(EqualSpacing, CellSpacing))
 {
-	Init(EqualSpacing, CellSpacing);
-}
-
-GTKHBox::GTKHBox(int Width, int Height, bool EqualSpacing, int CellSpacing)
-{
-	Init(EqualSpacing, CellSpacing);
-	gtk_widget_set_size_request(Widget, Width, Height);
-}
-
-void GTKHBox::Init(bool EqualSpacing, int CellSpacing)
-{
-	Widget = gtk_hbox_new(EqualSpacing, CellSpacing);
-	Container = GTK_CONTAINER(Widget);
-	Box = GTK_BOX(Container);
 	HBox = GTK_HBOX(Box);
+}
+
+GTKHBox::GTKHBox(int Width, int Height, bool EqualSpacing, int CellSpacing) : GTKBox(gtk_hbox_new(EqualSpacing, CellSpacing))
+{
+	HBox = GTK_HBOX(Box);
+	gtk_widget_set_size_request(Widget, Width, Height);
 }
 
 void GTKHBox::SetParent(GTKWidget *Parent)

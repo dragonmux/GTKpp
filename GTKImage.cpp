@@ -13,7 +13,7 @@
 		} \
 	}
 
-GTKImage::GTKImage(int Width, int Height, bool UsingImage)
+GTKImage::GTKImage(int Width, int Height, bool UsingImage) : GTKWidget(gtk_event_box_new())
 {
 	this->UsingImage = UsingImage;
 	if (UsingImage == FALSE)
@@ -28,7 +28,6 @@ GTKImage::GTKImage(int Width, int Height, bool UsingImage)
 		_Widget = gtk_image_new();
 		Img = GTK_IMAGE(_Widget);
 	};
-	Widget = gtk_event_box_new();
 	EventBox = GTK_EVENT_BOX(Widget);
 	gtk_event_box_set_visible_window(EventBox, FALSE);
 	gtk_container_add(GTK_CONTAINER(Widget), _Widget);

@@ -1,9 +1,7 @@
 #include "stdafx.h"
 
-GTKMenuItem::GTKMenuItem(const char *Value)
+GTKMenuItem::GTKMenuItem(const char *Value) : GTKContainer(gtk_menu_item_new_with_mnemonic(Value))
 {
-	Widget = gtk_menu_item_new_with_mnemonic(Value);//gtk_menu_item_new();
-	Container = GTK_CONTAINER(Widget);
 	MenuItem = GTK_MENU_ITEM(Container);
 	//gtk_menu_item_set_use_underline(MenuItem, TRUE);
 	SetMenuText(Value);

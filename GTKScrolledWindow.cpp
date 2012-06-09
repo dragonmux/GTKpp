@@ -1,9 +1,7 @@
 #include "stdafx.h"
 
-GTKScrolledWindow::GTKScrolledWindow(GTKWidget *Parent, int Width, int Height, bool NeedsParenting)
+GTKScrolledWindow::GTKScrolledWindow(GTKWidget *Parent, int Width, int Height, bool NeedsParenting) : GTKContainer(gtk_scrolled_window_new(NULL, NULL))
 {
-	Widget = gtk_scrolled_window_new(NULL, NULL);
-	Container = GTK_CONTAINER(Widget);
 	ScrolledWindow = GTK_SCROLLED_WINDOW(Container);
 	if (NeedsParenting == true)
 		SetParent(Parent);

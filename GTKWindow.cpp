@@ -8,10 +8,8 @@
 |*                   GTKWindow implementation                  *|
 \***************************************************************/
 
-GTKWindow::GTKWindow(GtkWindowType Type, void *CloseFunc, void *data)
+GTKWindow::GTKWindow(GtkWindowType Type, void *CloseFunc, void *data) : GTKContainer(gtk_window_new(Type))
 {
-	Widget = gtk_window_new(Type);
-	Container = GTK_CONTAINER(Widget);
 	Window = GTK_WINDOW(Container);
 	gtk_window_set_gravity(Window, GDK_GRAVITY_NORTH_WEST);
 	QuitFunc = (CloseFunc == NULL ? (void *)gtk_main_quit : CloseFunc);

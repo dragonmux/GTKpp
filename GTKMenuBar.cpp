@@ -1,10 +1,7 @@
 #include "stdafx.h"
 
-GTKMenuBar::GTKMenuBar(GTKWidget *Parent, bool NeedsParenting)
+GTKMenuBar::GTKMenuBar(GTKWidget *Parent, bool NeedsParenting) : GTKMenuShell(gtk_menu_bar_new())
 {
-	Widget = gtk_menu_bar_new();
-	Container = GTK_CONTAINER(Widget);
-	MenuShell = GTK_MENU_SHELL(Container);
 	MenuBar = GTK_MENU_BAR(MenuShell);
 	if (NeedsParenting == true)
 		((GTKContainer *)Parent)->AddChild(this);

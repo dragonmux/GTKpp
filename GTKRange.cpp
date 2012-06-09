@@ -1,7 +1,8 @@
 #include "stdafx.h"
 
-GTKRange::GTKRange() : StartVal(0)
+GTKRange::GTKRange(GtkWidget *Widget) : GTKWidget(Widget), StartVal(0)
 {
+	Range = GTK_RANGE(Widget);
 	OnChangedCallbacks.clear();
 }
 

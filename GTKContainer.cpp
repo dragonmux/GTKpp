@@ -1,7 +1,8 @@
 #include "stdafx.h"
 
-GTKContainer::GTKContainer()
+GTKContainer::GTKContainer(GtkWidget *Widget) : GTKWidget(Widget)
 {
+	Container = GTK_CONTAINER(Widget);
 	Children.clear();
 }
 

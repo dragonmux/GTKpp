@@ -1,8 +1,7 @@
 #include "stdafx.h"
 
-GTKEntry::GTKEntry(int Width, int Height, const char *Content)
+GTKEntry::GTKEntry(int Width, int Height, const char *Content) : GTKWidget(gtk_entry_new())
 {
-	Widget = gtk_entry_new();
 	Entry = GTK_ENTRY(Widget);
 	SetText(Content);
 	gtk_widget_set_size_request(Widget, Width, Height);

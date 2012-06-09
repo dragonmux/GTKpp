@@ -1,9 +1,7 @@
 #include "stdafx.h"
 
-GTKTextView::GTKTextView(GTKWidget *Parent, int Width, int Height, bool NeedsParenting) : AutoScroll(false)
+GTKTextView::GTKTextView(GTKWidget *Parent, int Width, int Height, bool NeedsParenting) : GTKContainer(gtk_text_view_new()), AutoScroll(false)
 {
-	Widget = gtk_text_view_new();
-	Container = GTK_CONTAINER(Widget);
 	TextView = GTK_TEXT_VIEW(Container);
 	if (NeedsParenting != FALSE)
 		SetParent(Parent);

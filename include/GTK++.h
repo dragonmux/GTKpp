@@ -119,7 +119,7 @@ protected:
 	GtkWidget *Widget;
 
 protected:
-	GTKWidget();
+	GTKWidget(GtkWidget *W);
 	GTKWidget *GetGTKWidget() const;
 
 public:
@@ -180,6 +180,8 @@ class GTKDialog : public GTKWidget
 protected:
 	GtkDialog *Dialog;
 
+	GTKDialog(GtkWidget *Widget);
+
 public:
 	GTKpp_API int Run();
 };
@@ -210,8 +212,9 @@ protected:
 	GtkContainer *Container;
 	std::list<GTKWidget *> Children;
 
+	GTKContainer(GtkWidget *Widget);
+
 public:
-	GTKpp_API GTKContainer();
 	GTKpp_API ~GTKContainer();
 	GTKpp_API void AddChild(GTKWidget *Child);
 	GTKpp_API void RemoveChild(GTKWidget *Child);
@@ -222,6 +225,8 @@ class GTKBox : public GTKContainer
 {
 protected:
 	GtkBox *Box;
+
+	GTKBox(GtkWidget *Widget);
 };
 
 class GTKFixed : public GTKContainer
@@ -243,9 +248,6 @@ class GTKHBox : public GTKBox
 protected:
 	GtkHBox *HBox;
 
-private:
-	void Init(bool EqualSpacing, int CellSpacing);
-
 public:
 	GTKpp_API GTKHBox(bool EqualSpacing = true, int CellSpacing = 0);
 	GTKpp_API GTKHBox(int Width, int Height, bool EqualSpacing, int CellSpacing = 0);
@@ -257,9 +259,6 @@ class GTKVBox : public GTKBox
 {
 protected:
 	GtkVBox *VBox;
-
-private:
-	void Init(bool EqualSpacing, int CellSpacing);
 
 public:
 	GTKpp_API GTKVBox(bool EqualSpacing = true, int CellSpacing = 0);
@@ -286,6 +285,8 @@ class GTKButton : public GTKWidget
 {
 protected:
 	GtkButton *Button;
+
+	GTKButton(GtkWidget *Widget);
 
 public:
 	GTKpp_API GTKButton(const char *Content = NULL);
@@ -364,9 +365,6 @@ class GTKFrame : public GTKContainer
 {
 protected:
 	GtkFrame *Frame;
-
-private:
-	void Init(const char *Label);
 
 public:
 	GTKpp_API GTKFrame(GTKWidget *Parent, int Width, int Height, const char *Label = NULL);
@@ -677,6 +675,8 @@ class GTKMenuShell : public GTKContainer
 protected:
 	GtkMenuShell *MenuShell;
 
+	GTKMenuShell(GtkWidget *Widget);
+
 public:
 	GTKpp_API void AddChild(GTKWidget *Child, bool Append = true);
 };
@@ -734,7 +734,7 @@ class GTKRange : public GTKWidget
 protected:
 	GtkRange *Range;
 
-	GTKRange();
+	GTKRange(GtkWidget *Widget);
 	void SetHandlers();
 	~GTKRange();
 
@@ -762,7 +762,7 @@ class GTKScale : public GTKRange
 protected:
 	GtkScale *Scale;
 
-	GTKScale();
+	GTKScale(GtkWidget *Widget);
 	~GTKScale();
 
 public:
@@ -796,7 +796,7 @@ class GTKSeparator : public GTKWidget
 protected:
 	GtkSeparator *Separator;
 
-	GTKSeparator();
+	GTKSeparator(GtkWidget *Widget);
 	~GTKSeparator();
 };
 

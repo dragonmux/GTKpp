@@ -1,10 +1,8 @@
 #include "stdafx.h"
 
-GTKFixed::GTKFixed(GTKWidget *Parent, int Width, int Height)
+GTKFixed::GTKFixed(GTKWidget *Parent, int Width, int Height) : GTKContainer(gtk_fixed_new())
 {
 	//GtkStyle *Style = gtk_style_new();
-	Widget = gtk_fixed_new();
-	Container = GTK_CONTAINER(Widget);
 	Fixed = GTK_FIXED(Container);
 	SetParent(Parent);
 	/*gtk_style_set_font(Style, gdk_font_load("Courier New"));
@@ -12,10 +10,8 @@ GTKFixed::GTKFixed(GTKWidget *Parent, int Width, int Height)
 	gtk_widget_set_size_request(Widget, Width, Height);
 }
 
-GTKFixed::GTKFixed(int Width, int Height)
+GTKFixed::GTKFixed(int Width, int Height) : GTKContainer(gtk_fixed_new())
 {
-	Widget = gtk_fixed_new();
-	Container = GTK_CONTAINER(Widget);
 	Fixed = GTK_FIXED(Container);
 	gtk_widget_set_size_request(Widget, Width, Height);
 }

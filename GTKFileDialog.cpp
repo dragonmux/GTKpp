@@ -5,11 +5,10 @@
 \***************************************************************/
 
 GTKFileDialog::GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChooserAction Action, std::vector<const char *> FileTypes,
-	std::vector<const char *> FileTypeNames, const char *Button1_Type, int Button1_Result, const char *Button2_Type, int Button2_Result) : GTKDialog()
+	std::vector<const char *> FileTypeNames, const char *Button1_Type, int Button1_Result, const char *Button2_Type, int Button2_Result) :
+	GTKDialog(gtk_file_chooser_dialog_new(Title, Window, Action, Button1_Type, Button1_Result, Button2_Type, Button2_Result, NULL))
 {
-	Widget = gtk_file_chooser_dialog_new(Title, Window, Action, Button1_Type, Button1_Result, Button2_Type, Button2_Result, NULL);
-	Dialog = GTK_DIALOG(Widget);
-	FileDialog = GTK_FILE_CHOOSER(Widget);
+	FileDialog = GTK_FILE_CHOOSER(Dialog);
 	gtk_file_chooser_set_do_overwrite_confirmation(FileDialog, TRUE);
 	AddFilters(FileTypes, FileTypeNames);
 	if (strncmp(Button1_Type, GTK_STOCK_SAVE, 8) == 0 || strncmp(Button2_Type, GTK_STOCK_SAVE, 8) == 0)

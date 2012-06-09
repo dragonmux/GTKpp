@@ -1,8 +1,12 @@
 #include "stdafx.h"
 
-GTKButton::GTKButton(const char *Content)
+GTKButton::GTKButton(GtkWidget *Widget) : GTKWidget(Widget)
 {
-	Widget = gtk_button_new();
+	Button = GTK_BUTTON(Widget);
+}
+
+GTKButton::GTKButton(const char *Content) : GTKWidget(gtk_button_new())
+{
 	Button = GTK_BUTTON(Widget);
 	if (Content != NULL)
 	{

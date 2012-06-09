@@ -4,10 +4,8 @@
 |*                    GTKImage implementation                  *|
 \***************************************************************/
 
-GTKComboBox::GTKComboBox(GTKWidget *Parent, int Width, int Height, bool NeedsParenting)
+GTKComboBox::GTKComboBox(GTKWidget *Parent, int Width, int Height, bool NeedsParenting) : GTKContainer(gtk_combo_box_new_text())
 {
-	Widget = gtk_combo_box_new_text();
-	Container = GTK_CONTAINER(Widget);
 	ComboBox = GTK_COMBO_BOX(Container);
 	lastPos = -1;
 	if (NeedsParenting != FALSE)

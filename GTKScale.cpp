@@ -1,7 +1,8 @@
 #include "stdafx.h"
 
-GTKScale::GTKScale()
+GTKScale::GTKScale(GtkWidget *Widget) : GTKRange(Widget)
 {
+	Scale = GTK_SCALE(Range);
 }
 
 GTKScale::~GTKScale()
