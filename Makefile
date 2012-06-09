@@ -69,52 +69,6 @@ clean-recursive:
 	@cd include && $(MAKE) clean
 	@cd bin && $(MAKE) clean
 
-GTK.o: GTK.cpp
-GTKGL.o: GTKGL.cpp
-GTKWidgeto: GTKWidget.cpp
-GLBase.o: GLBase.cpp
-GTKWindow.o: GTKWindow.cpp
-GTKGLWindow.o: GTKGLWindow.cpp
-GTKFrame.o: GTKFrame.cpp
-GTKFixedFrame.o: GTKFixedFrame.cpp
-GTKDialog.o: GTKDialog.cpp
-GTKFileDialog.o: GTKFileDialog.cpp
-GTKMessageBox.o: GTKMessageBox.cpp
-GTKFont.o: GTKFont.cpp
-GDKPixbuf.o: GDKPixbuf.cpp
-GTKHBox.o: GTKHBox.cpp
-GTKVBox.o: GTKVBox.cpp
-GTKKey.o: GTKKey.cpp
-GTKFixed.o: GTKFixed.cpp
-GTKButton.o: GTKButton.cpp
-GTKEntry.o: GTKEntry.cpp
-GTKImage.o: GTKImage.cpp
-GTKLabel.o: GTKLabel.cpp
-GTKHUpDown.o: GTKHUpDown.cpp
 # GLPixelFormats.o: GLPixelFormats.cpp # for Windows only!
-GTKContainer.o: GTKContainer.cpp
-GTKEvents.o: GTKEvents.cpp
-GTKScrolledWindow.o: GTKScrolledWindow.cpp
-GTKTextBuffer.o: GTKTextBuffer.cpp
-GTKTextView.o: GTKTextView.cpp
-GTKList.o: GTKList.cpp
-GTKCheckBox.o: GTKCheckBox.cpp
-GTKComboBox.o: GTKComboBox.cpp
-GTKColourSelectionDialog.o: GTKColourSelectionDialog.cpp
-GTKAboutDialog.o: GTKAboutDialog.cpp
 # GTKAdjustment.o: GTKAdjustment.cpp # not yet, not ready yet.
-GTKDrawingArea.o: GTKDrawingArea.cpp
-GTKGLDrawingArea.o: GTKGLDrawingArea.cpp
 # GTKViewport.o: GTKViewport.cpp # not yet, not ready yet.
-GTKMenu.o: GTKMenu.cpp
-GTKMenuBar.o: GTKMenuBar.cpp
-GTKMenuItem.o: GTKMenuItem.cpp
-GTKMenuShell.o: GTKMenuShell.cpp
-GTKProgressBar.o: GTKProgressBar.cpp
-GTKRange.o: GTKRange.cpp
-GTKScale.o: GTKScale.cpp
-GTKHScale.o: GTKHScale.cpp
-GTKVScale.o: GTKVScale.cpp
-GTKSeparator.o: GTKSeparator.cpp
-GTKHSeparator.o: GTKHSeparator.cpp
-GTKVSeparator.o: GTKVSeparator.cpp
