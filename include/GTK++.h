@@ -449,7 +449,7 @@ public:
 	GTKpp_API void SetFullscreen(bool Fullscreen = true);
 };
 
-class GTKEvents// abstract
+class GTKpp_API GTKEvents// abstract
 {
 protected:
 	GTKWindow *Window;
@@ -470,9 +470,9 @@ protected:
 	GTKpp_API GTKEvents();
 
 public:
-	GTKpp_API virtual ~GTKEvents();
-	GTKpp_API virtual void Init(GTKWindow *Wnd) = 0;
-	GTKpp_API virtual void Deinit() = 0;
+	virtual ~GTKEvents();
+	virtual void Init(GTKWindow *Wnd) = 0;
+	virtual void Deinit() = 0;
 	Events EventHandlers;
 };
 
