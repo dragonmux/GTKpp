@@ -820,8 +820,4 @@ public:
 	GTKpp_API ~GTKVSeparator();
 };
 
-#ifdef __HAD_MessageBox__
-#define MessageBox __HAD_MessageBox__
-#undef __HAD_MessageBox__
-#endif /*__HAD_MessageBox__*/
 #endif /*__GTKpp_H__*/

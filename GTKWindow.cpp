@@ -4,6 +4,10 @@
 #undef MessageBox
 #endif
 
+#ifdef _MSC_VER
+#define vsnprintf	_vsnprintf
+#endif
+
 /***************************************************************\
 |*                   GTKWindow implementation                  *|
 \***************************************************************/
