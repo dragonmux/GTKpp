@@ -110,6 +110,8 @@ public:
 	GLBase *Parent;
 
 	GTKpp_API GTKSize GetStringMetrics(const char *String);
+	GTKpp_API uint32_t GetBaseline();
+	GTKpp_API void RenderString(const char *String);
 };
 #endif
 
@@ -465,7 +467,7 @@ public:
 	} Events;
 
 protected:
-	GTKpp_API GTKEvents();
+	GTKEvents();
 
 public:
 	virtual ~GTKEvents();

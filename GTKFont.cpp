@@ -11,7 +11,7 @@ GTKSize GTKFont::GetStringMetrics(const char *String)
 	PangoFontMap *PFM;
 	PangoFontDescription *PFD;
 	static PangoRectangle PR_Logic;
-	static GTKSize ret;
+	GTKSize ret;
 
 	PFD = pango_font_describe(Font);
 	PFM = pango_font_get_font_map(Font);
@@ -36,4 +36,17 @@ GTKSize GTKFont::GetStringMetrics(const char *String)
 	g_object_unref(PC);
 
 	return ret;
+}
+
+uint32_t GTKFont::GetBaseline()
+{
+	PangoFontMetrics *PFM = pango_font_get_metrics(Font, NULL);
+	uint32_t ret = pango_font_metrics_get_descent(PFM) / PANGO_SCALE;
+	pango_font_metrics_unref(PFM);
+	return ret;
+}
+
+void GTKFont::RenderString(const char *String)
+{
+	GTKSize size = GetStringMetrics(String);
 }
