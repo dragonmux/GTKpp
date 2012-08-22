@@ -51,6 +51,9 @@ void GLBase::GLBaseDeinit()
 
 GLBase::~GLBase()
 {
+//	g_clear_object(&Conf);
+	g_object_unref(Conf);
+	Conf = NULL;
 }
 
 GdkGLConfig *GLBase::MakeStandardConfig()

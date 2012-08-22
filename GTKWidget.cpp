@@ -20,9 +20,10 @@ GTKWidget::~GTKWidget()
 			((GdkWindowObject *)Widget->window)->destroyed == FALSE
 #endif
 		)
-			gtk_widget_destroy(Widget);
+		gtk_widget_destroy(Widget);
 		gtk_widget_unref(Widget);
 	}
+	//g_clear_object(&Widget);
 	Widget = NULL;
 }
 
