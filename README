@@ -1,0 +1,33 @@
+This is the GUI framework GTK++, built on GTK to include tightly
+integrated OpenGL support. The goal is the create a simple to use and
+understand framework that has true UTF-8 support and direct OpenGL
+integration that is true to the C++ style. This library is a little
+more heavy-weight than just a wrapper given it implements suits of
+common tasks as single functions rather than a sequence of calls
+that need to be learned.
+
+The code is formatted to play nice with editors that don't understand
+the spaces-for-tabs format. It should not matter what your tab width
+is set to, I use 4 but 2 and 8 should look good too.
+
+The Makefile has four overridable variables:
+GCC - controls how GCC is configured, a typical value for this
+	variable for a 64-bit build is
+GCC="gcc -m64 -fPIC -DPIC"
+DEBUG - controls whether the build is to be a debug build,
+	defaults to '0' which means no
+NOGL - controls whether OpenGL support will be switched on
+	for the build. '0', which means no, is the default and
+	switches OpenGL support on
+LIBDIR - controls where the object files and pkgconfig file
+	will be installed, defaults to /usr/lib. For a 64-bit build, it is
+	recomended to set this as
+LIBDIR=/usr/lib64
+
+The library is currently somewhere between being in alpha and beta
+release stages. It is recognised that significant work needs to be
+done in order to complete the library enough for an initial release.
+This is especially of GTKFont and introducing more OpenGL versions of
+widgets where it makes sense.
+
+Please report bugs to dx-mon@users.sourceforge.net
