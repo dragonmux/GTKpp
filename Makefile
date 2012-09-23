@@ -66,7 +66,6 @@ clean: clean-recursive
 	$(call run-cmd,rm,GTK++,$(O) $(SO_out))
 
 clean-recursive:
-	@cd include && $(MAKE) clean
 	@cd bin && $(MAKE) clean
 
 # GLPixelFormats.o: GLPixelFormats.cpp # for Windows only!
