@@ -13,21 +13,14 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+include Makefile.inc
 
-GCC ?= gcc
-ifeq ($(strip $(DEBUG)), 1)
-	OPTIM_FLAGS = -ggdb
-	GCC_FLAGS =
-else
-	GCC_VER = $(shell gcc -dumpversion | cut -d . -f 1)
-	ifeq ($(shell if [ $(GCC_VER) -ge 4 ]; then echo 1; else echo 0; fi), 1)
-		GCC_FLAGS = -fvisibility=hidden -fvisibility-inlines-hidden
-	else
-		GCC_FLAGS =
-	endif
-	OPTIM_FLAGS = -O2
-	DEBUG = 0
-endif
+PKG_CONFIG = gtk+-2.0 pango $(PKG_GL)
+EXTRA_CFLAGS = $(shell pkg-config --cflags $(PKG_CONFIG)) $(CFLAGS_GL)
+CFLAGS = -c $(OPTIM_FLAGS) -D__GTKpp_EXPORT__ -I./include/ -I./ $(EXTRA_CFLAGS) -o $@ $<
+LIBS = $(shell pkg-config --libs $(PKG_CONFIG))
+LFLAGS = $(OPTIM_FLAGS) -shared $(O) $(LIBS) -Wl,-soname,$(SO_out) -o $(SO)
+
 ifeq ($(strip $(NOGL)), 1)
 	O_GL =
 	PKG_GL =
@@ -37,15 +30,6 @@ else
 	PKG_GL = gtkglext-1.0
 	CFLAGS_GL = 
 endif
-CC = $(GCC) $(GCC_FLAGS)
-PKG_CONFIG = gtk+-2.0 pango $(PKG_GL)
-EXTRA_CFLAGS = $(shell pkg-config --cflags $(PKG_CONFIG)) $(CFLAGS_GL)
-CFLAGS = -c $(OPTIM_FLAGS) -D__GTKpp_EXPORT__ -I./include/ -I./ $(EXTRA_CFLAGS) -o $*.o
-LIBS = $(shell pkg-config --libs $(PKG_CONFIG))
-LFLAGS = $(OPTIM_FLAGS) -shared $(O) $(LIBS) -Wl,-soname,$(SO_out) -o $(SO)
-AR = ar cr
-RANLIB = ranlib
-STRIP = strip -x
 
 O = GTK.o GTKWidget.o GTKWindow.o GTKFrame.o GTKDialog.o GTKFileDialog.o GTKMessageBox.o GDKPixbuf.o GTKBox.o GTKHBox.o GTKVBox.o GTKKey.o GTKFixed.o GTKButton.o GTKEntry.o GTKImage.o GTKLabel.o GTKHUpDown.o GTKContainer.o GTKEvents.o GTKScrolledWindow.o GTKTextBuffer.o GTKTextView.o GTKList.o GTKCheckBox.o GTKComboBox.o GTKColourSelectionDialog.o GTKAboutDialog.o GTKDrawingArea.o GTKMenu.o GTKMenuBar.o GTKMenuItem.o GTKMenuShell.o GTKProgressBar.o GTKRange.o GTKScale.o GTKHScale.o GTKVScale.o GTKSeparator.o GTKHSeparator.o GTKVSeparator.o $(O_GL)
 #GTKFixedFrame.o 
@@ -70,16 +54,16 @@ sudo-install:
 	@cd include && $(MAKE) install
 
 bin/libGTK++.so: $(O)
-	$(AR) $(A) $(O)
-	$(RANLIB) $(A)
-	$(CC) $(LFLAGS)
-	if [ $(DEBUG) -eq 0 ]; then $(STRIP) $(SO); fi
+	$(call run-cmd,ar,$(A),$(O))
+	$(call run-cmd,ranlib,$(A))
+	$(call run-cmd,ccld,$(LFLAGS))
+	$(call debug-strip,$(SO))
 
 .cpp.o:
-	$(CC) $(CFLAGS) $*.cpp
+	$(call run-cmd,cc,$(CFLAGS))
 
 clean: clean-recursive
-	rm -f *.o *~
+	$(call run-cmd,rm,GTK++,$(O) $(SO_out))
 
 clean-recursive:
 	@cd include && $(MAKE) clean
