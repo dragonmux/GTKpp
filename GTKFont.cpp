@@ -66,5 +66,7 @@ uint32_t GTKFont::GetBaseline()
 
 void GTKFont::RenderString(const char *String)
 {
+	if (String == NULL)
+		return;
 	GTKSize size = GetStringMetrics(String);
 }
