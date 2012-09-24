@@ -22,10 +22,16 @@
 |*                      GTK implementation                     *|
 \***************************************************************/
 
+bool GTK::init = false;
+
 void GTK::GTKInit(int argc, char **argv)
 {
-	gtk_set_locale();
-	gtk_init(&argc, &argv);
+	if (init == false)
+	{
+		gtk_set_locale();
+		gtk_init(&argc, &argv);
+		init = true;
+	}
 }
 
 GTK::GTK()

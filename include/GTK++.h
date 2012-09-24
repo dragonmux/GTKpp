@@ -101,6 +101,8 @@ protected:
 	GTK();
 	~GTK();
 
+	static bool init;
+
 public:
 	GTKpp_API static void GTKInit(int _argc, char **_argv);
 	GTKpp_API static void SetDefaultWindowIcon(GList *Icons);
