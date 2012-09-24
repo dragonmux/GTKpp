@@ -20,10 +20,16 @@ PKGDIR = $(LIBDIR)/pkgconfig
 INSTALL = install
 INSTALL_FILE = $(INSTALL) -m644
 
+PACKAGES = $(shell pkg-config --cflags gtk+-2.0 pango gtkglext-1.0)
+SED = sed -e 's:@PACKAGES@:$(PACKAGES):g' -e 's:@LIBDIR@:$(LIBDIR):g'
+
 SO = libGTK++.so
 A = libGTK++.a
 PC = libGTK++.pc
 IN = libGTK++.pc.in
+
+quiet_cmd_sed = " GEN   $(3)"
+cmd_sed = $(SED) $(2) > $(3)
 
 clean:
 	$(call run-cmd,rm,GTK+/bin,$(SO) $(A))
@@ -32,7 +38,6 @@ install:
 	$(call run-cmd,install_file,$(SO),$(LIBDIR))
 	$(call run-cmd,install_file,$(A),$(LIBDIR))
 	$(call run-cmd,rm,$(PC),$(PC))
-	$(Q)$(SHELL) ./libGTK++.pc.sh
-	$(Q)sed -i -e 's:@LIBDIR@:$(LIBDIR):g' libGTK++.pc
+	$(call run-cmd,sed,$(IN),$(PC))
 	$(call run-cmd,install_file,$(PC),$(PKGDIR))
 	$(Q)ldconfig
