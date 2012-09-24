@@ -20,7 +20,7 @@ PKGDIR = $(LIBDIR)/pkgconfig
 INSTALL = install
 INSTALL_FILE = $(INSTALL) -m644
 
-PACKAGES = $(shell pkg-config --cflags gtk+-2.0 pango gtkglext-1.0)
+PACKAGES = $(strip $(shell pkg-config --cflags gtk+-2.0 pango gtkglext-1.0))
 SED = sed -e 's:@PACKAGES@:$(PACKAGES):g' -e 's:@LIBDIR@:$(LIBDIR):g'
 
 SO = libGTK++.so
