@@ -153,7 +153,7 @@ GTKFont *GLBase::SetupGLFont(const char *FontName, int Size, int Start, int Num)
 	PF = gdk_gl_font_use_pango_font(PFD, Start, Num, Font->DisplayBase);
 	if (PF == NULL)
 	{
-		printf("Cannot get a font from Pango with name and size %s %ipt, exiting.....\n\n", FontName, Size);
+		printf("Cannot get a font from Pango with name and size %s %dpt, exiting.....\n\n", FontName, Size);
 		exit(1);
 	}
 	Font->Font = PF;
@@ -179,7 +179,7 @@ void GLBase::DestroyGLFont(GTKFont **Font)
 		{
 			g_object_unref(Fonts[i]->Font);
 			glDeleteLists(Fonts[i]->DisplayBase, Fonts[i]->NumEntries);
-			free(Fonts[i]);
+			delete Fonts[i];
 			*Font = NULL;
 			return;
 		}
@@ -193,9 +193,12 @@ void GLBase::DestroyGLFonts()
 	this->glBegin();
 	for (uint32_t i = 0; i < Fonts.size(); i++)
 	{
-		g_object_unref(Fonts[i]->Font);
-		glDeleteLists(Fonts[i]->DisplayBase, Fonts[i]->NumEntries);
-		free(Fonts[i]);
+		if (Fonts[i]->Font != NULL)
+		{
+			g_object_unref(Fonts[i]->Font);
+			glDeleteLists(Fonts[i]->DisplayBase, Fonts[i]->NumEntries);
+			delete Fonts[i];
+		}
 	}
 	Fonts.clear();
 	this->glEnd();
