@@ -181,6 +181,7 @@ void GLBase::DestroyGLFont(GTKFont **Font)
 			glDeleteLists(Fonts[i]->DisplayBase, Fonts[i]->NumEntries);
 			delete Fonts[i];
 			*Font = NULL;
+			Fonts[i] = NULL;
 			return;
 		}
 	}
@@ -193,7 +194,7 @@ void GLBase::DestroyGLFonts()
 	this->glBegin();
 	for (uint32_t i = 0; i < Fonts.size(); i++)
 	{
-		if (Fonts[i]->Font != NULL)
+		if (Fonts[i] != NULL)
 		{
 			g_object_unref(Fonts[i]->Font);
 			glDeleteLists(Fonts[i]->DisplayBase, Fonts[i]->NumEntries);
