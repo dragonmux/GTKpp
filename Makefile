@@ -31,7 +31,7 @@ else
 	CFLAGS_GL = 
 endif
 
-O = GTK.o GTKWidget.o GTKWindow.o GTKFrame.o GTKDialog.o GTKFileDialog.o GTKMessageBox.o GDKPixbuf.o GTKBox.o GTKHBox.o GTKVBox.o GTKKey.o GTKFixed.o GTKButton.o GTKEntry.o GTKImage.o GTKLabel.o GTKHUpDown.o GTKContainer.o GTKEvents.o GTKScrolledWindow.o GTKTextBuffer.o GTKTextView.o GTKList.o GTKCheckBox.o GTKComboBox.o GTKColourSelectionDialog.o GTKAboutDialog.o GTKDrawingArea.o GTKMenu.o GTKMenuBar.o GTKMenuItem.o GTKMenuShell.o GTKProgressBar.o GTKRange.o GTKScale.o GTKHScale.o GTKVScale.o GTKSeparator.o GTKHSeparator.o GTKVSeparator.o $(O_GL)
+O = GTK.o GTKWidget.o GTKWindow.o GTKFrame.o GTKDialog.o GTKFileDialog.o GTKMessageBox.o GDKPixbuf.o GTKBox.o GTKHBox.o GTKVBox.o GTKKey.o GTKFixed.o GTKButton.o GTKEntry.o GTKImage.o GTKLabel.o GTKHUpDown.o GTKContainer.o GTKEvents.o GTKScrolledWindow.o GTKTextBuffer.o GTKTextView.o GTKList.o GTKCheckBox.o GTKComboBox.o GTKColourSelectionDialog.o GTKAboutDialog.o GDKPixmap.o GTKDrawingArea.o GTKCairoDrawingArea.o GTKMenu.o GTKMenuBar.o GTKMenuItem.o GTKMenuShell.o GTKProgressBar.o GTKRange.o GTKScale.o GTKHScale.o GTKVScale.o GTKSeparator.o GTKHSeparator.o GTKVSeparator.o $(O_GL)
 #GTKFixedFrame.o 
 SO = bin/libGTK++.so
 SO_out = libGTK++.so
