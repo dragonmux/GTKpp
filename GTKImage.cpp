@@ -34,7 +34,7 @@
 GTKImage::GTKImage(int Width, int Height, bool UsingImage) : GTKWidget(gtk_event_box_new())
 {
 	this->UsingImage = UsingImage;
-	if (UsingImage == FALSE)
+	if (UsingImage == false)
 	{
 		_Widget = gtk_drawing_area_new();
 		Image = GTK_DRAWING_AREA(_Widget);
@@ -66,7 +66,7 @@ void GTKImage::DrawImage(GDKPixbuf *Image)
 {
 	GdkColor Col = {0};
 	GdkRectangle Rect;
-	ASSERT_AND_RETURN("Cannot DrawImage on a gtk_image!\n", UsingImage == FALSE);
+	ASSERT_AND_RETURN("Cannot DrawImage on a gtk_image!\n", UsingImage == false);
 	if (DrawArea == NULL)
 	{
 		DrawArea = GDK_DRAWABLE(_Widget->window);
@@ -96,7 +96,7 @@ void GTKImage::DrawImage(GDKPixbuf *Image)
 
 void GTKImage::SetImage(GDKPixbuf *Image)
 {
-	ASSERT_AND_RETURN("Cannot SetImage on a gtk_drawing_area!\n", UsingImage != FALSE);
+	ASSERT_AND_RETURN("Cannot SetImage on a gtk_drawing_area!\n", UsingImage == true);
 	gtk_image_set_from_pixbuf(this->Img, Image->GetBuffer());
 }
 
