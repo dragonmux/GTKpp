@@ -18,13 +18,69 @@
 
 #include "stdafx.h"
 
-GTKDrawingArea::GTKDrawingArea(int Width, int Height) : GTKWidget(gtk_drawing_area_new())
+GTKDrawingArea::GTKDrawingArea(uint32_t width, uint32_t height) : GTKWidget(gtk_drawing_area_new()), Pixmap(NULL), Width(width), Height(height)
 {
 	DrawingArea = GTK_DRAWING_AREA(Widget);
 	gtk_drawing_area_size(DrawingArea, Width, Height);
+	SetHandler("expose-event", (void *)Redraw, this);
 }
 
-void GTKDrawingArea::SetSize(int Width, int Height)
+void GTKDrawingArea::SetSize(uint32_t width, uint32_t height)
 {
+	Width = width;
+	Height = height;
 	gtk_drawing_area_size(DrawingArea, Width, Height);
 }
+
+void GTKDrawingArea::SetPixmap(GDKPixmap *pixmap)
+{
+	Pixmap = pixmap;
+}
+
+bool GTKDrawingArea::Redraw(GtkWidget *widget, GdkEventExpose *event, void *data)
+{
+	GTKDrawingArea *DrawingArea = (GTKDrawingArea *)data;
+	GDKPixmap *Pixmap = DrawingArea->Pixmap;
+
+	if (Pixmap == NULL)
+	{
+		cairo_t *cairoPixmap = gdk_cairo_create(widget->window);
+		cairo_set_source_rgb(cairoPixmap, 0, 0, 0);
+		cairo_rectangle(cairoPixmap, 0, 0, widget->allocation.width, widget->allocation.height);
+		cairo_fill(cairoPixmap);
+		cairo_destroy(cairoPixmap);
+	}
+	else
+	{
+		/*cairo_matrix_t transferMatrix;
+		cairo_pattern_t *transferPattern;
+		cairo_surface_t *transferSurface = cairo_image_surface_create(CAIRO_FORMAT_RGB24, Pixmap->GetWidth(), Pixmap->GetHeight());
+		cairo_t *cairoPixmap = gdk_cairo_create(widget->window);
+		cairo_t *transferPixmap = cairo_create(transferSurface);
+
+		gdk_cairo_set_source_window(transferPixmap, Pixmap->GetPixmap(), 0, 0);
+		cairo_rectangle(transferPixmap, 0, 0, Pixmap->GetWidth(), Pixmap->GetHeight());
+		cairo_fill(transferPixmap);
+		cairo_destroy(transferPixmap);
+
+		transferPattern = cairo_pattern_create_for_surface(transferSurface);
+		cairo_matrix_init_scale(&transferMatrix, float(Pixmap->GetWidth()) / float(DrawingArea->Width), float(Pixmap->GetHeight()) / float(DrawingArea->Height));
+		cairo_pattern_set_matrix(transferPattern, &transferMatrix);
+		cairo_set_source(cairoPixmap, transferPattern);
+
+		cairo_rectangle(cairoPixmap, 0, 0, DrawingArea->Width, DrawingArea->Height);
+		cairo_fill(cairoPixmap);
+		cairo_pattern_destroy(transferPattern);
+
+		cairo_surface_destroy(transferSurface);*/
+		gdk_draw_drawable(widget->window, widget->style->fg_gc[gtk_widget_get_state(widget)], Pixmap->GetPixmap(), event->area.x, event->area.y,
+			event->area.x, event->area.y, event->area.width, event->area.height);
+	}
+	return false;
+}
+
+void GTKDrawingArea::FinishDrawing()
+{
+	gtk_widget_queue_draw(Widget);
+}
+

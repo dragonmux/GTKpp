@@ -326,7 +326,7 @@ public:
 	GTKpp_API GDKPixbuf(const char *File);
 	GTKpp_API GDKPixbuf(uint8_t *Data, uint32_t Width, uint32_t Height, uint32_t BPP, uint32_t CPP);
 	GTKpp_API GDKPixbuf(const uint8_t *InlineData);
-	GTKpp_API ~GDKPixbuf();
+	GTKpp_API virtual ~GDKPixbuf();
 	GTKpp_API GdkPixbuf *GetBuffer() const;
 };
 
@@ -467,6 +467,7 @@ public:
 	GTKpp_API void Present();
 	GTKpp_API void SetWindowIcon(GList *Icons);
 	GTKpp_API void SetFullscreen(bool Fullscreen = true);
+	GTKpp_API void RegisterTimedCallback(uint32_t Interval, bool (*Callback)(void *), void *Data = NULL);
 };
 
 class GTKpp_API GTKEvents// abstract
@@ -667,14 +668,66 @@ public:
 	GTKpp_API ~GTKViewport();
 };*/
 
+struct GTKColour
+{
+	uint8_t R, G, B;
+};
+
+class GDKPixmap
+{
+protected:
+	GdkPixmap *Pixmap;
+	uint32_t PixmapWidth, PixmapHeight;
+
+public:
+	GTKpp_API GDKPixmap(GTKWidget *Widget, uint32_t Width, uint32_t Height);
+	GTKpp_API virtual ~GDKPixmap();
+	GTKpp_API GdkPixmap *GetPixmap() const;
+	GTKpp_API uint32_t GetWidth() const;
+	GTKpp_API uint32_t GetHeight() const;
+	GTKpp_API void DrawPoint(uint32_t X, uint32_t Y, const GTKColour &Colour);
+	GTKpp_API void DrawRect(uint32_t X, uint32_t Y, uint32_t Width, uint32_t Height, const GTKColour &Colour);
+};
+
 class GTKDrawingArea : public GTKWidget
 {
 protected:
 	GtkDrawingArea *DrawingArea;
+	GDKPixmap *Pixmap;
+	uint32_t Width, Height;
 
 public:
-	GTKpp_API GTKDrawingArea(int Width, int Height);
-	GTKpp_API void SetSize(int Width, int Height);
+	GTKpp_API GTKDrawingArea(uint32_t Width, uint32_t Height);
+	GTKpp_API void SetSize(uint32_t Width, uint32_t Height);
+	GTKpp_API void SetPixmap(GDKPixmap *Pixmap);
+	GTKpp_API void FinishDrawing();
+
+private:
+	static bool Redraw(GtkWidget *widget, GdkEventExpose *event, void *data);
+};
+
+struct GTKCairoColour
+{
+	double R, G, B;
+};
+
+class GTKCairoDrawingArea : public GTKWidget
+{
+protected:
+	GtkDrawingArea *DrawingArea;
+	cairo_surface_t *Surface;
+	cairo_t *Pixmap;
+	uint32_t Width, Height;
+
+public:
+	GTKpp_API GTKCairoDrawingArea(uint32_t Width, uint32_t Height);
+	GTKpp_API ~GTKCairoDrawingArea();
+	GTKpp_API void DrawPoint(uint32_t X, uint32_t Y, const GTKCairoColour &Colour);
+	GTKpp_API void DrawRect(uint32_t X, uint32_t Y, uint32_t Width, uint32_t Height, const GTKCairoColour &Colour);
+	GTKpp_API void FinishDrawing();
+
+private:
+	static bool Redraw(GtkWidget *widget, GdkEventExpose *event, void *data);
 };
 
 #ifndef __NO_OPEN_GL__

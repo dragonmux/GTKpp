@@ -355,3 +355,9 @@ void GTKWindow::SetFullscreen(bool Fullscreen)
 	else
 		gtk_window_unfullscreen(Window);
 }
+
+void GTKWindow::RegisterTimedCallback(uint32_t Interval, bool (*Callback)(void *), void *Data)
+{
+	g_timeout_add(Interval, (GSourceFunc)Callback, Data);
+}
+
