@@ -424,7 +424,7 @@ protected:
 	uint32_t BaseLoopLevel;
 
 public:
-	GTKpp_API GTKWindow(GtkWindowType Type, void *CloseFunc = NULL, void *data = NULL);
+	GTKpp_API GTKWindow(GtkWindowType Type, void *CloseFunc = NULL, void *Data = NULL);
 	GTKpp_API ~GTKWindow();
 	GTKpp_API GtkWindow *GetWindow() const;
 	GTKpp_API void SetSize(int Width, int Height);
