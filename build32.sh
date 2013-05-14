@@ -16,4 +16,4 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-make clean && USE_ARCH=32 PKG_CONFIG_PATH="/usr/lib/pkgconfig" GCC="gcc -m32" LIBDIR=/usr/lib make -j 8 all install
+USE_ARCH=32 PKG_CONFIG_PATH="/usr/lib/pkgconfig" GCC="gcc -m32" LIBDIR=/usr/lib make "$@"
