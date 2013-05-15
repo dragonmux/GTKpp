@@ -467,7 +467,8 @@ public:
 	GTKpp_API void Present();
 	GTKpp_API void SetWindowIcon(GList *Icons);
 	GTKpp_API void SetFullscreen(bool Fullscreen = true);
-	GTKpp_API void RegisterTimedCallback(uint32_t Interval, bool (*Callback)(void *), void *Data = NULL);
+	GTKpp_API uint32_t RegisterTimedCallback(uint32_t Interval, bool (*Callback)(void *), void *Data = NULL);
+	GTKpp_API void UnregisterTimedCallback(uint32_t CallbackID);
 };
 
 class GTKpp_API GTKEvents// abstract
