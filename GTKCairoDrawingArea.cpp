@@ -45,6 +45,14 @@ void GTKCairoDrawingArea::DrawRect(uint32_t X, uint32_t Y, uint32_t Width, uint3
 	cairo_fill(Pixmap);
 }
 
+void GTKCairoDrawingArea::DrawLine(uint32_t SrcX, uint32_t SrcY, uint32_t DstX, uint32_t DstY, const GTKCairoColour &Colour)
+{
+	cairo_set_soruce_rgb(Pixmap, Colour.R, Colour.G, Colour.B);
+	cairo_move_to(Pixmap, SrcX, SrcY);
+	cairo_line_to(Pixmap, DstX, DstY);
+	cairo_fill(Pixmap);
+}
+
 void GTKCairoDrawingArea::FinishDrawing()
 {
 	gtk_widget_queue_draw(Widget);
@@ -60,4 +68,5 @@ bool GTKCairoDrawingArea::Redraw(GtkWidget *widget, GdkEventExpose *event, void 
 	//cairo_fill(gtkSurface);
 	cairo_paint(gtkSurface);
 	cairo_destroy(gtkSurface);
+	return false;
 }

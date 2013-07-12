@@ -725,6 +725,7 @@ public:
 	GTKpp_API ~GTKCairoDrawingArea();
 	GTKpp_API void DrawPoint(uint32_t X, uint32_t Y, const GTKCairoColour &Colour);
 	GTKpp_API void DrawRect(uint32_t X, uint32_t Y, uint32_t Width, uint32_t Height, const GTKCairoColour &Colour);
+	GTKpp_API void DrawLine(uint32_t SrcX, uint32_t SrcY, uint32_t DstX, uint32_t DstY, const GTKCairoColour &Colour);
 	GTKpp_API void FinishDrawing();
 
 private:
