@@ -47,7 +47,7 @@ void GTKCairoDrawingArea::DrawRect(uint32_t X, uint32_t Y, uint32_t Width, uint3
 
 void GTKCairoDrawingArea::DrawLine(uint32_t SrcX, uint32_t SrcY, uint32_t DstX, uint32_t DstY, const GTKCairoColour &Colour)
 {
-	cairo_set_soruce_rgb(Pixmap, Colour.R, Colour.G, Colour.B);
+	cairo_set_source_rgb(Pixmap, Colour.R, Colour.G, Colour.B);
 	cairo_move_to(Pixmap, SrcX, SrcY);
 	cairo_line_to(Pixmap, DstX, DstY);
 	cairo_fill(Pixmap);
