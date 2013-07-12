@@ -18,6 +18,10 @@
 
 #include "stdafx.h"
 
+#ifdef GTK_WIDGET_STATE
+#define gtk_widget_get_state	GTK_WIDGET_STATE
+#endif
+
 GTKDrawingArea::GTKDrawingArea(uint32_t width, uint32_t height) : GTKWidget(gtk_drawing_area_new()), Pixmap(NULL), Width(width), Height(height)
 {
 	DrawingArea = GTK_DRAWING_AREA(Widget);
