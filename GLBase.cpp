@@ -111,6 +111,11 @@ bool GLBase::glBegin()
 
 void GLBase::glSwapBuffers()
 {
+	if (drw == NULL)
+	{
+		printf("Error, glSwapBuffers() called outside of glBegin()/glEnd() block!\n");
+		return;
+	}
 	if (gdk_gl_drawable_is_double_buffered(drw) == TRUE)
 		gdk_gl_drawable_swap_buffers(drw);
 	else
