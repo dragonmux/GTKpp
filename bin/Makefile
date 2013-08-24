@@ -1,5 +1,5 @@
 # This file is part of GTK++ (libGTK++)
-# Copyright © 2012 Richard/Rachel Mant (dx-mon@users.sourceforge.net)
+# Copyright © 2012 Rachel Mant (dx-mon@users.sourceforge.net)
 #
 # GTK++ is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
