@@ -24,43 +24,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef UINT
-	#define UINT uint32_t
-#endif
-
-#ifndef ULONG
-	#define ULONG unsigned long
-#endif
-
-#ifndef BOOL
-	#define BOOL int32_t
-#endif
-
-#ifndef BYTE
-	#define BYTE uint8_t
-#endif
-
-#ifndef RECT
-typedef struct _RECT
-{
-	int left, top, right, bottom;
-} RECT;
-#endif
-
-#ifndef POINT
-typedef struct _POINT
-{
-	int x, y;
-} POINT;
-#endif
-
-#ifndef SIZE
-typedef struct _SIZE
-{
-	int cx, cy;
-} SIZE;
-#endif
-
 #ifndef __cdecl
 #define __cdecl
 #endif
