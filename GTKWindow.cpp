@@ -305,7 +305,9 @@ void GTKWindow::Close(GdkEvent *event)
 	else
 	{
 		GdkEvent *delete_event = gdk_event_new(GDK_DELETE);
-		delete_event->any.window = Widget->window;
+		delete_event->any.window = (GdkWindow *)gdk_window_ref(Widget->window);
+		delete_event->any.send_event = TRUE;
+
 		gdk_event_put(delete_event);
 		gdk_event_free(delete_event);
 	}
