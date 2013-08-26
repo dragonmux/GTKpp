@@ -39,7 +39,7 @@ GDKPixbuf::GDKPixbuf(const uint8_t *InlineData)
 
 GDKPixbuf::~GDKPixbuf()
 {
-	gdk_pixbuf_unref(Buff);
+	g_object_unref(Buff);
 }
 
 GdkPixbuf *GDKPixbuf::GetBuffer() const

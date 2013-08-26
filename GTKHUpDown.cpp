@@ -30,11 +30,11 @@ GTKHUpDown::GTKHUpDown(int Width, int Height, void *IncrementFunc, void *Decreme
 	AddChild(Right);
 	Pixbuf = gdk_pixbuf_new_from_inline(-1, ArrowLeft, FALSE, NULL);
 	Image = gtk_image_new_from_pixbuf(Pixbuf);
-	gdk_pixbuf_unref(Pixbuf);
+	g_object_unref(Pixbuf);
 	Left->SetImage(Image);
 	Pixbuf = gdk_pixbuf_new_from_inline(-1, ArrowRight, FALSE, NULL);
 	Image = gtk_image_new_from_pixbuf(Pixbuf);
-	gdk_pixbuf_unref(Pixbuf);
+	g_object_unref(Pixbuf);
 	Right->SetImage(Image);
 	Current = Min = Max = 0;
 	Left->SetOnClicked(DecrementFunc, data);
