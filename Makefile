@@ -47,7 +47,11 @@ VARS = LIBDIR=$(LIBDIR)
 endif
 
 install: all $(PC)
-	sudo make $(VARS) sudo-install
+	$(Q)if [[ $(UID) -ne 0 && "$(PREFIX)" =~ ^/usr\.*\$$ ]]; then \
+		sudo make $(VARS) sudo-install; \
+	else \
+		$(MAKE) sudo-install; \
+	fi
 
 sudo-install:
 	@cd bin && $(MAKE) install
