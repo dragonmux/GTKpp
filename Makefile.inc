@@ -67,6 +67,8 @@ quiet_cmd_install_file = " INSTALL $(2)"
 cmd_install_file = $(INSTALL_FILE) $(2) $(3)
 quiet_cmd_install_rename = " INSTALL $(2) => $(3)"
 cmd_install_rename = $(INSTALL_RENAME) $(2) $(3)
+quiet_cmd_ldconfig = " LDCONFIG"
+cmd_ldconfig = ldconfig
 
 define run-cmd
 	@echo $($(quiet)cmd_$(1))
@@ -77,6 +79,13 @@ define debug-strip
 	$(Q)if [ $(DEBUG) -eq 0 ]; then \
 		echo $($(quiet)cmd_strip); \
 		$(cmd_strip); \
+	fi
+endef
+
+define ldconfig
+	$(Q)if [ $(UID) -eq 0 ]; then \
+		echo $($(quiet)cmd_ldconfig); \
+		$(cmd_ldconfig); \
 	fi
 endef
 

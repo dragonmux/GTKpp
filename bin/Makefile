@@ -47,4 +47,4 @@ install: $(LIBDIR) $(PKGDIR)
 	$(call run-cmd,rm,$(PC),$(PC))
 	$(call run-cmd,sed,$(IN),$(PC))
 	$(call run-cmd,install_file,$(PC),$(PKGDIR))
-	$(Q)ldconfig
+	$(call ldconfig)
