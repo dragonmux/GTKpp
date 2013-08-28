@@ -15,10 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 include ../Makefile.inc
 
-LIBDIR ?= /usr/lib
+LIBDIR ?= $(PREFIX)/lib
 PKGDIR = $(LIBDIR)/pkgconfig
 INSTALL = install
 INSTALL_FILE = $(INSTALL) -m644
+INSTALL_DIR = $(INSTALL) -m755 -d
 
 PACKAGES = $(strip $(shell pkg-config --cflags gtk+-2.0 pango gtkglext-1.0))
 SED = sed -e 's:@PACKAGES@:$(PACKAGES):g' -e 's:@LIBDIR@:$(LIBDIR):g'
@@ -34,7 +35,13 @@ cmd_sed = $(SED) $(2) > $(3)
 clean:
 	$(call run-cmd,rm,GTK+/bin,$(SO) $(A))
 
-install:
+$(LIBDIR):
+	$(call run-cmd,install_dir,$(LIBDIR))
+
+$(PKGDIR):
+	$(call run-cmd,install_dir,$(PKGDIR))
+
+install: $(LIBDIR) $(PKGDIR)
 	$(call run-cmd,install_file,$(SO),$(LIBDIR))
 	$(call run-cmd,install_file,$(A),$(LIBDIR))
 	$(call run-cmd,rm,$(PC),$(PC))

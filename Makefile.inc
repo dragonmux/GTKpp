@@ -102,5 +102,7 @@ RM = rm -f
 AR = ar cr
 RANLIB = ranlib
 LN = ln -sfT
+UID = $(shell id -u)
+PREFIX ?= /usr
 
-export GCC DEBUG
+export GCC DEBUG UID PREFIX

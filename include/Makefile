@@ -15,13 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 include ../Makefile.inc
 
-INCDIR = /usr/include/GTK++
+INCDIR = $(PREFIX)/include/GTK++
 INSTALL = install
 INSTALL_FILE = $(INSTALL) -m644
 INSTALL_DIR = $(INSTALL) -m755 -d
 
-install:
+$(INCDIR):
 	$(call run-cmd,install_dir,$(INCDIR))
+
+install: $(INCDIR)
 	$(call run-cmd,rm,$(INCDIR),$(INCDIR)/*.h)
 	$(call run-cmd,install_file,GTK++.h,$(INCDIR))
 	$(call run-cmd,install_file,GTK++_Compat.h,$(INCDIR))
