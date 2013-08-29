@@ -45,6 +45,9 @@ all: $(SO)
 ifneq ($(strip $(LIBDIR)),)
 VARS = LIBDIR=$(LIBDIR)
 endif
+ifneq ($(strip $(PREFIX)),)
+VARS += PREFIX=$(PREFIX)
+endif
 
 install: all $(PC)
 	$(Q)if [[ $(UID) -ne 0 && "$(PREFIX)" =~ ^/usr\.*\$$ ]]; then \
