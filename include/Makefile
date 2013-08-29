@@ -26,4 +26,3 @@ $(INCDIR):
 install: $(INCDIR)
 	$(call run-cmd,rm,$(INCDIR),$(INCDIR)/*.h)
 	$(call run-cmd,install_file,GTK++.h,$(INCDIR))
-	$(call run-cmd,install_file,GTK++_Compat.h,$(INCDIR))
