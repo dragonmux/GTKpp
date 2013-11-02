@@ -448,7 +448,8 @@ public:
 	GTKpp_API void DoMessageLoop();
 	GTKpp_API void IterateMessageLoop();
 	GTKpp_API void SetEventsHandled(int Events);
-	GTKpp_API int MessageBox(GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...);
+	GTKpp_API int MessageBox(GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...)
+		GTK_FORMAT_ARGS(4, 6);
 	GTKpp_API char *FileSave(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
 	GTKpp_API char *FileOpen(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
 	GTKpp_API void GetCursorPos(GTKPoint *GTKPoint, GdkModifierType *modifiers = NULL);
