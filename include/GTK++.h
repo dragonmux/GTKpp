@@ -49,13 +49,15 @@
 	#else
 		#define GTKpp_API __declspec(dllimport)
 	#endif
+	#define GTK_FORMAT_ARGS(n, m)
 #else
 	#if __GNUC__ >= 4
-		#define DEFAULT_VISIBILITY __attribute__ ((visibility("default")))
+		#define DEFAULT_VISIBILITY __attribute__((visibility("default")))
 	#else
 		#define DEFAULT_VISIBILITY
 	#endif
 	#define GTKpp_API DEFAULT_VISIBILITY
+	#define GTK_FORMAT_ARGS(n, m) __attribute__((format(printf, n, m)))
 #endif
 
 #ifndef GTK_GL_RGBA_TYPE
@@ -211,7 +213,8 @@ public:
 class GTKMessageBox : public GTKDialog
 {
 public:
-	GTKpp_API GTKMessageBox(GtkWindow *Window, GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...);
+	GTKpp_API GTKMessageBox(GtkWindow *Window, GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...)
+		GTK_FORMAT_ARGS(5, 7);
 };
 
 class GTKFileDialog : public GTKDialog
