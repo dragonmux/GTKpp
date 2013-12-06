@@ -221,12 +221,12 @@ bool GLBase::CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, void 
 	return true;
 }
 
-void GLBase::AddTimeout(int Timeout)
+void GLBase::AddTimeout(int newTimeout)
 {
 	if (TimeoutID == 0)
 	{
+		Timeout = newTimeout;
 		TimeoutID = g_timeout_add(Timeout, Redraw_Internal, getGTKWidget());
-		this->Timeout = Timeout;
 	}
 }
 
@@ -236,6 +236,6 @@ void GLBase::RemoveTimeout()
 	{
 		g_source_remove(TimeoutID);
 		TimeoutID = 0;
-		Timeout = -1;
+//		Timeout = -1;
 	}
 }
