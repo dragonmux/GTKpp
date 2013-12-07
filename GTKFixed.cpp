@@ -36,6 +36,8 @@ GTKFixed::GTKFixed(int Width, int Height) : GTKContainer(gtk_fixed_new())
 
 void GTKFixed::SetParent(GTKWidget *Parent)
 {
+	if (Parent == NULL)
+		return;
 	((GTKContainer *)Parent)->AddChild(this);
 }
 
