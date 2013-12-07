@@ -792,6 +792,12 @@ public:
 	GTKpp_API void SetOnClicked(void *OnClickFunc, void *data = NULL);
 };
 
+class GTKMenuSeparatorItem : public GTKContainer
+{
+public:
+	GTKpp_API GTKMenuSeparatorItem();
+};
+
 class GTKProgressBar : public GTKWidget
 {
 protected:

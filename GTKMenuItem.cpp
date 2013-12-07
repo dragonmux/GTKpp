@@ -42,3 +42,7 @@ void GTKMenuItem::SetOnClicked(void *OnClickFunc, void *data)
 {
 	SetHandler("activate", OnClickFunc, (data == NULL ? this : data));
 }
+
+GTKMenuSeparatorItem::GTKMenuSeparatorItem() : GTKContainer(gtk_separator_menu_item_new())
+{
+}
