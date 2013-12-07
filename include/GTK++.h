@@ -52,11 +52,11 @@
 	#define GTK_FORMAT_ARGS(n, m)
 #else
 	#if __GNUC__ >= 4
-		#define DEFAULT_VISIBILITY __attribute__((visibility("default")))
+		#define GTKpp_DEFAULT_VISIBILITY __attribute__((visibility("default")))
 	#else
-		#define DEFAULT_VISIBILITY
+		#define GTKpp_DEFAULT_VISIBILITY
 	#endif
-	#define GTKpp_API DEFAULT_VISIBILITY
+	#define GTKpp_API GTKpp_DEFAULT_VISIBILITY
 	#define GTK_FORMAT_ARGS(n, m) __attribute__((format(printf, n, m)))
 #endif
 
