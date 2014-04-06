@@ -78,6 +78,8 @@ clean: clean-recursive
 clean-recursive:
 	@cd bin && $(MAKE) clean
 
+.PHONY: default all install sudo-install .cpp.o clean clean-recursive
+
 # GLPixelFormats.o: GLPixelFormats.cpp # for Windows only!
 # GTKAdjustment.o: GTKAdjustment.cpp # not yet, not ready yet.
 # GTKViewport.o: GTKViewport.cpp # not yet, not ready yet.
