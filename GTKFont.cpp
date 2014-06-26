@@ -29,7 +29,10 @@ GTKSize GTKFont::GetStringMetrics(const char *String)
 	PangoFontMap *PFM;
 	PangoFontDescription *PFD;
 	static PangoRectangle PR_Logic;
-	GTKSize ret;
+	GTKSize ret = {0, 0};
+
+	if (String == NULL)
+		return ret;
 
 	PFD = pango_font_describe(Font);
 	PFM = pango_font_get_font_map(Font);
