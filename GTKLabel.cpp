@@ -21,13 +21,13 @@
 GTKLabel::GTKLabel(const char *Content) : GTKWidget(gtk_label_new(Content))
 {
 	Label = GTK_LABEL(Widget);
-	gtk_label_set_ellipsize(Label, PANGO_ELLIPSIZE_END);
+//	gtk_label_set_ellipsize(Label, PANGO_ELLIPSIZE_END);
 }
 
 void GTKLabel::SetText(const char *Content)
 {
 	gtk_label_set_text(Label, Content);
-	gtk_label_set_ellipsize(Label, PANGO_ELLIPSIZE_END);
+//	gtk_label_set_ellipsize(Label, PANGO_ELLIPSIZE_END);
 }
 
 void GTKLabel::SetSize(int Width, int Height)
