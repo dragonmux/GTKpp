@@ -34,8 +34,8 @@ void GTKVBox::SetParent(GTKWidget *Parent)
 	gtk_container_add(GTK_CONTAINER(Parent->GetWidget()), Widget);
 }
 
-void GTKVBox::AddChild(GTKWidget *Child)
+void GTKVBox::AddChild(GTKWidget *Child, bool Expand)
 {
-	gtk_box_pack_start_defaults(Box, Child->GetWidget());
+	gtk_box_pack_start(Box, Child->GetWidget(), Expand, TRUE, 0);
 	Children.push_back(Child);
 }

@@ -277,7 +277,7 @@ public:
 	GTKpp_API GTKHBox(bool EqualSpacing = true, int CellSpacing = 0);
 	GTKpp_API GTKHBox(int Width, int Height, bool EqualSpacing, int CellSpacing = 0);
 	GTKpp_API void SetParent(GTKWidget *Parent);
-	GTKpp_API void AddChild(GTKWidget *Child);
+	GTKpp_API void AddChild(GTKWidget *Child, bool Expand = true);
 };
 
 class GTKVBox : public GTKBox
@@ -289,7 +289,7 @@ public:
 	GTKpp_API GTKVBox(bool EqualSpacing = true, int CellSpacing = 0);
 	GTKpp_API GTKVBox(int Width, int Height, bool EqualSpacing, int CellSpacing = 0);
 	GTKpp_API void SetParent(GTKWidget *Parent);
-	GTKpp_API void AddChild(GTKWidget *Child);
+	GTKpp_API void AddChild(GTKWidget *Child, bool Expand = true);
 };
 
 class GTKLabel : public GTKWidget
