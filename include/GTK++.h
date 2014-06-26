@@ -907,4 +907,21 @@ public:
 	GTKpp_API ~GTKVSeparator();
 };
 
+class GTKTabBar : public GTKContainer
+{
+protected:
+	GtkNotebook *TabBar;
+	std::vector<GTKWidget *> Labels;
+	void AppendChild(GTKWidget *Child);
+	void RemoveChild(GTKWidget *Child);
+
+public:
+	GTKpp_API GTKTabBar();
+	GTKpp_API ~GTKTabBar();
+
+	GTKpp_API void AppendPage(GTKWidget *Child, const char *Label);
+	GTKpp_API void AppendPage(GTKWidget *Child, GTKWidget *Label);
+	GTKpp_API void RemovePage(GTKWidget *Child);
+};
+
 #endif /*__GTKpp_H__*/
