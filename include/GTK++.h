@@ -22,6 +22,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <set>
 #include <utility>
 #include <gtk/gtk.h>
 #ifndef __NO_OPEN_GL__
@@ -922,6 +923,20 @@ public:
 	GTKpp_API void AppendPage(GTKWidget *Child, const char *Label);
 	GTKpp_API void AppendPage(GTKWidget *Child, GTKWidget *Label);
 	GTKpp_API void RemovePage(GTKWidget *Child);
+};
+
+class GTKTree : public GTKContainer
+{
+protected:
+	GtkTreeView *TreeView;
+	GtkTreeStore *TreeStore;
+	std::set<GtkTreeIter *> Nodes;
+
+public:
+	GTKpp_API GTKTree();
+	GTKpp_API ~GTKTree();
+
+	GTKpp_API void *AddItem(char *Value, void *Parent = NULL);
 };
 
 #endif /*__GTKpp_H__*/
