@@ -928,9 +928,12 @@ public:
 class GTKTree : public GTKContainer
 {
 protected:
+	typedef std::set<GtkTreeIter *> nodeType;
+	typedef nodeType::iterator nodeIter;
+
 	GtkTreeView *TreeView;
 	GtkTreeStore *TreeStore;
-	std::set<GtkTreeIter *> Nodes;
+	nodeType Nodes;
 
 public:
 	GTKpp_API GTKTree();

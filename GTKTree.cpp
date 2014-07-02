@@ -29,6 +29,8 @@ GTKTree::GTKTree() : GTKContainer(gtk_invisible_new())
 
 GTKTree::~GTKTree()
 {
+	for (nodeIter i = Nodes.begin(); i != Nodes.end(); i++)
+		delete *i;
 }
 
 void *GTKTree::AddItem(char *Value, void *Parent)
