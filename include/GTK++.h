@@ -222,12 +222,12 @@ class GTKFileDialog : public GTKDialog
 private:
 	GtkFileChooser *FileDialog;
 	GtkFileFilter *Filter;
-	void AddFilters(std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
-	void AddFilterChooser(std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
+	void AddFilters(const std::vector<const char *> &FileTypes, const std::vector<const char *> &FileTypeNames);
+	void AddFilterChooser(const std::vector<const char *> &FileTypes, const std::vector<const char *> &FileTypeNames);
 
 public:
-	GTKpp_API GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChooserAction Action, std::vector<const char *> FileTypes,
-		std::vector<const char *> FileTypeNames, const char *Button1_Type, int Button1_Result, const char *Button2_Type, int Button2_Result);
+	GTKpp_API GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChooserAction Action, const std::vector<const char *> &FileTypes,
+		const std::vector<const char *> &FileTypeNames, const char *Button1_Type, int Button1_Result, const char *Button2_Type, int Button2_Result);
 	GTKpp_API char *GetSelectedFile();
 };
 
@@ -450,8 +450,8 @@ public:
 	GTKpp_API void SetEventsHandled(int Events);
 	GTKpp_API int MessageBox(GtkMessageType Type, GtkButtonsType Buttons, const char *Message, const char *Title, ...)
 		GTK_FORMAT_ARGS(4, 6);
-	GTKpp_API char *FileSave(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
-	GTKpp_API char *FileOpen(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames);
+	GTKpp_API char *FileSave(const char *Title, const std::vector<const char *> &FileTypes, const std::vector<const char *> &FileTypeNames);
+	GTKpp_API char *FileOpen(const char *Title, const std::vector<const char *> &FileTypes, const std::vector<const char *> &FileTypeNames);
 	GTKpp_API void GetCursorPos(GTKPoint *GTKPoint, GdkModifierType *modifiers = NULL);
 	GTKpp_API void ScreenToClient(GTKPoint *GTKPoint);
 	GTKpp_API void ScreenToWindow(GTKPoint *GTKPoint);

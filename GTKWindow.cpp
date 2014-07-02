@@ -232,7 +232,7 @@ void GTKWindow::GetCursorPos(GTKPoint *point, GdkModifierType *modifiers)
 	gdk_window_get_pointer(Window->frame, (int *)&point->x, (int *)&point->y, modifiers);
 }
 
-char *GTKWindow::FileSave(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames)
+char *GTKWindow::FileSave(const char *Title, const std::vector<const char *> &FileTypes, const std::vector<const char *> &FileTypeNames)
 {
 	int code;
 	char *ret = NULL;
@@ -247,7 +247,7 @@ char *GTKWindow::FileSave(const char *Title, std::vector<const char *> FileTypes
 	return ret;
 }
 
-char *GTKWindow::FileOpen(const char *Title, std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames)
+char *GTKWindow::FileOpen(const char *Title, const std::vector<const char *> &FileTypes, const std::vector<const char *> &FileTypeNames)
 {
 	int code;
 	char *ret = NULL;

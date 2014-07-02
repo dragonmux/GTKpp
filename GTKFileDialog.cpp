@@ -22,8 +22,8 @@
 |*                 GTKFileDialog implementation                *|
 \***************************************************************/
 
-GTKFileDialog::GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChooserAction Action, std::vector<const char *> FileTypes,
-	std::vector<const char *> FileTypeNames, const char *Button1_Type, int Button1_Result, const char *Button2_Type, int Button2_Result) :
+GTKFileDialog::GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChooserAction Action, const std::vector<const char *> &FileTypes,
+	const std::vector<const char *> &FileTypeNames, const char *Button1_Type, int Button1_Result, const char *Button2_Type, int Button2_Result) :
 	GTKDialog(gtk_file_chooser_dialog_new(Title, Window, Action, Button1_Type, Button1_Result, Button2_Type, Button2_Result, NULL))
 {
 	FileDialog = GTK_FILE_CHOOSER(Dialog);
@@ -33,7 +33,7 @@ GTKFileDialog::GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChoose
 		AddFilterChooser(FileTypes, FileTypeNames);
 }
 
-void GTKFileDialog::AddFilters(std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames)
+void GTKFileDialog::AddFilters(const std::vector<const char *> &FileTypes, const std::vector<const char *> &FileTypeNames)
 {
 	for (uint32_t i = 0; i < FileTypes.size(); i++)
 	{
@@ -46,7 +46,7 @@ void GTKFileDialog::AddFilters(std::vector<const char *> FileTypes, std::vector<
 	}
 }
 
-void GTKFileDialog::AddFilterChooser(std::vector<const char *> FileTypes, std::vector<const char *> FileTypeNames)
+void GTKFileDialog::AddFilterChooser(const std::vector<const char *> &FileTypes, const std::vector<const char *> &FileTypeNames)
 {
 	/*GtkWidget *dropdown = gtk_combo_box_new();
 	GtkComboBox *cboFilters = GTK_COMBO_BOX(dropdown);
