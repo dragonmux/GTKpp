@@ -165,6 +165,7 @@ public:
 	GTKpp_API void SetUnderline(bool Underline);
 	GTKpp_API void SetFontSize(int GTKSize);
 	GTKpp_API void SetFontName(const char *Name);
+	GTKpp_API void AddAccelerator(const char *Event, GtkAccelGroup *Group, const char Key, GdkModifierType Mods);
 };
 
 #ifndef __NO_OPEN_GL__
@@ -420,6 +421,7 @@ class GTKWindow : public GTKContainer
 {
 private:
 	GtkWindow *Window;
+	GtkAccelGroup *AccelGroup;
 	GTKEvents *Events;
 	void *QuitFunc;
 	void *QuitData;
@@ -475,6 +477,7 @@ public:
 	GTKpp_API void SetFullscreen(bool Fullscreen = true);
 	GTKpp_API uint32_t RegisterTimedCallback(uint32_t Interval, bool (*Callback)(void *), void *Data = NULL);
 	GTKpp_API void UnregisterTimedCallback(uint32_t CallbackID);
+	GTKpp_API GtkAccelGroup *GetAccelGroup() const;
 };
 
 class GTKpp_API GTKEvents// abstract

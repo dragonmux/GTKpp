@@ -38,6 +38,8 @@ GTKWindow::GTKWindow(GtkWindowType Type, void *CloseFunc, void *Data) : GTKConta
 	QuitData = Data;
 	RegisterQuitFunction();
 	Events = NULL;
+	AccelGroup = gtk_accel_group_new();
+	gtk_window_add_accel_group(Window, AccelGroup);
 }
 
 GTKWindow::~GTKWindow()
@@ -366,4 +368,9 @@ uint32_t GTKWindow::RegisterTimedCallback(uint32_t Interval, bool (*Callback)(vo
 void GTKWindow::UnregisterTimedCallback(uint32_t CallbackID)
 {
 	g_source_remove(CallbackID);
+}
+
+GtkAccelGroup *GTKWindow::GetAccelGroup() const
+{
+	return AccelGroup;
 }

@@ -158,3 +158,8 @@ void GTKWidget::SetFontName(const char *Name)
 	pango_font_description_set_family(pfd, Name);
 	gtk_widget_modify_font(Widget, pfd);
 }
+
+void GTKWidget::AddAccelerator(const char *Event, GtkAccelGroup *Group, const char Key, GdkModifierType Mods)
+{
+	gtk_widget_add_accelerator(Widget, Event, Group, Key, Mods, (GtkAccelFlags)0);
+}
