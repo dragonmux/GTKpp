@@ -221,6 +221,7 @@ public:
 class GTKFileDialog : public GTKDialog
 {
 private:
+	static char *CWD;
 	GtkFileChooser *FileDialog;
 	GtkFileFilter *Filter;
 	void AddFilters(const std::vector<const char *> &FileTypes, const std::vector<const char *> &FileTypeNames);
