@@ -22,6 +22,8 @@
 |*                 GTKFileDialog implementation                *|
 \***************************************************************/
 
+char *GTKFileDialog::CWD = NULL;
+
 GTKFileDialog::GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChooserAction Action, const std::vector<const char *> &FileTypes,
 	const std::vector<const char *> &FileTypeNames, const char *Button1_Type, int Button1_Result, const char *Button2_Type, int Button2_Result) :
 	GTKDialog(gtk_file_chooser_dialog_new(Title, Window, Action, Button1_Type, Button1_Result, Button2_Type, Button2_Result, NULL))
@@ -31,6 +33,9 @@ GTKFileDialog::GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChoose
 	AddFilters(FileTypes, FileTypeNames);
 	if (strncmp(Button1_Type, GTK_STOCK_SAVE, 8) == 0 || strncmp(Button2_Type, GTK_STOCK_SAVE, 8) == 0)
 		AddFilterChooser(FileTypes, FileTypeNames);
+	if (CWD == NULL)
+		CWD = gtk_file_chooser_get_current_folder(FileDialog);
+	gtk_file_chooser_set_current_folder(FileDialog, CWD);
 }
 
 void GTKFileDialog::AddFilters(const std::vector<const char *> &FileTypes, const std::vector<const char *> &FileTypeNames)
@@ -55,5 +60,7 @@ void GTKFileDialog::AddFilterChooser(const std::vector<const char *> &FileTypes,
 
 char *GTKFileDialog::GetSelectedFile()
 {
+	g_free(CWD);
+	CWD = gtk_file_chooser_get_current_folder(FileDialog);
 	return gtk_file_chooser_get_filename(FileDialog);
 }
