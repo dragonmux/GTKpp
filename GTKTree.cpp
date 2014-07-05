@@ -18,13 +18,11 @@
 
 #include "stdafx.h"
 
-GTKTree::GTKTree() : GTKContainer(gtk_invisible_new())
+GTKTree::GTKTree() : GTKContainer(gtk_tree_view_new())
 {
-	g_object_unref(Widget);
-	TreeStore = gtk_tree_store_new(1, G_TYPE_STRING);
-	Widget = gtk_tree_view_new_with_model(GTK_TREE_MODEL(TreeStore));
-	Container = GTK_CONTAINER(Widget);
 	TreeView = GTK_TREE_VIEW(Container);
+	TreeStore = gtk_tree_store_new(1, G_TYPE_STRING);
+	gtk_tree_view_set_model(TreeView, GTK_TREE_MODEL(TreeStore));
 }
 
 GTKTree::~GTKTree()
@@ -33,7 +31,7 @@ GTKTree::~GTKTree()
 		delete *i;
 }
 
-void *GTKTree::AddItem(char *Value, void *Parent)
+void *GTKTree::AddItem(const char *Value, void *Parent)
 {
 	GtkTreeIter *Iter, *ParentIter = (GtkTreeIter *)Parent;
 	if (Parent != NULL && Nodes.find(ParentIter) == Nodes.end())

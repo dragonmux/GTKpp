@@ -943,7 +943,7 @@ public:
 	GTKpp_API GTKTree();
 	GTKpp_API ~GTKTree();
 
-	GTKpp_API void *AddItem(char *Value, void *Parent = NULL);
+	GTKpp_API void *AddItem(const char *Value, void *Parent = NULL);
 };
 
 #endif /*__GTKpp_H__*/
