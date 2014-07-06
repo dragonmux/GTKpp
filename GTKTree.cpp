@@ -20,9 +20,16 @@
 
 GTKTree::GTKTree() : GTKContainer(gtk_tree_view_new())
 {
+	Renderer = gtk_cell_renderer_text_new();
+	Column = gtk_tree_view_column_new();
 	TreeView = GTK_TREE_VIEW(Container);
 	TreeStore = gtk_tree_store_new(1, G_TYPE_STRING);
 	gtk_tree_view_set_model(TreeView, GTK_TREE_MODEL(TreeStore));
+	gtk_tree_view_column_set_visible(Column, TRUE);
+	gtk_tree_view_column_pack_start(Column, Renderer, TRUE);
+	gtk_tree_view_column_set_attributes(Column, Renderer, "text", 0, NULL);
+	gtk_tree_view_append_column(TreeView, Column);
+	gtk_tree_view_set_headers_visible(TreeView, FALSE);
 }
 
 GTKTree::~GTKTree()

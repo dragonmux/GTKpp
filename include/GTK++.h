@@ -938,6 +938,8 @@ protected:
 
 	GtkTreeView *TreeView;
 	GtkTreeStore *TreeStore;
+	GtkCellRenderer *Renderer;
+	GtkTreeViewColumn *Column;
 	nodeType Nodes;
 
 public:
