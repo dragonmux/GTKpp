@@ -138,7 +138,7 @@ public:
 };
 #endif
 
-class GTKWidget
+class GTKpp_API GTKWidget
 {
 protected:
 	GtkWidget *Widget;
