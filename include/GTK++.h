@@ -232,6 +232,7 @@ public:
 	GTKpp_API GTKFileDialog(GtkWindow *Window, const char *Title, GtkFileChooserAction Action, const std::vector<const char *> &FileTypes,
 		const std::vector<const char *> &FileTypeNames, const char *Button1_Type, int Button1_Result, const char *Button2_Type, int Button2_Result);
 	GTKpp_API char *GetSelectedFile();
+	GTKpp_API static const char *GetWorkingDir();
 };
 
 class GTKContainer : public GTKWidget

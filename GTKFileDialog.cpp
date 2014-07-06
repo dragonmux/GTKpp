@@ -64,3 +64,8 @@ char *GTKFileDialog::GetSelectedFile()
 	CWD = gtk_file_chooser_get_current_folder(FileDialog);
 	return gtk_file_chooser_get_filename(FileDialog);
 }
+
+const char *GTKFileDialog::GetWorkingDir()
+{
+	return CWD;
+}
