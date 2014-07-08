@@ -960,4 +960,43 @@ public:
 	GTKpp_API void *AddItem(const char *Value, void *Parent = NULL);
 };
 
+class GTKToolItem : public GTKContainer
+{
+protected:
+	GtkToolItem *ToolItem;
+
+	GTKToolItem();
+	GTKToolItem(GtkToolItem *Widget);
+
+public:
+	GTKpp_API ~GTKToolItem();
+
+	GTKpp_API GtkToolItem *GetToolItem();
+};
+
+class GTKToolBar : public GTKContainer
+{
+protected:
+	GtkToolbar *ToolBar;
+
+public:
+	GTKpp_API GTKToolBar();
+	GTKpp_API ~GTKToolBar();
+
+	GTKpp_API void AddItem(GTKToolItem *item);
+};
+
+class GTKToolButton : public GTKToolItem
+{
+protected:
+	GtkToolButton *ToolButton;
+	GTKMisc *Icon;
+
+public:
+	GTKpp_API GTKToolButton(GTKMisc *Icon, const char *Text);
+	GTKpp_API GTKToolButton(GTKMisc *Icon);
+	GTKpp_API GTKToolButton(const char *Text, bool Stock = false);
+	GTKpp_API ~GTKToolButton();
+};
+
 #endif /*__GTKpp_H__*/
