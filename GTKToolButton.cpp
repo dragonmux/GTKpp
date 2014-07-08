@@ -44,3 +44,8 @@ GTKToolButton::~GTKToolButton()
 {
 	delete Icon;
 }
+
+void GTKToolButton::SetOnClicked(void *OnClickFunc, void *data)
+{
+	SetHandler("clicked", OnClickFunc, (data == NULL ? this : data));
+}

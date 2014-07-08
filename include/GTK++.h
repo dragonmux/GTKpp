@@ -997,6 +997,8 @@ public:
 	GTKpp_API GTKToolButton(GTKMisc *Icon);
 	GTKpp_API GTKToolButton(const char *Text, bool Stock = false);
 	GTKpp_API ~GTKToolButton();
+
+	GTKpp_API void SetOnClicked(void *OnClickFunc, void *data);
 };
 
 #endif /*__GTKpp_H__*/
