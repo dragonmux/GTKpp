@@ -250,6 +250,17 @@ public:
 	GTKpp_API void SetBorder(int BorderWidth);
 };
 
+class GTKMisc : public GTKWidget
+{
+protected:
+	GtkMisc *Misc;
+
+	GTKpp_API GTKMisc(GtkWidget *Widget, bool Misc = true);
+
+public:
+	GTKpp_API ~GTKMisc();
+};
+
 class GTKBox : public GTKContainer
 {
 protected:
@@ -296,7 +307,7 @@ public:
 	GTKpp_API void AddChild(GTKWidget *Child, bool Expand = true);
 };
 
-class GTKLabel : public GTKWidget
+class GTKLabel : public GTKMisc
 {
 protected:
 	GtkLabel *Label;
@@ -337,7 +348,7 @@ public:
 	GTKpp_API GdkPixbuf *GetBuffer() const;
 };
 
-class GTKImage : public GTKWidget
+class GTKImage : public GTKMisc
 {
 protected:
 	GtkWidget *_Widget;

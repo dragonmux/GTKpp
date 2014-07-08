@@ -31,7 +31,7 @@
 		} \
 	}
 
-GTKImage::GTKImage(int Width, int Height, bool UsingImage) : GTKWidget(gtk_event_box_new())
+GTKImage::GTKImage(int Width, int Height, bool UsingImage) : GTKMisc(gtk_event_box_new(), false)
 {
 	this->UsingImage = UsingImage;
 	if (UsingImage == false)

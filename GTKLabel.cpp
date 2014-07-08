@@ -18,9 +18,9 @@
 
 #include "stdafx.h"
 
-GTKLabel::GTKLabel(const char *Content) : GTKWidget(gtk_label_new(Content))
+GTKLabel::GTKLabel(const char *Content) : GTKMisc(gtk_label_new(Content))
 {
-	Label = GTK_LABEL(Widget);
+	Label = GTK_LABEL(Misc);
 //	gtk_label_set_ellipsize(Label, PANGO_ELLIPSIZE_END);
 }
 
