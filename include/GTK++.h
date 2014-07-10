@@ -998,7 +998,7 @@ public:
 	GTKpp_API GTKToolButton(const char *Text, bool Stock = false);
 	GTKpp_API ~GTKToolButton();
 
-	GTKpp_API void SetOnClicked(void *OnClickFunc, void *data);
+	GTKpp_API void SetOnClicked(void *OnClickFunc, void *data = NULL);
 };
 
 class GTKToolSeparator : public GTKToolItem
