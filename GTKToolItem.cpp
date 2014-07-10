@@ -36,3 +36,7 @@ GtkToolItem *GTKToolItem::GetToolItem()
 {
 	return ToolItem;
 }
+
+GTKToolSeparator::GTKToolSeparator() : GTKToolItem(gtk_separator_tool_item_new())
+{
+}

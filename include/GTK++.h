@@ -1001,4 +1001,10 @@ public:
 	GTKpp_API void SetOnClicked(void *OnClickFunc, void *data);
 };
 
+class GTKToolSeparator : public GTKToolItem
+{
+public:
+	GTKpp_API GTKToolSeparator();
+};
+
 #endif /*__GTKpp_H__*/
