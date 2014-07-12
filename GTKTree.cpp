@@ -51,3 +51,29 @@ void *GTKTree::AddItem(const char *Value, void *Parent)
 	Nodes.insert(Iter);
 	return Iter;
 }
+
+void GTKTree::RemoveItem(void *Node)
+{
+	GtkTreeIter *Iter = (GtkTreeIter *)Node;
+	if (Node == NULL || Nodes.find(Iter) == Nodes.end())
+		return;
+
+	RemoveSubItems(Node);
+	gtk_tree_store_remove(TreeStore, Iter);
+	Nodes.erase(Iter);
+}
+
+void GTKTree::RemoveSubItems(void *Node)
+{
+	GtkTreeIter *Iter, *ParentIter = (GtkTreeIter *)Node;
+	if (Node != NULL && Nodes.find(ParentIter) == Nodes.end())
+		return;
+
+	while (gtk_tree_model_iter_children(GTK_TREE_MODEL(TreeStore), Iter, ParentIter) != FALSE)
+		RemoveItem(Iter);
+}
+
+bool GTKTreeIterComp::operator ()(GtkTreeIter *x, GtkTreeIter *y) const
+{
+	return x->stamp < y->stamp;
+}

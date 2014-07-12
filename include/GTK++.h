@@ -941,10 +941,15 @@ public:
 	GTKpp_API void RemovePage(GTKWidget *Child);
 };
 
+struct GTKTreeIterComp
+{
+	bool operator ()(GtkTreeIter *x, GtkTreeIter *y) const;
+};
+
 class GTKTree : public GTKContainer
 {
 protected:
-	typedef std::set<GtkTreeIter *> nodeType;
+	typedef std::set<GtkTreeIter *, GTKTreeIterComp> nodeType;
 	typedef nodeType::iterator nodeIter;
 
 	GtkTreeView *TreeView;
@@ -958,6 +963,8 @@ public:
 	GTKpp_API ~GTKTree();
 
 	GTKpp_API void *AddItem(const char *Value, void *Parent = NULL);
+	GTKpp_API void RemoveItem(void *Node);
+	GTKpp_API void RemoveSubItems(void *Node);
 };
 
 class GTKToolItem : public GTKContainer
