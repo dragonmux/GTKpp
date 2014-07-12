@@ -37,7 +37,7 @@ int GTKEntry::GetTextLen()
 
 void GTKEntry::GetText(char *Buff, int BuffLen)
 {
-	char *Text = (char *)gtk_entry_get_text(Entry);
+	const char *Text = gtk_entry_get_text(Entry);
 	if (Text != NULL)
 	{
 		int Len = strlen(Text) + 1;
