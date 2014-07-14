@@ -30,12 +30,12 @@ void GTKEntry::SetText(const char *Content)
 	gtk_entry_set_text(Entry, Content);
 }
 
-int GTKEntry::GetTextLen()
+uint32_t GTKEntry::GetTextLen()
 {
 	return gtk_entry_get_text_length(Entry);
 }
 
-void GTKEntry::GetText(char *Buff, int BuffLen)
+void GTKEntry::GetText(char *Buff, uint32_t BuffLen)
 {
 	const char *Text = gtk_entry_get_text(Entry);
 	if (Text != NULL)

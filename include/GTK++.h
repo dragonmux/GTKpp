@@ -391,8 +391,8 @@ protected:
 public:
 	GTKpp_API GTKEntry(int Width, int Height, const char *Content = "");
 	GTKpp_API void SetText(const char *Content = "");
-	GTKpp_API int GetTextLen();
-	GTKpp_API void GetText(char *Buff, int BuffLen);
+	GTKpp_API uint32_t GetTextLen();
+	GTKpp_API void GetText(char *Buff, uint32_t BuffLen);
 };
 
 class GTKKey
