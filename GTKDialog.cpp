@@ -31,3 +31,8 @@ int GTKDialog::Run()
 {
 	return gtk_dialog_run(Dialog);
 }
+
+void GTKDialog::Respond(GtkResponseType Response)
+{
+	gtk_dialog_response(Dialog, Response);
+}

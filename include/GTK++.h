@@ -210,6 +210,7 @@ protected:
 
 public:
 	GTKpp_API int Run();
+	GTKpp_API void Respond(GtkResponseType Response);
 };
 
 class GTKMessageBox : public GTKDialog
@@ -1012,6 +1013,23 @@ class GTKToolSeparator : public GTKToolItem
 {
 public:
 	GTKpp_API GTKToolSeparator();
+};
+
+class GTKFontDialog : public GTKDialog
+{
+protected:
+	GtkFontSelectionDialog *FontDialog;
+	GtkFontSelection *FontSelection;
+
+private:
+	static void OkClicked(GtkWidget *widget, void *data);
+	static void CancelClicked(GtkWidget *widget, void *data);
+
+public:
+	GTKpp_API GTKFontDialog(const char *Title);
+	GTKpp_API void SetFontName(const char *Font);
+	GTKpp_API char *GetFontName();
+	GTKpp_API int32_t GetFontSize();
 };
 
 #endif /*__GTKpp_H__*/
