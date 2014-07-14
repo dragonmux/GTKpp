@@ -1021,10 +1021,6 @@ protected:
 	GtkFontSelectionDialog *FontDialog;
 	GtkFontSelection *FontSelection;
 
-private:
-	static void OkClicked(GtkWidget *widget, void *data);
-	static void CancelClicked(GtkWidget *widget, void *data);
-
 public:
 	GTKpp_API GTKFontDialog(const char *Title);
 	GTKpp_API void SetFontName(const char *Font);

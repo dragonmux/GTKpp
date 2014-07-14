@@ -23,11 +23,6 @@ GTKFontDialog::GTKFontDialog(const char *Title) : GTKDialog(gtk_font_selection_d
 	GtkWidget *btnOK, *btnCancel;
 	FontDialog = GTK_FONT_SELECTION_DIALOG(Dialog);
 	FontSelection = GTK_FONT_SELECTION(gtk_font_selection_dialog_get_font_selection(FontDialog));
-
-	btnOK = gtk_font_selection_dialog_get_ok_button(FontDialog);
-	g_signal_connect(GTK_OBJECT(btnOK), "clicked", G_CALLBACK(OkClicked), this);
-	btnCancel = gtk_font_selection_dialog_get_cancel_button(FontDialog);
-	g_signal_connect(GTK_OBJECT(btnCancel), "clicked", G_CALLBACK(CancelClicked), this);
 }
 
 void GTKFontDialog::SetFontName(const char *Font)
@@ -43,16 +38,4 @@ char *GTKFontDialog::GetFontName()
 int32_t GTKFontDialog::GetFontSize()
 {
 	return gtk_font_selection_get_size(FontSelection);
-}
-
-void GTKFontDialog::OkClicked(GtkWidget *, void *data)
-{
-	GTKFontDialog *self = (GTKFontDialog *)data;
-	self->Respond(GTK_RESPONSE_OK);
-}
-
-void GTKFontDialog::CancelClicked(GtkWidget *, void *data)
-{
-	GTKFontDialog *self = (GTKFontDialog *)data;
-	self->Respond(GTK_RESPONSE_CANCEL);
 }
