@@ -42,10 +42,11 @@ void GTKEntry::GetText(char *Buff, uint32_t BuffLen)
 	{
 		int Len = strlen(Text) + 1;
 		memcpy(Buff, Text, (Len > BuffLen ? BuffLen : Len));
+		if (BuffLen > 0)
+			Buff[BuffLen - 1] = 0;
 	}
-	else if (BuffLen > 0)
-		Buff[0] = 0; // Ensure the end result is always sane..
-	// Unless no storage was given, then just kick the person up the ass..
+	else
+		Buff[0] = 0;
 }
 
 /*void GTKEntry::SetForegroundColour(int R, int G, int B)
