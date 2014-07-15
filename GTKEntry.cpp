@@ -40,7 +40,7 @@ void GTKEntry::GetText(char *Buff, uint32_t BuffLen)
 	const char *Text = gtk_entry_get_text(Entry);
 	if (Text != NULL)
 	{
-		int Len = strlen(Text) + 1;
+		uint32_t Len = gtk_entry_get_text_length(Entry);
 		memcpy(Buff, Text, (Len > BuffLen ? BuffLen : Len));
 		if (BuffLen > 0)
 			Buff[BuffLen - 1] = 0;
