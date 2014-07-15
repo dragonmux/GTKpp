@@ -1,42 +1,48 @@
 GTK.cpp: In static member function ‘static void GTK::GTKInit(int, char**)’:
-GTK.cpp:10:17: error: ‘gtk_set_locale’ was not declared in this scope
+GTK.cpp:31:18: error: ‘gtk_set_locale’ was not declared in this scope
+   gtk_set_locale();
 make: *** [GTK.o] Error 1
+GTKWidget.cpp: In constructor ‘GTKWidget::GTKWidget(GtkWidget*)’:
+GTKWidget.cpp:27:23: error: ‘gtk_widget_ref’ was not declared in this scope
+  gtk_widget_ref(Widget);
+GTKWidget.cpp: In destructor ‘virtual GTKWidget::~GTKWidget()’:
+GTKWidget.cpp:42:26: error: ‘gtk_widget_unref’ was not declared in this scope
+   gtk_widget_unref(Widget);
 GTKWidget.cpp: In member function ‘void GTKWidget::Hide()’:
-GTKWidget.cpp:45:28: error: ‘gtk_widget_hide_all’ was not declared in this scope
+GTKWidget.cpp:85:28: error: ‘gtk_widget_hide_all’ was not declared in this scope
+  gtk_widget_hide_all(Widget);
 make: *** [GTKWidget.o] Error 1
-GTKWindow.cpp: In member function ‘SIZE GTKWindow::GetDesktopSize()’:
-GTKWindow.cpp:153:81: error: ‘gdk_drawable_get_size’ was not declared in this scope
-GTKWindow.cpp: In member function ‘void GTKWindow::Close()’:
-GTKWindow.cpp:292:60: error: ‘gtk_signal_emit_by_name’ was not declared in this scope
-make: *** [GTKWindow.o] Error 1
-GTKHBox.cpp: In member function ‘void GTKHBox::AddWidget(GTKWidget*)’:
-GTKHBox.cpp:20:66: error: ‘gtk_box_pack_start_defaults’ was not declared in this scope
-make: *** [GTKHBox.o] Error 1
-GTKVBox.cpp: In member function ‘void GTKVBox::AddWidget(GTKWidget*)’:
-GTKVBox.cpp:20:66: error: ‘gtk_box_pack_start_defaults’ was not declared in this scope
-make: *** [GTKVBox.o] Error 1
+GTKMessageBox.cpp: In constructor ‘GTKMessageBox::GTKMessageBox(GtkWindow*, GtkMessageType, GtkButtonsType, const char*, const char*, ...)’:
+GTKMessageBox.cpp:44:23: error: ‘gtk_widget_ref’ was not declared in this scope
+  gtk_widget_ref(Widget);
+make: *** [GTKMessageBox.o] Error 1
 GTKImage.cpp: In member function ‘void GTKImage::SetSize(int, int)’:
-GTKImage.cpp:42:45: error: ‘gtk_drawing_area_size’ was not declared in this scope
-GTKImage.cpp: In member function ‘void GTKImage::DrawImage(GDKPixbuf*)’:
-GTKImage.cpp:57:27: error: ‘gdk_gc_new’ was not declared in this scope
-GTKImage.cpp:58:81: error: ‘gdk_gc_set_line_attributes’ was not declared in this scope
-GTKImage.cpp:71:133: error: ‘gdk_draw_pixbuf’ was not declared in this scope
-GTKImage.cpp:73:34: error: ‘gdk_gc_set_rgb_fg_color’ was not declared in this scope
-GTKImage.cpp:74:48: error: ‘gdk_draw_line’ was not declared in this scope
+GTKImage.cpp:58:45: error: ‘gtk_drawing_area_size’ was not declared in this scope
+   gtk_drawing_area_size(Image, Width, Height);
 make: *** [GTKImage.o] Error 1
-GTKComboBox.cpp: In constructor ‘GTKComboBox::GTKComboBox(GTKWidget*, int, int, int32_t)’:
-GTKComboBox.cpp:10:34: error: ‘gtk_combo_box_new_text’ was not declared in this scope
-GTKComboBox.cpp: In member function ‘void GTKComboBox::AddItem(const char*, int, void (*)(void*))’:
-GTKComboBox.cpp:47:42: error: ‘gtk_combo_box_append_text’ was not declared in this scope
+GTKComboBox.cpp: In constructor ‘GTKComboBox::GTKComboBox(GTKWidget*, int, int, bool)’:
+GTKComboBox.cpp:25:127: error: ‘gtk_combo_box_new_text’ was not declared in this scope
+ GTKComboBox::GTKComboBox(GTKWidget *Parent, int Width, int Height, bool NeedsParenting) : GTKContainer(gtk_combo_box_new_text())
+GTKComboBox.cpp: In member function ‘void GTKComboBox::AddItem(const char*, int, freeFn)’:
+GTKComboBox.cpp:62:42: error: ‘gtk_combo_box_append_text’ was not declared in this scope
+  gtk_combo_box_append_text(ComboBox, Text);
 GTKComboBox.cpp: In member function ‘void GTKComboBox::DeleteItem(const char*)’:
-GTKComboBox.cpp:55:55: error: ‘gtk_combo_box_remove_text’ was not declared in this scope
+GTKComboBox.cpp:70:55: error: ‘gtk_combo_box_remove_text’ was not declared in this scope
+  gtk_combo_box_remove_text(ComboBox, Items[a].ComboPos);
 make: *** [GTKComboBox.o] Error 1
 GTKAboutDialog.cpp: In member function ‘void GTKAboutDialog::SetWebsiteURL(const char*)’:
-GTKAboutDialog.cpp:50:58: error: ‘gtk_about_dialog_set_url_hook’ was not declared in this scope
+GTKAboutDialog.cpp:60:58: error: ‘gtk_about_dialog_set_url_hook’ was not declared in this scope
+  gtk_about_dialog_set_url_hook(WebURLCallback, NULL, NULL);
 make: *** [GTKAboutDialog.o] Error 1
-GTKDrawingArea.cpp: In constructor ‘GTKDrawingArea::GTKDrawingArea(int, int)’:
-GTKDrawingArea.cpp:8:50: error: ‘gtk_drawing_area_size’ was not declared in this scope
-GTKDrawingArea.cpp: In member function ‘void GTKDrawingArea::SetSize(int, int)’:
-GTKDrawingArea.cpp:13:50: error: ‘gtk_drawing_area_size’ was not declared in this scope
+GTKDrawingArea.cpp: In constructor ‘GTKDrawingArea::GTKDrawingArea(uint32_t, uint32_t)’:
+GTKDrawingArea.cpp:28:50: error: ‘gtk_drawing_area_size’ was not declared in this scope
+  gtk_drawing_area_size(DrawingArea, Width, Height);
+GTKDrawingArea.cpp: In member function ‘void GTKDrawingArea::SetSize(uint32_t, uint32_t)’:
+GTKDrawingArea.cpp:36:50: error: ‘gtk_drawing_area_size’ was not declared in this scope
+  gtk_drawing_area_size(DrawingArea, Width, Height);
 make: *** [GTKDrawingArea.o] Error 1
+GTKCairoDrawingArea.cpp: In constructor ‘GTKCairoDrawingArea::GTKCairoDrawingArea(uint32_t, uint32_t)’:
+GTKCairoDrawingArea.cpp:24:50: error: ‘gtk_drawing_area_size’ was not declared in this scope
+  gtk_drawing_area_size(DrawingArea, Width, Height);
+make: *** [GTKCairoDrawingArea.o] Error 1
 make: Target `default' not remade because of errors.
