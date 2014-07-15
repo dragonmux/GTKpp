@@ -393,6 +393,8 @@ public:
 	GTKpp_API void SetText(const char *Content = "");
 	GTKpp_API uint32_t GetTextLen();
 	GTKpp_API void GetText(char *Buff, uint32_t BuffLen);
+	GTKpp_API bool GetIntValue(int32_t &val);
+	GTKpp_API bool GetUintValue(uint32_t &val);
 };
 
 class GTKKey

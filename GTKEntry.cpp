@@ -49,6 +49,59 @@ void GTKEntry::GetText(char *Buff, uint32_t BuffLen)
 		Buff[0] = 0;
 }
 
+inline bool isNumber(const char x)
+{
+	return x >= '0' && x <= '9';
+}
+
+inline bool isMinus(const char x)
+{
+	return x == '-';
+}
+
+inline bool checkNumber(const char *num, uint32_t numLen)
+{
+	for (uint32_t i = 0; i < numLen; i++)
+	{
+		if (!isNumber(num[i]))
+			return false;
+	}
+	return true;
+}
+
+bool GTKEntry::GetIntValue(int32_t &val)
+{
+	const char *strNum = gtk_entry_get_text(Entry);
+	uint32_t strNumLen = gtk_entry_get_text_length(Entry);
+	bool sign = isMinus(strNum[0]);
+	if (!checkNumber(strNum + (sign ? 1 : 0), strNumLen - (sign ? 1 : 0)))
+		return false;
+	val = 0;
+	for (uint32_t i = (sign ? 1 : 0); i < strNumLen; i++)
+	{
+		val *= 10;
+		val += strNum[i] - '0';
+	}
+	if (sign)
+		val = -val;
+	return true;
+}
+
+bool GTKEntry::GetUintValue(uint32_t &val)
+{
+	const char *strNum = gtk_entry_get_text(Entry);
+	uint32_t strNumLen = gtk_entry_get_text_length(Entry);
+	if (!checkNumber(strNum, strNumLen))
+		return false;
+	val = 0;
+	for (uint32_t i = 0; i < strNumLen; i++)
+	{
+		val *= 10;
+		val += strNum[i] - '0';
+	}
+	return true;
+}
+
 /*void GTKEntry::SetForegroundColour(int R, int G, int B)
 {
 	pango_layout_set_font_description
