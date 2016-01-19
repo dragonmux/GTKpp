@@ -47,6 +47,7 @@ quiet_cmd_cc = " CC    $@"
 cmd_cc = $(CC) $(2)
 quiet_cmd_ccld = " CCLD  $@"
 cmd_ccld = $(CC) $(2)
+cmd_makedep = $(1) $(2)
 quiet_cmd_strip = " STRIP $@"
 cmd_strip = $(STRIP) $(1)
 quiet_cmd_ar = " AR    $(2)"
@@ -75,6 +76,16 @@ define run-cmd
 	@$(cmd_$(1))
 endef
 
+define makedep
+	@if [ -z "$(quiet)" ]; then \
+		echo $(cmd_makedep); \
+	fi
+	@$(cmd_makedep)
+	@if [ "$(dir $<)" != "./" ]; then \
+		sed -i "s|^$(notdir $@):|$@:|" .dep/$*.d; \
+	fi
+endef
+
 define debug-strip
 	$(Q)if [ $(DEBUG) -eq 0 ]; then \
 		echo $($(quiet)cmd_strip); \
@@ -93,13 +104,13 @@ endef
 GCC ?= gcc
 ifeq ($(strip $(DEBUG)), 1)
 	OPTIM_FLAGS = -ggdb
-	GCC_FLAGS = 
+	GCC_FLAGS =
 else
 	GCC_VER = $(shell gcc -dumpversion | cut -d . -f 1)
 	ifeq ($(shell if [ $(GCC_VER) -ge 4 ]; then echo 1; else echo 0; fi), 1)
 		GCC_FLAGS = -fvisibility=hidden -fvisibility-inlines-hidden
 	else
-		GCC_FLAGS = 
+		GCC_FLAGS =
 	endif
 	OPTIM_FLAGS = -O2
 	DEBUG = 0
@@ -111,6 +122,9 @@ RM = rm -f
 AR = ar cr
 RANLIB = ranlib
 LN = ln -sfT
+INSTALL = install
+INSTALL_FILE = $(INSTALL) -m644
+INSTALL_DIR = $(INSTALL) -m755 -d
 UID = $(shell id -u)
 PREFIX ?= /usr
 
