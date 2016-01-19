@@ -22,6 +22,8 @@
 |*                   GTKWidget implementation                  *|
 \***************************************************************/
 
+constexpr uint16_t extendColour(const uint8_t colour) noexcept { return colour | (colour << 8); }
+
 GTKWidget::GTKWidget(GtkWidget *W) : Widget(W)
 {
 	gtk_widget_ref(Widget);
@@ -97,9 +99,9 @@ void GTKWidget::Redraw(bool Now)
 		gdk_window_process_updates(Widget->window, TRUE);
 }
 
-void GTKWidget::SetForegroundColour(int R, int G, int B)
+void GTKWidget::SetForegroundColour(uint8_t R, uint8_t G, uint8_t B)
 {
-	GdkColor col = {0, R * 257, G * 257, B * 257};
+	GdkColor col{0, extendColour(R), extendColour(G), extendColour(B)};
 	gtk_widget_modify_fg(Widget, GTK_STATE_NORMAL, &col);
 	gtk_widget_modify_fg(Widget, GTK_STATE_ACTIVE, &col);
 	gtk_widget_modify_fg(Widget, GTK_STATE_PRELIGHT, &col);
@@ -108,9 +110,9 @@ void GTKWidget::SetForegroundColour(int R, int G, int B)
 	gtk_widget_modify_text(Widget, GTK_STATE_PRELIGHT, &col);
 }
 
-void GTKWidget::SetBackgroundColour(int R, int G, int B)
+void GTKWidget::SetBackgroundColour(uint8_t R, uint8_t G, uint8_t B)
 {
-	GdkColor col = {0, R * 257, G * 257, B * 257};
+	GdkColor col{0, extendColour(R), extendColour(G), extendColour(B)};
 	gtk_widget_modify_bg(Widget, GTK_STATE_NORMAL, &col);
 	gtk_widget_modify_bg(Widget, GTK_STATE_ACTIVE, &col);
 	gtk_widget_modify_bg(Widget, GTK_STATE_PRELIGHT, &col);
@@ -135,7 +137,7 @@ void GTKWidget::SetItalic(bool Italic)
 	gtk_widget_modify_font(Widget, pfd);
 }
 
-void GTKWidget::SetUnderline(bool Underline)
+void GTKWidget::SetUnderline(bool /*Underline*/)
 {
 /*	PangoContext *ctx = gtk_widget_get_pango_context(Widget);
 	PangoFontDescription *pfd = pango_font_description_copy(pango_context_get_font_description(ctx));
