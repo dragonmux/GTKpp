@@ -16,7 +16,7 @@
 include Makefile.inc
 
 PKG_CONFIG = gtk+-2.0 pango $(PKG_GL)
-EXTRA_CFLAGS = $(shell pkg-config --cflags $(PKG_CONFIG)) $(CFLAGS_GL)
+EXTRA_CFLAGS = $(shell pkg-config --cflags $(PKG_CONFIG)) $(CFLAGS_GL) -std=c++11
 DEFS = -Wall -Wextra -pedantic -D__GTKpp_EXPORT__ -Iinclude
 CFLAGS = $(OPTIM_FLAGS) -c $(DEFS) $(EXTRA_CFLAGS) -o $@ $<
 DEPFLAGS = $(OPTIM_FLAGS) -E -MM $(DEFS) $(EXTRA_CFLAGS) -o .dep/$*.d $<
