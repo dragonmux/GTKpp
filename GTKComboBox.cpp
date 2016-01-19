@@ -109,11 +109,11 @@ int GTKComboBox::getPossitionOf(const char *Value)
 int GTKComboBox::getEnumFor(unsigned int Value)
 {
 	std::map<int, GTKComboBoxEntry>::iterator i;
-	if (Value == -1)
+	if (int(Value) == -1)
 		return Value;
 	for (i = Items.begin(); i != Items.end(); i++)
 	{
-		if ((*i).second.ComboPos == Value)
+		if ((*i).second.ComboPos == int(Value))
 			return (*i).first;
 	}
 	return -1;
