@@ -58,7 +58,7 @@ void GTKCairoDrawingArea::FinishDrawing()
 	gtk_widget_queue_draw(Widget);
 }
 
-bool GTKCairoDrawingArea::Redraw(GtkWidget *widget, GdkEventExpose *event, void *data)
+bool GTKCairoDrawingArea::Redraw(GtkWidget *, GdkEventExpose *, void *data)
 {
 	GTKCairoDrawingArea *DrawingArea = (GTKCairoDrawingArea *)data;
 	cairo_t *gtkSurface = gdk_cairo_create(DrawingArea->Widget->window);

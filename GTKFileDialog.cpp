@@ -51,7 +51,7 @@ void GTKFileDialog::AddFilters(const std::vector<const char *> &FileTypes, const
 	}
 }
 
-void GTKFileDialog::AddFilterChooser(const std::vector<const char *> &FileTypes, const std::vector<const char *> &FileTypeNames)
+void GTKFileDialog::AddFilterChooser(const std::vector<const char *> &/*FileTypes*/, const std::vector<const char *> &/*FileTypeNames*/)
 {
 	/*GtkWidget *dropdown = gtk_combo_box_new();
 	GtkComboBox *cboFilters = GTK_COMBO_BOX(dropdown);

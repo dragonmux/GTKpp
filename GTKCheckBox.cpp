@@ -18,7 +18,7 @@
 
 #include "stdafx.h"
 
-GTKCheckBox::GTKCheckBox(int Width, int Height, const char *Content) : GTKButton(gtk_check_button_new())
+GTKCheckBox::GTKCheckBox(int , int, const char *Content) : GTKButton(gtk_check_button_new())
 {
 	CheckButton = GTK_CHECK_BUTTON(Button);
 	if (Content != NULL)

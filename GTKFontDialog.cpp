@@ -20,7 +20,6 @@
 
 GTKFontDialog::GTKFontDialog(const char *Title) : GTKDialog(gtk_font_selection_dialog_new(Title))
 {
-	GtkWidget *btnOK, *btnCancel;
 	FontDialog = GTK_FONT_SELECTION_DIALOG(Dialog);
 	FontSelection = GTK_FONT_SELECTION(gtk_font_selection_dialog_get_font_selection(FontDialog));
 }

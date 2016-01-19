@@ -51,13 +51,13 @@ void GTKColourSelectionDialog::GetColour(char *R, char *G, char *B)
 	*B = round((double)col.blue / 257.0);
 }
 
-void GTKColourSelectionDialog::OkClicked(GtkWidget *widget, void *data)
+void GTKColourSelectionDialog::OkClicked(GtkWidget *, void *data)
 {
 	GTKColourSelectionDialog *self = (GTKColourSelectionDialog *)data;
 	gtk_dialog_response(self->Dialog, GTK_RESPONSE_OK);
 }
 
-void GTKColourSelectionDialog::CancelClicked(GtkWidget *widget, void *data)
+void GTKColourSelectionDialog::CancelClicked(GtkWidget *, void *data)
 {
 	GTKColourSelectionDialog *self = (GTKColourSelectionDialog *)data;
 	gtk_dialog_response(self->Dialog, GTK_RESPONSE_CANCEL);

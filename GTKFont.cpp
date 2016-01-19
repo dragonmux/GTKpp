@@ -71,5 +71,5 @@ void GTKFont::RenderString(const char *String)
 {
 	if (String == NULL)
 		return;
-	GTKSize size = GetStringMetrics(String);
+	//GTKSize size = GetStringMetrics(String);
 }

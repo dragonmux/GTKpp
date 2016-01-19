@@ -18,7 +18,7 @@
 
 #include "stdafx.h"
 
-void WebURLCallback(GtkAboutDialog *AboutBox, const char *Link, void *Data)
+void WebURLCallback(GtkAboutDialog *, const char *Link, void *)
 {
 	gtk_show_uri(NULL, Link, GDK_CURRENT_TIME, NULL);
 }

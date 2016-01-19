@@ -83,7 +83,7 @@ bool GTKRange::KeyRelease(GtkWidget *, GdkEventKey *, void *data)
 	return false;
 }
 
-bool GTKRange::Scroll(GtkWidget *widget, GdkEventScroll *, void *data)
+bool GTKRange::Scroll(GtkWidget *, GdkEventScroll *, void *data)
 {
 	((GTKRange *)data)->CallOnChangedCallbacks();
 	return false;
