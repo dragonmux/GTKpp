@@ -23,7 +23,7 @@
 \***************************************************************/
 
 GTKGLWindow::GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc, int PixFormat, bool AutoRedraw, int Timeout) :
-	GTKWindow(Type, CloseFunc)
+	GTKWindow(Type, CloseFunc), GLBase(this)
 {
 	GLBaseInit(Config, PixFormat, AutoRedraw, Timeout);
 }
@@ -31,9 +31,4 @@ GTKGLWindow::GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFun
 GTKGLWindow::~GTKGLWindow()
 {
 	GLBaseDeinit();
-}
-
-GTKWidget *GTKGLWindow::getGTKWidget()
-{
-	return GetGTKWidget();
 }

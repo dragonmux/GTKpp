@@ -18,19 +18,19 @@
 
 #include "stdafx.h"
 
-GTKGLDrawingArea::GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config) : GTKDrawingArea(Width, Height)
+GTKGLDrawingArea::GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config) : GTKDrawingArea(Width, Height), GLBase(this)
 {
 	GLBaseInit(Config);
 }
 
 GTKGLDrawingArea::GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config, int PixFormat) :
-	GTKDrawingArea(Width, Height)
+	GTKDrawingArea(Width, Height), GLBase(this)
 {
-	GLBaseInit(Config);
+	GLBaseInit(Config, PixFormat);
 }
 
 GTKGLDrawingArea::GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int Timeout) :
-	GTKDrawingArea(Width, Height)
+	GTKDrawingArea(Width, Height), GLBase(this)
 {
 	GLBaseInit(Config, PixFormat, AutoRedraw, Timeout);
 }
@@ -38,9 +38,4 @@ GTKGLDrawingArea::GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config, i
 GTKGLDrawingArea::~GTKGLDrawingArea()
 {
 	GLBaseDeinit();
-}
-
-GTKWidget *GTKGLDrawingArea::getGTKWidget()
-{
-	return GetGTKWidget();
 }

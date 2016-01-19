@@ -25,6 +25,8 @@ extern "C" GdkGLConfig *gdk_win32_gl_config_new_from_pixel_format(int pixel_form
 #include <errno.h>
 #endif
 
+GLBase::GLBase(GTKWidget *w) : widget(w) { }
+
 void GLBase::GLBaseInit(GdkGLConfig *Config)
 {
 	init(Config, GDK_GL_RGBA_TYPE);
@@ -48,14 +50,14 @@ void GLBase::GLBaseInit(GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int
 	if (AutoRedraw == true)
 	{
 		AddTimeout(Timeout);
-		getGTKWidget()->SetHandler("visibility_notify_event", (void *)CheckVisibility, this);
+		widget->SetHandler("visibility_notify_event", (void *)CheckVisibility, this);
 	}
 }
 
 void GLBase::init(GdkGLConfig *Config, int PixFormat)
 {
-	gtk_widget_set_gl_capability(this->getGTKWidget()->GetWidget(), Config, NULL, true, PixFormat);
-	gtk_widget_set_app_paintable(this->getGTKWidget()->GetWidget(), true);
+	gtk_widget_set_gl_capability(widget->GetWidget(), Config, NULL, true, PixFormat);
+	gtk_widget_set_app_paintable(widget->GetWidget(), true);
 	Conf = Config;
 	ctx = NULL;
 	drw = NULL;
@@ -103,8 +105,8 @@ bool GLBase::glBegin()
 		printf("Error, glBegin() called without interviening glEnd() call\n");
 		return false;
 	}
-	ctx = gtk_widget_get_gl_context(this->getGTKWidget()->GetWidget());
-	drw = gtk_widget_get_gl_drawable(this->getGTKWidget()->GetWidget());
+	ctx = gtk_widget_get_gl_context(widget->GetWidget());
+	drw = gtk_widget_get_gl_drawable(widget->GetWidget());
 
 	return (gdk_gl_drawable_gl_begin(drw, ctx) == FALSE ? false : true);
 }
@@ -152,7 +154,7 @@ GTKFont *GLBase::SetupGLFont(const char *FontName, int Size, int Start, int Num)
 	pango_font_description_set_style(PFD, PANGO_STYLE_NORMAL);
 	pango_font_description_set_stretch(PFD, PANGO_STRETCH_NORMAL);
 
-	this->glBegin();
+	glBegin();
 
 	Font->DisplayBase = glGenLists(Num);
 	PF = gdk_gl_font_use_pango_font(PFD, Start, Num, Font->DisplayBase);
@@ -167,7 +169,7 @@ GTKFont *GLBase::SetupGLFont(const char *FontName, int Size, int Start, int Num)
 	Fonts.push_back(Font);
 	Font->Parent = this;
 
-	this->glEnd();
+	glEnd();
 
 	pango_font_description_free(PFD);
 
@@ -196,7 +198,7 @@ void GLBase::DestroyGLFonts()
 {
 	if (Fonts.size() == 0)
 		return;
-	this->glBegin();
+	glBegin();
 	for (uint32_t i = 0; i < Fonts.size(); i++)
 	{
 		if (Fonts[i] != NULL)
@@ -207,10 +209,10 @@ void GLBase::DestroyGLFonts()
 		}
 	}
 	Fonts.clear();
-	this->glEnd();
+	glEnd();
 }
 
-bool GLBase::CheckVisibility(GtkWidget *widget, GdkEventVisibility *event, void *data)
+bool GLBase::CheckVisibility(GtkWidget *, GdkEventVisibility *event, void *data)
 {
 	GLBase *Self = (GLBase *)data;
 	if (event->state == GDK_VISIBILITY_FULLY_OBSCURED)
@@ -226,7 +228,7 @@ void GLBase::AddTimeout(int newTimeout)
 	if (TimeoutID == 0)
 	{
 		Timeout = newTimeout;
-		TimeoutID = g_timeout_add(Timeout, Redraw_Internal, getGTKWidget());
+		TimeoutID = g_timeout_add(Timeout, Redraw_Internal, widget);
 	}
 }
 

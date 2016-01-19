@@ -145,7 +145,6 @@ protected:
 
 protected:
 	GTKWidget(GtkWidget *W);
-	GTKWidget *GetGTKWidget() const;
 
 public:
 	GTKpp_API virtual ~GTKWidget();
@@ -158,8 +157,8 @@ public:
 	GTKpp_API void Hide();
 	GTKpp_API void Show();
 	GTKpp_API void Redraw(bool Now = false);
-	GTKpp_API void SetForegroundColour(int R, int G, int B);
-	GTKpp_API void SetBackgroundColour(int R, int G, int B);
+	GTKpp_API void SetForegroundColour(uint8_t R, uint8_t G, uint8_t B);
+	GTKpp_API void SetBackgroundColour(uint8_t R, uint8_t G, uint8_t B);
 	GTKpp_API void SetBold(bool Bold);
 	GTKpp_API void SetItalic(bool Italic);
 	GTKpp_API void SetUnderline(bool Underline);
@@ -172,6 +171,7 @@ public:
 class GLBase
 {
 private:
+	GTKWidget *widget;
 	GdkGLConfig *Conf;
 	GdkGLContext *ctx;
 	GdkGLDrawable *drw;
@@ -181,7 +181,7 @@ private:
 	void init(GdkGLConfig *Config, int PixFormat);
 
 protected:
-	virtual GTKWidget *getGTKWidget() = 0;
+	GLBase(GTKWidget *w);
 	void GLBaseInit(GdkGLConfig *Config);
 	void GLBaseInit(GdkGLConfig *Config, int PixFormat);
 	void GLBaseInit(GdkGLConfig *Config, int PixFormat, bool AutoRedraw, int Timeout = GTKpp_TIMEOUT_INTERVAL);
@@ -525,9 +525,6 @@ public:
 #ifndef __NO_OPEN_GL__
 class GTKGLWindow : public GTKWindow, public GLBase
 {
-protected:
-	virtual GTKWidget *getGTKWidget();
-
 public:
 	GTKpp_API GTKGLWindow(GtkWindowType Type, GdkGLConfig *Config, void *CloseFunc = NULL,
 		int PixFormat = GDK_GL_RGBA_TYPE, bool AutoRedraw = false, int Timeout = GTKpp_TIMEOUT_INTERVAL);
@@ -759,9 +756,6 @@ private:
 #ifndef __NO_OPEN_GL__
 class GTKGLDrawingArea : public GTKDrawingArea, public GLBase
 {
-protected:
-	virtual GTKWidget *getGTKWidget();
-
 public:
 	GTKpp_API GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config);
 	GTKpp_API GTKGLDrawingArea(int Width, int Height, GdkGLConfig *Config, int PixFormat);

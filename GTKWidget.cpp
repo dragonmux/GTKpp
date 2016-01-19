@@ -52,11 +52,6 @@ GtkWidget *GTKWidget::GetWidget() const
 	return Widget;
 }
 
-GTKWidget *GTKWidget::GetGTKWidget() const
-{
-	return (GTKWidget *)this;
-}
-
 uint32_t GTKWidget::SetHandler(const char *Event, void *Handler, void *Data)
 {
 	return g_signal_connect(GTK_OBJECT(Widget), Event, G_CALLBACK(Handler), Data);
