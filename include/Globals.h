@@ -38,3 +38,4 @@
 #endif
 
 #include <stdarg.h>
+constexpr uint16_t extendColour(const uint8_t colour) noexcept { return colour | (colour << 8); }

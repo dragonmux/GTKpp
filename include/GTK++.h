@@ -645,7 +645,7 @@ protected:
 
 public:
 	GTKpp_API GTKColourSelectionDialog();
-	GTKpp_API void SetColour(char R, char G, char B);
+	GTKpp_API void SetColour(uint8_t R, uint8_t G, uint8_t B);
 	GTKpp_API void GetColour(char *R, char *G, char *B);
 };
 

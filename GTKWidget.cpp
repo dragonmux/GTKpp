@@ -22,8 +22,6 @@
 |*                   GTKWidget implementation                  *|
 \***************************************************************/
 
-constexpr uint16_t extendColour(const uint8_t colour) noexcept { return colour | (colour << 8); }
-
 GTKWidget::GTKWidget(GtkWidget *W) : Widget(W)
 {
 	gtk_widget_ref(Widget);

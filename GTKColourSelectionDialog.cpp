@@ -36,9 +36,9 @@ GTKColourSelectionDialog::GTKColourSelectionDialog() : GTKDialog(gtk_color_selec
 	g_signal_connect(GTK_OBJECT(Selector->cancel_button), "clicked", G_CALLBACK(CancelClicked), this);
 }
 
-void GTKColourSelectionDialog::SetColour(char R, char G, char B)
+void GTKColourSelectionDialog::SetColour(uint8_t R, uint8_t G, uint8_t B)
 {
-	GdkColor col = {0, ((int)R) * 257, ((int)G) * 257, ((int)B) * 257};
+	GdkColor col = {0, extendColour(R), extendColour(G), extendColour(B)};
 	gtk_color_selection_set_current_color(GTK_COLOR_SELECTION(Selector->colorsel), &col);
 }
 
@@ -46,9 +46,9 @@ void GTKColourSelectionDialog::GetColour(char *R, char *G, char *B)
 {
 	GdkColor col;
 	gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(Selector->colorsel), &col);
-	*R = round((double)col.red / 257.0);
-	*G = round((double)col.green / 257.0);
-	*B = round((double)col.blue / 257.0);
+	*R = round(double(col.red) / 257.0);
+	*G = round(double(col.green) / 257.0);
+	*B = round(double(col.blue) / 257.0);
 }
 
 void GTKColourSelectionDialog::OkClicked(GtkWidget *, void *data)
