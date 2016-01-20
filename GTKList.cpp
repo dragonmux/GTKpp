@@ -27,13 +27,13 @@ GTKList::GTKList(GTKWidget *Parent, int Width, int Height, bool NeedsParenting) 
 	ListView = GTK_TREE_VIEW(Container);
 	ListStore = gtk_list_store_new(1, G_TYPE_STRING);
 	gtk_tree_view_set_model(ListView, GTK_TREE_MODEL(ListStore));
-	gtk_tree_view_column_set_visible(Column, TRUE);
-	gtk_tree_view_column_pack_start(Column, Renderer, TRUE);
+	gtk_tree_view_column_set_visible(Column, true);
+	gtk_tree_view_column_pack_start(Column, Renderer, true);
 	gtk_tree_view_column_set_attributes(Column, Renderer, "text", 0, NULL);
 	gtk_tree_view_append_column(ListView, Column);
-	gtk_tree_view_set_headers_visible(ListView, FALSE);
+	gtk_tree_view_set_headers_visible(ListView, false);
 	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(ListStore), 0, GTK_SORT_ASCENDING);
-	if (NeedsParenting != FALSE)
+	if (NeedsParenting != false)
 		SetParent(Parent);
 	gtk_widget_set_size_request(Widget, Width, Height);
 }
@@ -63,7 +63,7 @@ void GTKList::DeleteItem(char *Value)
 	bool OK;
 	char *val;
 	GtkTreeIter Iter = {0};
-	OK = (gtk_tree_model_get_iter_first(GTK_TREE_MODEL(ListStore), &Iter) == FALSE ? false : true);
+	OK = (gtk_tree_model_get_iter_first(GTK_TREE_MODEL(ListStore), &Iter) == false ? false : true);
 	while (OK == true)
 	{
 		gtk_tree_model_get(GTK_TREE_MODEL(ListStore), &Iter, 0, &val, -1);
@@ -74,7 +74,7 @@ void GTKList::DeleteItem(char *Value)
 			break;
 		}
 		g_free(val);
-		OK = (gtk_tree_model_iter_next(GTK_TREE_MODEL(ListStore), &Iter) == FALSE ? false : true);
+		OK = (gtk_tree_model_iter_next(GTK_TREE_MODEL(ListStore), &Iter) == false ? false : true);
 	}
 }
 
@@ -84,9 +84,9 @@ void GTKList::Clear()
 	GtkTreeIter Iter = {0};
 	do
 	{
-		OK = (gtk_tree_model_get_iter_first(GTK_TREE_MODEL(ListStore), &Iter) == FALSE ? false : true);
-		if (OK != FALSE)
+		OK = (gtk_tree_model_get_iter_first(GTK_TREE_MODEL(ListStore), &Iter) == false ? false : true);
+		if (OK != false)
 			gtk_list_store_remove(ListStore, &Iter);
 	}
-	while (OK != FALSE);
+	while (OK != false);
 }
