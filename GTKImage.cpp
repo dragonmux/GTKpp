@@ -52,14 +52,14 @@ GTKImage::GTKImage(int Width, int Height, bool UsingImage) : GTKMisc(gtk_event_b
 	SetSize(Width, Height);
 }
 
-void GTKImage::SetSize(int Width, int Height)
+void GTKImage::SetSize(int width, int height)
 {
 	if (UsingImage == FALSE)
-		gtk_drawing_area_size(Image, Width, Height);
+		gtk_drawing_area_size(Image, width, height);
 	else
-		gtk_widget_set_size_request(_Widget, Width, Height);
-	this->Width = Width;
-	this->Height = Height;
+		gtk_widget_set_size_request(_Widget, width, height);
+	Width = width;
+	Height = height;
 }
 
 void GTKImage::DrawImage(GDKPixbuf *Image)
