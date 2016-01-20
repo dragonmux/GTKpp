@@ -60,11 +60,11 @@ void GTKList::AddItem(char *Value)
 
 void GTKList::DeleteItem(char *Value)
 {
-	bool OK;
+	bool ok;
 	char *val;
-	GtkTreeIter Iter = {0};
-	OK = (gtk_tree_model_get_iter_first(GTK_TREE_MODEL(ListStore), &Iter) == false ? false : true);
-	while (OK == true)
+	GtkTreeIter Iter;
+	ok = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(ListStore), &Iter) == false ? false : true;
+	while (ok == true)
 	{
 		gtk_tree_model_get(GTK_TREE_MODEL(ListStore), &Iter, 0, &val, -1);
 		if (strcmp(Value, val) == 0)
@@ -74,19 +74,19 @@ void GTKList::DeleteItem(char *Value)
 			break;
 		}
 		g_free(val);
-		OK = (gtk_tree_model_iter_next(GTK_TREE_MODEL(ListStore), &Iter) == false ? false : true);
+		ok = gtk_tree_model_iter_next(GTK_TREE_MODEL(ListStore), &Iter) == false ? false : true;
 	}
 }
 
 void GTKList::Clear()
 {
-	bool OK;
-	GtkTreeIter Iter = {0};
+	bool ok = false;
+	GtkTreeIter Iter;
 	do
 	{
-		OK = (gtk_tree_model_get_iter_first(GTK_TREE_MODEL(ListStore), &Iter) == false ? false : true);
-		if (OK != false)
+		ok = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(ListStore), &Iter) == false ? false : true;
+		if (ok)
 			gtk_list_store_remove(ListStore, &Iter);
 	}
-	while (OK != false);
+	while (ok);
 }
