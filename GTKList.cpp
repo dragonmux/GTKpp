@@ -53,7 +53,7 @@ void GTKList::SetParent(GTKWidget *Parent)
 
 void GTKList::AddItem(char *Value)
 {
-	GtkTreeIter Iter = {0};
+	GtkTreeIter Iter;
 	gtk_list_store_append(ListStore, &Iter);
 	gtk_list_store_set(ListStore, &Iter, 0, Value, -1);
 }
