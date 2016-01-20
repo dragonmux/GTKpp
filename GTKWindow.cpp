@@ -177,7 +177,7 @@ GTKRect GTKWindow::GetClientRect()
 
 GTKSize GTKWindow::GetDesktopSize()
 {
-	GTKSize Desktop = {0};
+	GTKSize Desktop;
 	GdkWindow *wnd = gdk_get_default_root_window();
 //	GdkScreen *screen = gtk_window_get_screen(Window);
 //	Desktop.cx = gdk_screen_get_width(screen);

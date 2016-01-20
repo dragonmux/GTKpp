@@ -64,7 +64,7 @@ void GTKImage::SetSize(int width, int height)
 
 void GTKImage::DrawImage(GDKPixbuf *Image)
 {
-	GdkColor Col = {0};
+	GdkColor Col = {0, 0, 0, 0};
 	GdkRectangle Rect;
 	ASSERT_AND_RETURN("Cannot DrawImage on a gtk_image!\n", UsingImage == false);
 	if (DrawArea == NULL)
